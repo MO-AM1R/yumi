@@ -19,7 +19,6 @@
   <a href="#project-structure">Project Structure</a> •
   <a href="#setup">Setup</a> •
   <a href="#api">API</a> •
-  <a href="#contributors">Contributors</a>
 </p>
 
 <p align="center">
