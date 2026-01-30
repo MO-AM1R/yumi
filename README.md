@@ -334,7 +334,7 @@ app/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/Yumi.git
+   git clone https://github.com/MO-AM1R/Yumi.git
    cd Yumi
    ```
 
