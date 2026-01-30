@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Thin (100) -->
+    <font
+        app:font="@font/poppins_thin"
+        app:fontStyle="normal"
+        app:fontWeight="100" />
+
+    <!-- Thin Italic (100) -->
+    <font
+        app:font="@font/poppins_thin_italic"
+        app:fontStyle="italic"
+        app:fontWeight="100" />
+
+    <!-- Extra Light (200) -->
+    <font
+        app:font="@font/poppins_extra_light"
+        app:fontStyle="normal"
+        app:fontWeight="200" />
+
+    <!-- Extra Light Italic (200) -->
+    <font
+        app:font="@font/poppins_extra_light_italic"
+        app:fontStyle="italic"
+        app:fontWeight="200" />
+
+    <!-- Light (300) -->
+    <font
+        app:font="@font/poppins_light"
+        app:fontStyle="normal"
+        app:fontWeight="300" />
+
+    <!-- Light Italic (300) -->
+    <font
+        app:font="@font/poppins_light_italic"
+        app:fontStyle="italic"
+        app:fontWeight="300" />
+
+    <!-- Regular (400) -->
+    <font
+        app:font="@font/poppins_regular"
+        app:fontStyle="normal"
+        app:fontWeight="400" />
+
+    <!-- Regular Italic (400) -->
+    <font
+        app:font="@font/poppins_italic"
+        app:fontStyle="italic"
+        app:fontWeight="400" />
+
+    <!-- Medium (500) -->
+    <font
+        app:font="@font/poppins_medium"
+        app:fontStyle="normal"
+        app:fontWeight="500" />
+
+    <!-- Medium Italic (500) -->
+    <font
+        app:font="@font/poppins_medium_italic"
+        app:fontStyle="italic"
+        app:fontWeight="500" />
+
+    <!-- Semi Bold (600) -->
+    <font
+        app:font="@font/poppins_semi_bold"
+        app:fontStyle="normal"
+        app:fontWeight="600" />
+
+    <!-- Semi Bold Italic (600) -->
+    <font
+        app:font="@font/poppins_semi_bold_italic"
+        app:fontStyle="italic"
+        app:fontWeight="600" />
+
+    <!-- Bold (700) -->
+    <font
+        app:font="@font/poppins_bold"
+        app:fontStyle="normal"
+        app:fontWeight="700" />
+
+    <!-- Bold Italic (700) -->
+    <font
+        app:font="@font/poppins_bold_italic"
+        app:fontStyle="italic"
+        app:fontWeight="700" />
+
+    <!-- Extra Bold (800) -->
+    <font
+        app:font="@font/poppins_extra_bold"
+        app:fontStyle="normal"
+        app:fontWeight="800" />
+
+    <!-- Extra Bold Italic (800) -->
+    <font
+        app:font="@font/poppins_extra_bold_italic"
+        app:fontStyle="italic"
+        app:fontWeight="800" />
+
+    <!-- Black (900) -->
+    <font
+        app:font="@font/poppins_black"
+        app:fontStyle="normal"
+        app:fontWeight="900" />
+
+    <!-- Black Italic (900) -->
+    <font
+        app:font="@font/poppins_black_italic"
+        app:fontStyle="italic"
+        app:fontWeight="900" />
+
+</font-family>

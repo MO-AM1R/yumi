@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ==================== BUTTONS ==================== -->
+
+    <!-- Primary Button (Black/White) -->
+    <style name="Widget.Yumi.Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="cornerRadius">@dimen/radius_lg</item>
+        <item name="backgroundTint">@color/primary</item>
+        <item name="android:textColor">@color/primary_foreground</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/poppins_semi_bold</item>
+    </style>
+
+    <!-- Secondary Button (Orange) -->
+    <style name="Widget.Yumi.Button.Secondary" parent="Widget.Material3.Button">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="cornerRadius">@dimen/radius_lg</item>
+        <item name="backgroundTint">@color/secondary</item>
+        <item name="android:textColor">@color/secondary_foreground</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/poppins_semi_bold</item>
+    </style>
+
+    <!-- Outlined Button -->
+    <style name="Widget.Yumi.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="cornerRadius">@dimen/radius_lg</item>
+        <item name="strokeColor">@color/border</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <!-- Text Button -->
+    <style name="Widget.Yumi.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/secondary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <!-- Icon Button -->
+    <style name="Widget.Yumi.IconButton" parent="Widget.Material3.Button.IconButton">
+        <item name="iconTint">@color/foreground</item>
+        <item name="cornerRadius">@dimen/radius_full</item>
+    </style>
+
+    <!-- Pill Button (ADD button style) -->
+    <style name="Widget.Yumi.Button.Pill" parent="Widget.Material3.Button">
+        <item name="android:minHeight">36dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="cornerRadius">@dimen/radius_full</item>
+        <item name="backgroundTint">@color/primary</item>
+        <item name="android:textColor">@color/primary_foreground</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/text_sm</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <!-- ==================== TEXT INPUT ==================== -->
+
+    <!-- Text Input Layout -->
+    <style name="Widget.Yumi.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">@dimen/radius_lg</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/radius_lg</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/radius_lg</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/radius_lg</item>
+        <item name="boxStrokeColor">@color/input_stroke_color</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxBackgroundColor">@color/input_background</item>
+        <item name="hintTextColor">@color/muted_foreground</item>
+    </style>
+
+    <!-- Filled Text Input -->
+    <style name="Widget.Yumi.TextInputLayout.Filled" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="boxCornerRadiusTopStart">@dimen/radius_lg</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/radius_lg</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/radius_lg</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/radius_lg</item>
+        <item name="boxBackgroundColor">@color/input_background</item>
+        <item name="hintTextColor">@color/muted_foreground</item>
+    </style>
+
+    <!-- ==================== CARDS ==================== -->
+
+    <!-- Standard Card -->
+    <style name="Widget.Yumi.Card" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">@dimen/radius_lg</item>
+        <item name="cardBackgroundColor">@color/card</item>
+        <item name="cardElevation">@dimen/elevation_sm</item>
+        <item name="contentPadding">@dimen/padding_card</item>
+    </style>
+
+    <!-- Elevated Card -->
+    <style name="Widget.Yumi.Card.Elevated" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">@dimen/radius_lg</item>
+        <item name="cardBackgroundColor">@color/card</item>
+        <item name="cardElevation">@dimen/elevation_md</item>
+    </style>
+
+    <!-- Outlined Card -->
+    <style name="Widget.Yumi.Card.Outlined" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardCornerRadius">@dimen/radius_lg</item>
+        <item name="cardBackgroundColor">@color/card</item>
+        <item name="strokeColor">@color/border</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <!-- Meal Card (Large) -->
+    <style name="Widget.Yumi.Card.Meal" parent="Widget.Yumi.Card">
+        <item name="cardCornerRadius">@dimen/radius_xl</item>
+        <item name="cardElevation">0dp</item>
+        <item name="contentPadding">0dp</item>
+    </style>
+
+    <!-- ==================== CHIPS ==================== -->
+
+    <!-- Filter Chip -->
+    <style name="Widget.Yumi.Chip.Filter" parent="Widget.Material3.Chip.Filter">
+        <item name="chipCornerRadius">@dimen/radius_full</item>
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="checkedIconVisible">false</item>
+    </style>
+
+    <!-- Category Chip -->
+    <style name="Widget.Yumi.Chip.Category" parent="Widget.Material3.Chip.Suggestion">
+        <item name="chipCornerRadius">@dimen/radius_full</item>
+        <item name="chipBackgroundColor">@color/muted</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="chipMinHeight">32dp</item>
+    </style>
+
+    <!-- ==================== BOTTOM NAVIGATION ==================== -->
+
+    <style name="Widget.Yumi.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@color/card</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.Yumi.BottomNavigation.ActiveIndicator</item>
+        <item name="itemIconTint">@color/bottom_nav_icon_color</item>
+        <item name="itemTextColor">@color/bottom_nav_text_color</item>
+        <item name="labelVisibilityMode">labeled</item>
+    </style>
+
+    <style name="Widget.Yumi.BottomNavigation.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/secondary</item>
+    </style>
+
+    <!-- ==================== TAB LAYOUT ==================== -->
+
+    <style name="Widget.Yumi.TabLayout" parent="Widget.Material3.TabLayout">
+        <item name="tabIndicatorColor">@color/secondary</item>
+        <item name="tabSelectedTextColor">@color/foreground</item>
+        <item name="tabTextColor">@color/muted_foreground</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabIndicatorHeight">3dp</item>
+        <item name="tabRippleColor">@color/ripple</item>
+    </style>
+
+    <!-- ==================== TOOLBAR ==================== -->
+
+    <style name="Widget.Yumi.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/background</item>
+        <item name="titleTextColor">@color/foreground</item>
+        <item name="navigationIconTint">@color/foreground</item>
+    </style>
+
+    <!-- ==================== SWITCH ==================== -->
+
+    <style name="Widget.Yumi.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="trackTint">@color/switch_track_color</item>
+        <item name="thumbTint">@color/switch_thumb_color</item>
+    </style>
+
+    <!-- ==================== TEXT STYLES ==================== -->
+
+    <!-- Headline Large -->
+    <style name="TextAppearance.Yumi.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textColor">@color/foreground</item>
+    </style>
+
+    <!-- Headline Medium -->
+    <style name="TextAppearance.Yumi.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">@font/poppins_semi_bold</item>
+        <item name="android:fontFamily">@font/poppins_semi_bold</item>
+        <item name="android:textColor">@color/foreground</item>
+    </style>
+
+    <!-- Title Large -->
+    <style name="TextAppearance.Yumi.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/poppins_semi_bold</item>
+        <item name="android:fontFamily">@font/poppins_semi_bold</item>
+        <item name="android:textColor">@color/foreground</item>
+    </style>
+
+    <!-- Title Medium -->
+    <style name="TextAppearance.Yumi.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textColor">@color/foreground</item>
+    </style>
+
+    <!-- Title Small -->
+    <style name="TextAppearance.Yumi.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textColor">@color/foreground</item>
+    </style>
+
+    <!-- Body Large -->
+    <style name="TextAppearance.Yumi.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textColor">@color/foreground</item>
+    </style>
+
+    <!-- Body Medium -->
+    <style name="TextAppearance.Yumi.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textColor">@color/foreground</item>
+    </style>
+
+    <!-- Body Small -->
+    <style name="TextAppearance.Yumi.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textColor">@color/muted_foreground</item>
+    </style>
+
+    <!-- Label Large -->
+    <style name="TextAppearance.Yumi.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textColor">@color/foreground</item>
+    </style>
+
+    <!-- Label Medium -->
+    <style name="TextAppearance.Yumi.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textColor">@color/foreground</item>
+    </style>
+
+    <!-- Label Small -->
+    <style name="TextAppearance.Yumi.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textColor">@color/muted_foreground</item>
+    </style>
+
+</resources>
