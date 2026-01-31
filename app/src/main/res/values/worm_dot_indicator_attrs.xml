@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DotIndicator">
+        <attr name="inactive_color" format="color" />
+        <attr name="inactive_width" format="dimension" />
+        <attr name="inactive_height" format="dimension" />
+        <attr name="active_color" format="color" />
+        <attr name="active_width" format="dimension" />
+        <attr name="active_height" format="dimension" />
+        <attr name="dot_margin" format="dimension" />
+        <attr name="common_height" format="dimension" />
+        <attr name="count" format="integer" />
+        <attr name="animation_duration" format="integer" />
+    </declare-styleable>
+</resources>
