@@ -38,7 +38,6 @@
                 android:id="@+id/fruit1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:text="@string/fruit"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -48,22 +47,20 @@
                 android:id="@+id/fruit2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
                 android:text="@string/tomato"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                app:layout_constraintEnd_toEndOf="@+id/linearLayout" />
+                app:layout_constraintStart_toEndOf="@+id/linearLayout" />
 
             <TextView
                 android:id="@+id/fruit3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
                 android:text="@string/plant"
                 android:textSize="22sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
                 app:layout_constraintStart_toEndOf="@+id/linearLayout"
-                app:layout_constraintTop_toBottomOf="@+id/fruit2" />
+                app:layout_constraintTop_toTopOf="@+id/linearLayout"/>
 
             <TextView
                 android:id="@+id/fruit4"
@@ -71,9 +68,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/spaghetti"
                 android:textSize="22sp"
-                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/linearLayout" />
+                app:layout_constraintStart_toStartOf="@+id/fruit3"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
             <TextView
                 android:id="@+id/fruit5"
@@ -81,21 +77,18 @@
                 android:layout_height="wrap_content"
                 android:text="@string/lemon"
                 android:textSize="22sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="80dp"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
             <TextView
                 android:id="@+id/fruit6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="80dp"
                 android:text="@string/salt"
                 android:textSize="22sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout"/>
 
             <LinearLayout
                 android:id="@+id/linearLayout"
