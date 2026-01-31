@@ -1,4 +1,4 @@
-package com.example.yumi.view.splash;
+package com.example.yumi.view.splash.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -6,20 +6,20 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import com.example.yumi.R;
-import com.example.yumi.databinding.ActivitySplashBinding;
+import com.example.yumi.databinding.FragmentSplashBinding;
 import com.example.yumi.utils.AnimatorUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +32,8 @@ import eightbitlab.com.blurview.RenderEffectBlur;
 
 
 @SuppressLint("CustomSplashScreen")
-public class SplashActivity extends AppCompatActivity {
-    private ActivitySplashBinding binding;
+public class SplashFragment extends Fragment {
+    private FragmentSplashBinding binding;
     private Handler mainHandler = new Handler(Looper.getMainLooper());
     private AtomicBoolean isOperationComplete = new AtomicBoolean(false);
     private ExecutorService executorService;
@@ -42,20 +42,24 @@ public class SplashActivity extends AppCompatActivity {
     private Random random = new Random();
 
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        binding = ActivitySplashBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+        if (view == null){
+            binding = FragmentSplashBinding.inflate(inflater);
+            view = binding.getRoot();
+        }else{
+            binding = FragmentSplashBinding.bind(view);
+        }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.splash_screen),
-                (v, windowInsets) -> {
-                    v.setPadding(0, 0, 0, 0);
-                    return WindowInsetsCompat.CONSUMED;
-                });
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         BlurView blurView = binding.splashBlurView;
         ViewGroup rootView = binding.splashScreen;
@@ -140,8 +144,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
 
         mainHandler.removeCallbacksAndMessages(null);
         if (executorService != null && !executorService.isShutdown()) {

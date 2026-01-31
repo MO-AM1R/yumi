@@ -11,11 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Yumi">
         <activity
-            android:name=".view.splash.SplashActivity"
+            android:name=".view.splash.AuthenticationActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

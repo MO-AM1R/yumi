@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/splash_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".view.splash.SplashActivity">
+    tools:context=".view.splash.fragments.SplashFragment">
 
     <ImageView
         android:id="@+id/splash_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/splash_screen_description"
         android:scaleType="centerCrop"
-        android:src="@drawable/splash_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/splash_background" />
 
     <eightbitlab.com.blurview.BlurView
         android:id="@+id/splash_blur_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         app:blurOverlayColor="@color/blur_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -36,87 +36,87 @@
 
             <TextView
                 android:id="@+id/fruit1"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fruit"
-                android:textSize="22sp"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                app:layout_constraintEnd_toStartOf="@+id/linearLayout" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/fruit2"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tomato"
-                android:textSize="22sp"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                app:layout_constraintStart_toEndOf="@+id/linearLayout" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/fruit3"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/plant"
-                android:textSize="22sp"
-                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-                app:layout_constraintStart_toEndOf="@+id/linearLayout"
-                app:layout_constraintTop_toTopOf="@+id/linearLayout"/>
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/fruit4"
+                app:layout_constraintStart_toStartOf="@+id/fruit3"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/spaghetti"
-                android:textSize="22sp"
-                app:layout_constraintStart_toStartOf="@+id/fruit3"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/fruit5"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lemon"
-                android:textSize="22sp"
-                app:layout_constraintEnd_toStartOf="@+id/linearLayout"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/fruit6"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/salt"
-                android:textSize="22sp"
-                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-                app:layout_constraintEnd_toStartOf="@+id/linearLayout"
-                app:layout_constraintTop_toTopOf="@+id/linearLayout"/>
+                android:textSize="22sp" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <com.example.yumi.common.customviews.ShadowLayout
                     android:id="@+id/logo_glass_container"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    app:corner_radius="24dp"
                     app:shadow_color="@color/shadow_orange"
                     app:shadow_radius="20dp"
                     app:shadow_spread="40dp"
-                    app:corner_radius="24dp">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
 
                     <eightbitlab.com.blurview.BlurView
+                        app:blurOverlayColor="@color/glass_overlay_color"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/glass_background"
-                        android:padding="@dimen/padding_card"
-                        app:blurOverlayColor="@color/glass_overlay_color">
+                        android:padding="@dimen/padding_card">
 
                         <ImageView
                             android:id="@+id/logo_image"
@@ -157,12 +157,12 @@
                 <com.google.android.material.progressindicator.CircularProgressIndicator
                     android:id="@+id/splash_circular_progress"
                     style="@style/CircularProgressIndicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true"
                     app:indicatorColor="@color/secondary"
                     app:indicatorTrackGapSize="10dp"
-                    app:trackThickness="4dp" />
+                    app:trackThickness="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
