@@ -101,25 +101,34 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <eightbitlab.com.blurview.BlurView
+                <com.example.yumi.common.customviews.ShadowLayout
                     android:id="@+id/logo_glass_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/glass_background"
-                    android:elevation="8dp"
-                    android:padding="@dimen/padding_card"
-                    app:blurOverlayColor="@color/glass_overlay_color">
+                    app:shadow_color="@color/shadow_orange"
+                    app:shadow_radius="20dp"
+                    app:shadow_spread="40dp"
+                    app:corner_radius="24dp">
 
-                    <ImageView
-                        android:id="@+id/logo_image"
-                        android:layout_width="100dp"
-                        android:layout_height="90dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/logo_image_description"
-                        android:src="@drawable/fork_logo_1" />
+                    <eightbitlab.com.blurview.BlurView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/glass_background"
+                        android:padding="@dimen/padding_card"
+                        app:blurOverlayColor="@color/glass_overlay_color">
 
-                </eightbitlab.com.blurview.BlurView>
+                        <ImageView
+                            android:id="@+id/logo_image"
+                            android:layout_width="100dp"
+                            android:layout_height="90dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/logo_image_description"
+                            android:src="@drawable/fork_logo_1" />
+
+                    </eightbitlab.com.blurview.BlurView>
+
+                </com.example.yumi.common.customviews.ShadowLayout>
 
                 <Space
                     android:layout_width="wrap_content"

@@ -69,4 +69,6 @@
     <color name="glass_border_color">#40FFFFFF</color>
     <color name="glass_overlay_color">#19FFFFFF</color>
     <color name="blur_color">#33000000</color>
+
+    <color name="shadow_orange">#92E85D04</color>
 </resources>
