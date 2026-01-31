@@ -63,4 +63,10 @@
     <color name="chart_3">#FFFFFF</color>
     <color name="chart_4">#A1A1AA</color>
     <color name="chart_5">#4A4A4A</color>
+
+    <!-- Blur Colors -->
+    <color name="glass_background_color">#2CFFFFFF</color>
+    <color name="glass_border_color">#40FFFFFF</color>
+    <color name="glass_overlay_color">#19FFFFFF</color>
+    <color name="blur_color">#33000000</color>
 </resources>

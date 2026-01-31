@@ -1,0 +1,251 @@
+package com.example.yumi.view.splash;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.TextView;
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import com.example.yumi.R;
+import com.example.yumi.databinding.ActivitySplashBinding;
+import com.example.yumi.utils.AnimatorUtils;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
+import eightbitlab.com.blurview.BlurView;
+import eightbitlab.com.blurview.RenderEffectBlur;
+
+
+@SuppressLint("CustomSplashScreen")
+public class SplashActivity extends AppCompatActivity {
+    private ActivitySplashBinding binding;
+    private Handler mainHandler = new Handler(Looper.getMainLooper());
+    private AtomicBoolean isOperationComplete = new AtomicBoolean(false);
+    private ExecutorService executorService;
+    private TextView[] foods;
+    private final List<ObjectAnimator> foodAnimators = new ArrayList<>();
+    private Random random = new Random();
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+
+        binding = ActivitySplashBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.splash_screen),
+                (v, windowInsets) -> {
+                    v.setPadding(0, 0, 0, 0);
+                    return WindowInsetsCompat.CONSUMED;
+                });
+
+        BlurView blurView = binding.splashBlurView;
+        ViewGroup rootView = binding.splashScreen;
+        foods = new TextView[]{
+                binding.fruit1, binding.fruit2, binding.fruit3,
+                binding.fruit4, binding.fruit5, binding.fruit6
+        };
+
+        setupBlurView(blurView, rootView);
+        setupAnimations();
+    }
+
+    private void setupAnimations() {
+        AnimatorSet forkLogoAnimator = getForkLogoAnimator();
+        AnimatorSet logoAnimator = getLogoAnimator();
+        ObjectAnimator sloganAlpha = getSloganAlpha();
+        ObjectAnimator progressAlpha = getProgressAlpha();
+
+        beforeAnimation();
+
+        AnimatorSet sequentialAnimator = new AnimatorSet();
+        sequentialAnimator.playSequentially(forkLogoAnimator, logoAnimator,
+                sloganAlpha, progressAlpha);
+
+        sequentialAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                startLoadingWithTimeout();
+            }
+        });
+
+        setupFoodsAnimation();
+        sequentialAnimator.start();
+    }
+
+    private void startLoadingWithTimeout() {
+        executorService = Executors.newSingleThreadExecutor();
+
+        long MAX_LOADING_TIME_MS = 2000;
+        mainHandler.postDelayed(this::onLoadingComplete, MAX_LOADING_TIME_MS);
+        executorService.execute(this::performNetworkOperation);
+    }
+
+    private void performNetworkOperation() {
+        try {
+            Thread.sleep(1500);
+            if (isOperationComplete.compareAndSet(false, true)) {
+                mainHandler.post(this::onLoadingComplete);
+            }
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            Log.e("SplashActivity", "Network operation interrupted", e);
+
+            if (isOperationComplete.compareAndSet(false, true)) {
+                mainHandler.post(this::onLoadingComplete);
+            }
+        } catch (Exception e) {
+            Log.e("SplashActivity", "Network operation failed", e);
+
+            if (isOperationComplete.compareAndSet(false, true)) {
+                mainHandler.post(this::onLoadingComplete);
+            }
+        }
+    }
+
+    private void onLoadingComplete() {
+        if (!isOperationComplete.compareAndSet(false, true)) {
+            // If already true, check if this is the first call to actually proceed
+            // This handles the race condition between timeout and operation completion
+        }
+
+        // Remove any pending timeout callbacks
+        mainHandler.removeCallbacksAndMessages(null);
+        Log.d("SplashActivity", "Loading complete, proceeding to next screen");
+        navigateToNextScreen();
+    }
+
+
+    private void navigateToNextScreen() {
+        Log.d("SplashActivity", "Navigating to next screen...");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mainHandler.removeCallbacksAndMessages(null);
+        if (executorService != null && !executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
+
+        mainHandler = null;
+        isOperationComplete = null;
+        executorService = null;
+        foods = null;
+        random = null;
+        stopFoodsAnimation();
+    }
+
+    private void setupFoodsAnimation() {
+        for (TextView textView : foods) {
+            startRandomFadeAnimation(textView);
+        }
+    }
+
+    private void startRandomFadeAnimation(TextView textView) {
+        long duration = 1000 + random.nextInt(2300);
+        long startDelay = random.nextInt(800);
+
+        ObjectAnimator animator = AnimatorUtils.getFadeInAnimation(textView, 0f, 1f, 0f);
+        animator.setDuration(duration);
+        animator.setStartDelay(startDelay);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                startRandomFadeAnimation(textView);
+            }
+        });
+
+        foodAnimators.add(animator);
+        animator.start();
+    }
+
+    private void stopFoodsAnimation() {
+        for (ObjectAnimator animator : foodAnimators) {
+            if (animator != null) {
+                animator.removeAllListeners();
+                animator.cancel();
+            }
+        }
+        foodAnimators.clear();
+    }
+
+    private ObjectAnimator getProgressAlpha() {
+        return AnimatorUtils.getFadeInAnimation(binding.splashCircularProgress, 500);
+    }
+
+    @NonNull
+    private ObjectAnimator getSloganAlpha() {
+        return AnimatorUtils.getFadeInAnimation(binding.yumiSlogan, 500);
+    }
+
+    @NonNull
+    private AnimatorSet getLogoAnimator() {
+        ObjectAnimator logoTranslateY =
+                AnimatorUtils.getTranslateY(binding.yumiLogo, 100f, 0f);
+
+        ObjectAnimator logoAlpha = AnimatorUtils.getFadeInAnimation(binding.yumiLogo);
+
+        AnimatorSet logoAnimator = new AnimatorSet();
+        logoAnimator.playTogether(logoTranslateY, logoAlpha);
+        logoAnimator.setDuration(1000);
+
+        return logoAnimator;
+    }
+
+    @NonNull
+    private AnimatorSet getForkLogoAnimator() {
+        AnimatorSet scaleAnimatorSet = AnimatorUtils.getScaleAnimation(binding.logoGlassContainer);
+        ObjectAnimator fadeIn = AnimatorUtils.getFadeInAnimation(binding.logoGlassContainer);
+
+        AnimatorSet forkLogoAnimator = new AnimatorSet();
+        forkLogoAnimator.playTogether(scaleAnimatorSet, fadeIn);
+        forkLogoAnimator.setDuration(1300);
+        return forkLogoAnimator;
+    }
+
+    private void beforeAnimation() {
+        binding.yumiLogo.setAlpha(0f);
+        binding.logoGlassContainer.setScaleX(0f);
+        binding.logoGlassContainer.setScaleY(0f);
+        binding.yumiSlogan.setAlpha(0f);
+        binding.splashCircularProgress.setAlpha(0f);
+
+        for (TextView textView: foods){
+            textView.setAlpha(0);
+        }
+    }
+
+    private void setupBlurView(BlurView blurView, ViewGroup rootView) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            blurView.setupWith(rootView, new RenderEffectBlur())
+                    .setBlurRadius((float) 10.0)
+                    .setBlurAutoUpdate(true);
+        } else {
+            blurView.setupWith(rootView)
+                    .setBlurRadius((float) 10.0);
+        }
+    }
+}

@@ -253,4 +253,8 @@
         <item name="android:textColor">@color/muted_foreground</item>
     </style>
 
+    <style name="CircularProgressIndicator" parent="Widget.Material3.CircularProgressIndicator">
+        <item name="trackColor">#AAFFFFFF</item>
+    </style>
+
 </resources>
