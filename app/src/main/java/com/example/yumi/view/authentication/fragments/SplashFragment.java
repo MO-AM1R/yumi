@@ -1,10 +1,15 @@
 package com.example.yumi.view.authentication.fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import static com.example.yumi.common.utils.SharedPreferencesKeys.KEY_ONBOARDING_COMPLETED;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -20,6 +25,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 import com.example.yumi.R;
+import com.example.yumi.common.utils.SharedPreferencesKeys;
 import com.example.yumi.databinding.FragmentSplashBinding;
 import com.example.yumi.common.utils.AnimatorUtils;
 import com.example.yumi.view.authentication.AuthenticationActivity;
@@ -130,8 +136,19 @@ public class SplashFragment extends Fragment {
 
     private void navigateToNextScreen() {
         Log.d("SplashActivity", "Navigating to next screen...");
-        Navigation.findNavController(requireView())
-                .navigate(R.id.action_splashFragment_to_onboardingFragment);
+
+        SharedPreferences prefs
+                = getActivity().getSharedPreferences(SharedPreferencesKeys.PREF_NAME, MODE_PRIVATE);
+
+        boolean onboarding = prefs.getBoolean(KEY_ONBOARDING_COMPLETED, false);
+
+        if (onboarding){
+            Navigation.findNavController(requireView())
+                    .navigate(R.id.action_splashFragment_to_loginFragment);
+        }else{
+            Navigation.findNavController(requireView())
+                    .navigate(R.id.action_splashFragment_to_onboardingFragment);
+        }
     }
 
     @Override

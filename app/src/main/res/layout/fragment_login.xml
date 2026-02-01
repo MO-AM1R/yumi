@@ -2,17 +2,211 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/splash_background"
     tools:context=".view.authentication.fragments.LoginFragment">
 
-    <TextView
+    <!-- Top Guideline -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".1" />
+
+    <!-- Logo with Blur -->
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/logo_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/glass_background"
+        android:padding="@dimen/padding_card"
+        app:blurOverlayColor="@color/glass_overlay_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/logo_image_description"
+            android:src="@drawable/fork_logo_2" />
+
+    </eightbitlab.com.blurview.BlurView>
+
+    <!-- Yumi Logo -->
+    <TextView
+        android:id="@+id/yumi_logo"
+        android:layout_width="85dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/yumi_logo"
+        android:fontFamily="@font/poppins"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_image" />
+
+    <!-- Slogan -->
+    <TextView
+        android:id="@+id/yumi_slogan"
+        style="@style/TextAppearance.Yumi.BodyMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/deliciously_planned"
+        android:textAllCaps="true"
+        android:textColor="#CBCED4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/yumi_logo" />
+
+    <!-- Login Form Card -->
+    <ScrollView
+        android:id="@+id/login_form_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/login_form_glass_background"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/yumi_slogan">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="32dp">
+
+            <!-- Email Section -->
+            <TextView
+                android:id="@+id/email_label"
+                style="@style/TextAppearance.Yumi.LabelMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textColor="#CBCED4" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_text_field"
+                style="@style/Widget.Yumi.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/text_field_border"
+                android:drawableStart="@drawable/email_icon"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:hint="@string/enter_your_email"
+                android:inputType="textEmailAddress"
+                android:textSize="16sp" />
+
+            <!-- Password Section -->
+            <TextView
+                android:id="@+id/password_label"
+                style="@style/TextAppearance.Yumi.LabelMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/password"
+                android:textColor="#CBCED4" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_text_field"
+                style="@style/Widget.Yumi.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/text_field_border"
+                android:drawableStart="@drawable/lock_icon"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:hint="@string/enter_your_password"
+                android:inputType="textPassword"
+                android:textSize="16sp" />
+
+            <!-- Login Button -->
+            <Button
+                android:id="@+id/login_button"
+                style="@style/Widget.Yumi.Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="28dp"
+                android:gravity="center"
+                android:text="@string/login"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Divider: Or Continue With -->
+            <include
+                android:id="@+id/continue_bar"
+                layout="@layout/layout_divider_with_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp" />
+
+            <!-- Google Sign In -->
+            <ImageView
+                android:id="@+id/google_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/google_icon_background"
+                android:contentDescription="@string/sign_in_with_google_description"
+                android:padding="12dp"
+                android:src="@drawable/google_icon" />
+
+            <!-- Register Section -->
+            <LinearLayout
+                android:id="@+id/register_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextAppearance.Yumi.BodyMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/you_don_t_have_an_account"
+                    android:textColor="@color/text_disabled" />
+
+                <TextView
+                    android:id="@+id/register_text"
+                    style="@style/TextAppearance.Yumi.BodyMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/register"
+                    android:textColor="@color/secondary" />
+
+            </LinearLayout>
+
+            <!-- Continue as Guest with Underline Decoration -->
+            <TextView
+                android:id="@+id/continue_as_guest"
+                style="@style/TextAppearance.Yumi.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:text="@string/continue_as_guest"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

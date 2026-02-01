@@ -9,7 +9,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,7 @@ import com.example.yumi.databinding.FragmentOnboardingBinding;
 import com.example.yumi.common.utils.AnimatorUtils;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
 public class OnboardingFragment extends Fragment {
@@ -75,9 +79,7 @@ public class OnboardingFragment extends Fragment {
         setupData();
         binding();
 
-        binding.skipBtn.setOnClickListener(v -> {
-            NavigateToNextPage();
-        });
+        binding.skipBtn.setOnClickListener(v -> NavigateToNextPage());
 
         button.setOnClickListener(v -> {
             if (indicator.getIndex() == 2) {
@@ -91,14 +93,25 @@ public class OnboardingFragment extends Fragment {
     }
 
     private void NavigateToNextPage() {
-        //TODO: save onboarding seen
-        SharedPreferences prefs
-                = getActivity().getSharedPreferences(SharedPreferencesKeys.PREF_NAME, MODE_PRIVATE);
-
+        SharedPreferences prefs = requireActivity()
+                .getSharedPreferences(SharedPreferencesKeys.PREF_NAME, MODE_PRIVATE);
         prefs.edit().putBoolean(SharedPreferencesKeys.KEY_ONBOARDING_COMPLETED, true).apply();
 
-        Navigation.findNavController(requireView())
-                .navigate(R.id.action_onboardingFragment_to_loginFragment);
+        View view = getView();
+        if (view != null) {
+            view.post(() -> {
+                if (isAdded() && !isDetached()) {
+                    try {
+                        NavController navController = Navigation.findNavController(view);
+                        if (navController.getCurrentDestination() != null) {
+                            navController.navigate(R.id.action_onboardingFragment_to_loginFragment);
+                        }
+                    } catch (Exception e) {
+                        Log.d("Exception", Objects.requireNonNull(e.getMessage()));
+                    }
+                }
+            });
+        }
     }
 
     private void startAnimations() {
