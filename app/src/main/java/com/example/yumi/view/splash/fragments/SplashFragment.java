@@ -1,16 +1,18 @@
 package com.example.yumi.view.splash.fragments;
+import static android.content.Context.MODE_PRIVATE;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -19,8 +21,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
+import com.example.yumi.R;
+import com.example.yumi.common.utils.SharedPreferencesKeys;
 import com.example.yumi.databinding.FragmentSplashBinding;
-import com.example.yumi.utils.AnimatorUtils;
+import com.example.yumi.common.utils.AnimatorUtils;
+import com.example.yumi.view.splash.AuthenticationActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -104,25 +110,10 @@ public class SplashFragment extends Fragment {
     }
 
     private void performNetworkOperation() {
-        try {
-            Thread.sleep(1500);
-            if (isOperationComplete.compareAndSet(false, true)) {
-                mainHandler.post(this::onLoadingComplete);
-            }
-
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            Log.e("SplashActivity", "Network operation interrupted", e);
-
-            if (isOperationComplete.compareAndSet(false, true)) {
-                mainHandler.post(this::onLoadingComplete);
-            }
-        } catch (Exception e) {
-            Log.e("SplashActivity", "Network operation failed", e);
-
-            if (isOperationComplete.compareAndSet(false, true)) {
-                mainHandler.post(this::onLoadingComplete);
-            }
+        //TODO: check user logged in before
+        //TODO: check user saw on boarding before
+        if (isOperationComplete.compareAndSet(false, true)) {
+            mainHandler.post(this::onLoadingComplete);
         }
     }
 
@@ -134,13 +125,16 @@ public class SplashFragment extends Fragment {
 
         // Remove any pending timeout callbacks
         mainHandler.removeCallbacksAndMessages(null);
+
+        ((AuthenticationActivity) getActivity()).markSplashSeen();
         Log.d("SplashActivity", "Loading complete, proceeding to next screen");
         navigateToNextScreen();
     }
 
-
     private void navigateToNextScreen() {
         Log.d("SplashActivity", "Navigating to next screen...");
+        Navigation.findNavController(requireView())
+                .navigate(R.id.action_splashFragment_to_onboardingFragment);
     }
 
     @Override
