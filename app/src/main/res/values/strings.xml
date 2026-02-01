@@ -13,4 +13,20 @@
     <string name="tomato">🍅</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="on_boarding_title_1">Discover Delicious</string>
+    <string name="on_boarding_sub_title_1">Meals</string>
+    <string name="on_boarding_button_1">Next</string>
+    <string name="on_boarding_image_description">On Boarding Image Description</string>
+    <string name="on_boarding_details_1">Explore over 1000+ recipes from top chefs around the world.</string>
+
+    <string name="on_boarding_title_2">Plan Your Week</string>
+    <string name="on_boarding_sub_title_2">Easily</string>
+    <string name="on_boarding_button_2">Next</string>
+    <string name="on_boarding_details_2">Create meal plans for the week and generate shopping lists automatically.</string>
+
+    <string name="on_boarding_title_3">Save &amp; Cook</string>
+    <string name="on_boarding_sub_title_3">Offline</string>
+    <string name="on_boarding_button_3">Get Started</string>
+    <string name="on_boarding_details_3">Save your favorite recipes and access them even without internet.</string>
 </resources>

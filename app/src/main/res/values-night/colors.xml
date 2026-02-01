@@ -71,4 +71,6 @@
     <color name="blur_color">#33000000</color>
 
     <color name="shadow_orange">#92E85D04</color>
+
+    <color name="skip_glass_background_color">#80000000</color>
 </resources>
