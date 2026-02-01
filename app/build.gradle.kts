@@ -43,6 +43,8 @@ dependencies {
     implementation(libs.blurview.vversion)
     implementation(libs.constraintlayout)
     implementation(libs.fragment)
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
