@@ -124,6 +124,7 @@ public class WormDotIndicator extends LinearLayout {
         GradientDrawable bg = (GradientDrawable) dot.getBackground();
         params.width = activeWidthPx;
         bg.setColor(activeColor);
+        dot.setLayoutParams(params);
     }
 
     private void clearOldActiveDot() {
@@ -132,6 +133,7 @@ public class WormDotIndicator extends LinearLayout {
         GradientDrawable bg = (GradientDrawable) dot.getBackground();
         params.width = inactiveWidthPx;
         bg.setColor(inactiveColor);
+        dot.setLayoutParams(params);
     }
 
     public int getIndex(){
