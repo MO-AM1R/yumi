@@ -1,4 +1,4 @@
-package com.example.yumi.view.splash.fragments;
+package com.example.yumi.view.authentication.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;

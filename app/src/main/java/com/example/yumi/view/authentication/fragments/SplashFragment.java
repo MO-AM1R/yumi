@@ -1,12 +1,10 @@
-package com.example.yumi.view.splash.fragments;
-import static android.content.Context.MODE_PRIVATE;
+package com.example.yumi.view.authentication.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -22,10 +20,9 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 import com.example.yumi.R;
-import com.example.yumi.common.utils.SharedPreferencesKeys;
 import com.example.yumi.databinding.FragmentSplashBinding;
 import com.example.yumi.common.utils.AnimatorUtils;
-import com.example.yumi.view.splash.AuthenticationActivity;
+import com.example.yumi.view.authentication.AuthenticationActivity;
 
 import java.util.ArrayList;
 import java.util.List;
