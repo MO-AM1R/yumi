@@ -1,4 +1,4 @@
-package com.example.yumi.common.utils;
+package com.example.yumi.data.utils;
 
 public abstract class SharedPreferencesKeys {
     public static final String PREF_NAME =  "yumi_prefs";

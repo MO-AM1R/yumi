@@ -1,4 +1,4 @@
-package com.example.yumi.view.authentication.fragments;
+package com.example.yumi.presentation.authentication.view.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -20,10 +20,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.yumi.R;
-import com.example.yumi.common.customviews.WormDotIndicator;
-import com.example.yumi.common.utils.SharedPreferencesKeys;
+import com.example.yumi.presentation.custom.WormDotIndicator;
+import com.example.yumi.data.utils.SharedPreferencesKeys;
 import com.example.yumi.databinding.FragmentOnboardingBinding;
-import com.example.yumi.common.utils.AnimatorUtils;
+import com.example.yumi.data.utils.AnimatorUtils;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;

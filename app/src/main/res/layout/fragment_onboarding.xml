@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".view.authentication.fragments.OnboardingFragment">
+    tools:context=".presentation.authentication.view.fragments.OnboardingFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -70,7 +70,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline">
 
-        <com.example.yumi.common.customviews.WormDotIndicator
+        <com.example.yumi.presentation.custom.WormDotIndicator
             android:id="@+id/wormDotIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

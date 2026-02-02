@@ -1,4 +1,4 @@
-package com.example.yumi.view.authentication.fragments;
+package com.example.yumi.presentation.authentication.view.fragments;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

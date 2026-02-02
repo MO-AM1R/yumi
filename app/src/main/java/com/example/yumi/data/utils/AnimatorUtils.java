@@ -1,4 +1,4 @@
-package com.example.yumi.common.utils;
+package com.example.yumi.data.utils;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;

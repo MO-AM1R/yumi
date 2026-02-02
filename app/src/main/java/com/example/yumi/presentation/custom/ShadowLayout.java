@@ -1,4 +1,4 @@
-package com.example.yumi.common.customviews;
+package com.example.yumi.presentation.custom;
 
 import android.content.Context;
 import android.content.res.TypedArray;

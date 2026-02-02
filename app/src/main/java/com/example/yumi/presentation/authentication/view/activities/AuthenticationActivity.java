@@ -1,4 +1,4 @@
-package com.example.yumi.view.authentication;
+package com.example.yumi.presentation.authentication.view.activities;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +11,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavGraph;
 import androidx.navigation.fragment.NavHostFragment;
 import com.example.yumi.R;
-import com.example.yumi.common.utils.SharedPreferencesKeys;
+import com.example.yumi.data.utils.SharedPreferencesKeys;
 
 
 public class AuthenticationActivity extends AppCompatActivity {

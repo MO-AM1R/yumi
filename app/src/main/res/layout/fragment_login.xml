@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/splash_background"
-    tools:context=".view.authentication.fragments.LoginFragment">
+    tools:context=".presentation.authentication.view.fragments.LoginFragment">
 
     <!-- Top Guideline -->
     <androidx.constraintlayout.widget.Guideline

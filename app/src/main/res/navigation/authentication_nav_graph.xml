@@ -7,7 +7,7 @@
     <!-- Splash Fragment -->
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.yumi.view.authentication.fragments.SplashFragment"
+        android:name="com.example.yumi.presentation.authentication.view.fragments.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash">
 
@@ -33,7 +33,7 @@
     <!-- Onboarding Fragment -->
     <fragment
         android:id="@+id/onboardingFragment"
-        android:name="com.example.yumi.view.authentication.fragments.OnboardingFragment"
+        android:name="com.example.yumi.presentation.authentication.view.fragments.OnboardingFragment"
         android:label="fragment_onboarding"
         tools:layout="@layout/fragment_onboarding">
 
@@ -50,7 +50,7 @@
     <!-- Login Fragment -->
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.yumi.view.authentication.fragments.LoginFragment"
+        android:name="com.example.yumi.presentation.authentication.view.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
     </fragment>

@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Yumi">
         <activity
-            android:name=".view.authentication.AuthenticationActivity"
+            android:name=".presentation.authentication.view.activities.AuthenticationActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

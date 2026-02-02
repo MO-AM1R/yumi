@@ -1,8 +1,8 @@
-package com.example.yumi.view.authentication.fragments;
+package com.example.yumi.presentation.authentication.view.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import static com.example.yumi.common.utils.SharedPreferencesKeys.KEY_ONBOARDING_COMPLETED;
+import static com.example.yumi.data.utils.SharedPreferencesKeys.KEY_ONBOARDING_COMPLETED;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -25,10 +25,10 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 import com.example.yumi.R;
-import com.example.yumi.common.utils.SharedPreferencesKeys;
+import com.example.yumi.data.utils.SharedPreferencesKeys;
 import com.example.yumi.databinding.FragmentSplashBinding;
-import com.example.yumi.common.utils.AnimatorUtils;
-import com.example.yumi.view.authentication.AuthenticationActivity;
+import com.example.yumi.data.utils.AnimatorUtils;
+import com.example.yumi.presentation.authentication.view.activities.AuthenticationActivity;
 
 import java.util.ArrayList;
 import java.util.List;

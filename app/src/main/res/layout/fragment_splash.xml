@@ -6,7 +6,7 @@
     android:id="@+id/splash_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.authentication.fragments.SplashFragment">
+    tools:context=".presentation.authentication.view.fragments.SplashFragment">
 
     <ImageView
         android:id="@+id/splash_background"
@@ -101,7 +101,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.example.yumi.common.customviews.ShadowLayout
+                <com.example.yumi.presentation.custom.ShadowLayout
                     android:id="@+id/logo_glass_container"
                     app:corner_radius="24dp"
                     app:shadow_color="@color/shadow_orange"
@@ -128,7 +128,7 @@
 
                     </eightbitlab.com.blurview.BlurView>
 
-                </com.example.yumi.common.customviews.ShadowLayout>
+                </com.example.yumi.presentation.custom.ShadowLayout>
 
                 <Space
                     android:layout_width="wrap_content"
