@@ -1,5 +1,6 @@
 package com.example.yumi.presentation.authentication.view.fragments;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -12,24 +13,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.yumi.R;
-import com.example.yumi.databinding.FragmentLoginBinding;
+import com.example.yumi.databinding.FragmentRegisterBinding;
 
 import java.util.Objects;
 
 
-public class LoginFragment extends Fragment {
-    private FragmentLoginBinding binding;
+public class RegisterFragment extends Fragment {
+    private FragmentRegisterBinding binding;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         if (view == null){
-            binding = FragmentLoginBinding.inflate(inflater);
+            binding = FragmentRegisterBinding.inflate(inflater);
             view = binding.getRoot();
         }else{
-            binding = FragmentLoginBinding.bind(view);
+            binding = FragmentRegisterBinding.bind(view);
         }
 
         return view;
@@ -39,11 +40,11 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.registerText.setOnClickListener(v -> {
+        binding.loginText.setOnClickListener(v -> {
             if (isAdded() && !isDetached()) {
                 try {
                     NavController navController = Navigation.findNavController(binding.getRoot());
-                    navController.navigate(R.id.action_loginFragment_to_registerFragment);
+                    navController.navigate(R.id.action_registerFragment_to_loginFragment);
                 } catch (Exception e) {
                     Log.e("Bug", Objects.requireNonNull(e.getMessage()));
                 }
