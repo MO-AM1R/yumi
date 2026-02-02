@@ -97,20 +97,13 @@ public class OnboardingFragment extends Fragment {
                 .getSharedPreferences(SharedPreferencesKeys.PREF_NAME, MODE_PRIVATE);
         prefs.edit().putBoolean(SharedPreferencesKeys.KEY_ONBOARDING_COMPLETED, true).apply();
 
-        View view = getView();
-        if (view != null) {
-            view.post(() -> {
-                if (isAdded() && !isDetached()) {
-                    try {
-                        NavController navController = Navigation.findNavController(view);
-                        if (navController.getCurrentDestination() != null) {
-                            navController.navigate(R.id.action_onboardingFragment_to_loginFragment);
-                        }
-                    } catch (Exception e) {
-                        Log.d("Exception", Objects.requireNonNull(e.getMessage()));
-                    }
-                }
-            });
+        if (isAdded() && !isDetached()) {
+            try {
+                NavController navController = Navigation.findNavController(binding.getRoot());
+                navController.navigate(R.id.action_onboardingFragment_to_loginFragment);
+            } catch (Exception e) {
+                Log.e("Bug", Objects.requireNonNull(e.getMessage()));
+            }
         }
     }
 

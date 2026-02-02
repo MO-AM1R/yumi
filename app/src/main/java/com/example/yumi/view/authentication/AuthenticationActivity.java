@@ -36,28 +36,26 @@ public class AuthenticationActivity extends AppCompatActivity {
         }
 
         prefs = getSharedPreferences(SharedPreferencesKeys.PREF_NAME, MODE_PRIVATE);
-        setupNavigation(savedInstanceState);
+        setupNavigation();
     }
 
-    private void setupNavigation(Bundle savedInstanceState) {
+    private void setupNavigation() {
         FragmentContainerView fragmentContainerView = findViewById(R.id.nav_host_fragment);
         NavHostFragment navHostFragment = fragmentContainerView.getFragment();
 
         if (navHostFragment != null) {
             navController = navHostFragment.getNavController();
 
-            if (savedInstanceState == null) {
-                NavGraph navGraph = navController.getNavInflater()
-                        .inflate(R.navigation.authentication_nav_graph);
+            NavGraph navGraph = navController.getNavInflater()
+                    .inflate(R.navigation.authentication_nav_graph);
 
                 int startDestination = determineStartDestination();
                 Log.d("Auth", "Start Destination: " + startDestination);
                 navGraph.setStartDestination(startDestination);
 
-                navController.setGraph(navGraph);
-            }
+            navController.setGraph(navGraph);
         } else {
-            Log.e("Auth", "NavHostFragment is still null!");
+            Log.e("Bug", "NavHostFragment is still null!");
         }
     }
 
