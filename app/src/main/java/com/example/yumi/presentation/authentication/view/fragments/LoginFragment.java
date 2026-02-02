@@ -1,24 +1,22 @@
 package com.example.yumi.presentation.authentication.view.fragments;
+import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
-import androidx.navigation.NavOptions;
-import androidx.navigation.NavOptionsBuilder;
 import androidx.navigation.Navigation;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.yumi.R;
+import com.example.yumi.data.utils.SharedPreferencesKeys;
 import com.example.yumi.databinding.FragmentLoginBinding;
-
+import com.example.yumi.presentation.home.view.activities.HomeBaseActivity;
 import java.util.Objects;
 
 
@@ -44,17 +42,39 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.registerText.setOnClickListener(v -> {
-            if (isAdded() && !isDetached()) {
-                try {
-                    NavController navController = Navigation.findNavController(binding.getRoot());
-                    navController.navigate(
-                            LoginFragmentDirections.actionLoginFragmentToRegisterFragment());
-                } catch (Exception e) {
-                    Log.e("Bug", Objects.requireNonNull(e.getMessage()));
-                }
+        binding.registerText.setOnClickListener(v -> navigateToRegister());
+        binding.loginButton.setOnClickListener(v -> navigateToHome());
+        binding.continueAsGuest.setOnClickListener(v -> navigateToHome());
+    }
+
+    private void navigateToRegister() {
+        if (isAdded() && !isDetached()) {
+            try {
+                NavController navController = Navigation.findNavController(binding.getRoot());
+                navController.navigate(
+                        LoginFragmentDirections.actionLoginFragmentToRegisterFragment());
+            } catch (Exception e) {
+                Log.e("Bug", Objects.requireNonNull(e.getMessage()));
             }
-        });
+        }
+    }
+
+    private void navigateToHome() {
+        if (isAdded() && !isDetached()) {
+            try {
+                SharedPreferences prefs = requireActivity()
+                        .getSharedPreferences(SharedPreferencesKeys.PREF_NAME, MODE_PRIVATE);
+                prefs.edit().putBoolean(SharedPreferencesKeys.KEY_LOGGED_IN, true).apply();
+
+                NavController navController = Navigation.findNavController(binding.getRoot());
+                navController.navigate(
+                        LoginFragmentDirections.actionLoginFragmentToHomeBaseActivity());
+
+                requireActivity().finish();
+            } catch (Exception e) {
+                Log.e("Bug", Objects.requireNonNull(e.getMessage()));
+            }
+        }
     }
 
     @Override

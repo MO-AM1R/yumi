@@ -26,6 +26,11 @@
             app:exitAnim="@anim/slide_out_left"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_homeBaseActivity"
+            app:destination="@id/homeBaseActivity"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
 
@@ -56,6 +61,11 @@
             app:launchSingleTop="true"
             app:popUpToSaveState="true"
             app:restoreState="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeBaseActivity"
+            app:destination="@id/homeBaseActivity"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -63,5 +73,15 @@
         android:name="com.example.yumi.presentation.authentication.view.fragments.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
+    <activity
+        android:id="@+id/homeBaseActivity"
+        android:name="com.example.yumi.presentation.home.view.activities.HomeBaseActivity"
+        android:label="activity_home_base"
+        tools:layout="@layout/activity_home_base" />
 </navigation>

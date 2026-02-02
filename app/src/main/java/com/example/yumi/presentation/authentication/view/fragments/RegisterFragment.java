@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +40,17 @@ public class RegisterFragment extends Fragment {
                 try {
                     NavController navController = Navigation.findNavController(binding.getRoot());
                     navController.popBackStack();
+                } catch (Exception e) {
+                    Log.e("Bug", Objects.requireNonNull(e.getMessage()));
+                }
+            }
+        });
+
+        binding.registerButton.setOnClickListener(v -> {
+            if (isAdded() && !isDetached()) {
+                try {
+                    NavController navController = Navigation.findNavController(binding.getRoot());
+                    navController.navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment());
                 } catch (Exception e) {
                     Log.e("Bug", Objects.requireNonNull(e.getMessage()));
                 }

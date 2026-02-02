@@ -1,9 +1,7 @@
 package com.example.yumi.presentation.authentication.view.fragments;
-
 import static android.content.Context.MODE_PRIVATE;
-
+import static com.example.yumi.data.utils.SharedPreferencesKeys.KEY_LOGGED_IN;
 import static com.example.yumi.data.utils.SharedPreferencesKeys.KEY_ONBOARDING_COMPLETED;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -29,7 +27,6 @@ import com.example.yumi.data.utils.SharedPreferencesKeys;
 import com.example.yumi.databinding.FragmentSplashBinding;
 import com.example.yumi.data.utils.AnimatorUtils;
 import com.example.yumi.presentation.authentication.view.activities.AuthenticationActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -56,10 +53,10 @@ public class SplashFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        if (view == null){
+        if (view == null) {
             binding = FragmentSplashBinding.inflate(inflater);
             view = binding.getRoot();
-        }else{
+        } else {
             binding = FragmentSplashBinding.bind(view);
         }
 
@@ -113,8 +110,6 @@ public class SplashFragment extends Fragment {
     }
 
     private void performNetworkOperation() {
-        //TODO: check user logged in before
-        //TODO: check user saw on boarding before
         if (isOperationComplete.compareAndSet(false, true)) {
             mainHandler.post(this::onLoadingComplete);
         }
@@ -142,10 +137,19 @@ public class SplashFragment extends Fragment {
 
         boolean onboarding = prefs.getBoolean(KEY_ONBOARDING_COMPLETED, false);
 
-        if (onboarding){
-            Navigation.findNavController(requireView())
-                    .navigate(R.id.action_splashFragment_to_loginFragment);
-        }else{
+        if (onboarding) {
+            boolean loggedIn = prefs.getBoolean(KEY_LOGGED_IN, false);
+
+            if (loggedIn) {
+                Navigation.findNavController(requireView())
+                        .navigate(SplashFragmentDirections.actionSplashFragmentToHomeBaseActivity());
+
+                requireActivity().finish();
+            } else {
+                Navigation.findNavController(requireView())
+                        .navigate(R.id.action_splashFragment_to_loginFragment);
+            }
+        } else {
             Navigation.findNavController(requireView())
                     .navigate(R.id.action_splashFragment_to_onboardingFragment);
         }
@@ -245,7 +249,7 @@ public class SplashFragment extends Fragment {
         binding.yumiSlogan.setAlpha(0f);
         binding.splashCircularProgress.setAlpha(0f);
 
-        for (TextView textView: foods){
+        for (TextView textView : foods) {
             textView.setAlpha(0);
         }
     }

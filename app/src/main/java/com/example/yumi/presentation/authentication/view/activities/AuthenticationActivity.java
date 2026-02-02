@@ -1,4 +1,7 @@
 package com.example.yumi.presentation.authentication.view.activities;
+import static com.example.yumi.data.utils.SharedPreferencesKeys.KEY_LOGGED_IN;
+
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +15,7 @@ import androidx.navigation.NavGraph;
 import androidx.navigation.fragment.NavHostFragment;
 import com.example.yumi.R;
 import com.example.yumi.data.utils.SharedPreferencesKeys;
+import com.example.yumi.presentation.home.view.activities.HomeBaseActivity;
 
 
 public class AuthenticationActivity extends AppCompatActivity {
@@ -50,6 +54,9 @@ public class AuthenticationActivity extends AppCompatActivity {
                     .inflate(R.navigation.authentication_nav_graph);
 
                 int startDestination = determineStartDestination();
+                if (startDestination == -1)
+                    return;
+
                 Log.d("Auth", "Start Destination: " + startDestination);
                 navGraph.setStartDestination(startDestination);
 
@@ -67,14 +74,27 @@ public class AuthenticationActivity extends AppCompatActivity {
         } else if (!onboardingCompleted) {
             return R.id.onboardingFragment;
         } else {
-            return R.id.loginFragment;
+            boolean loggedIn = prefs.getBoolean(KEY_LOGGED_IN, false);
+            if (loggedIn){
+                navigateToHome();
+                return -1;
+            }else{
+                return R.id.loginFragment;
+            }
         }
+    }
+
+    private void navigateToHome() {
+        Intent intent = new Intent(this, HomeBaseActivity.class);
+        startActivity(intent);
+
+        this.finish();
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("splashShown", true);
+        outState.putBoolean("splashShown", splashShown);
     }
 
     @Override
