@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/profileFragment"
     tools:context=".presentation.home.view.fragment.ProfileFragment">
 
     <TextView
@@ -14,6 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/hello_blank_fragment" />
+        android:text="Profile Fragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
