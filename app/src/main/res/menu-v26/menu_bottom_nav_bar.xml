@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/home"
+        android:title="@string/home"
+        android:tooltipText="@string/home" />
+
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/search"
+        android:title="@string/search"
+        android:tooltipText="@string/search" />
+
+    <item
+        android:id="@+id/calendarFragment"
+        android:icon="@drawable/calendar"
+        android:title="@string/plans"
+        android:tooltipText="@string/plans" />
+
+    <item
+        android:id="@+id/favoritesFragment"
+        android:icon="@drawable/favorite"
+        android:title="@string/favorites"
+        android:tooltipText="@string/favorites" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/person"
+        android:title="@string/profile"
+        android:tooltipText="@string/profile" />
+
+</menu>
