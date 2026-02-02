@@ -8,7 +8,6 @@
     android:background="@drawable/splash_background"
     tools:context=".presentation.authentication.view.fragments.LoginFragment">
 
-    <!-- Top Guideline -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_top"
         android:layout_width="wrap_content"
@@ -16,7 +15,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".1" />
 
-    <!-- Logo with Blur -->
     <eightbitlab.com.blurview.BlurView
         android:id="@+id/logo_image"
         android:layout_width="wrap_content"
@@ -37,7 +35,6 @@
 
     </eightbitlab.com.blurview.BlurView>
 
-    <!-- Yumi Logo -->
     <TextView
         android:id="@+id/yumi_logo"
         android:layout_width="85dp"
@@ -49,7 +46,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logo_image" />
 
-    <!-- Slogan -->
     <TextView
         android:id="@+id/yumi_slogan"
         style="@style/TextAppearance.Yumi.BodyMedium"
@@ -62,7 +58,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/yumi_logo" />
 
-    <!-- Login Form Card -->
     <ScrollView
         android:id="@+id/login_form_scroll"
         android:layout_width="match_parent"
@@ -88,7 +83,6 @@
             android:paddingTop="32dp"
             android:paddingBottom="32dp">
 
-            <!-- Email Section -->
             <TextView
                 android:id="@+id/email_label"
                 style="@style/TextAppearance.Yumi.LabelMedium"
@@ -108,10 +102,10 @@
                 android:drawablePadding="12dp"
                 android:gravity="center_vertical"
                 android:hint="@string/enter_your_email"
+                android:textColor="#CBCED4"
                 android:inputType="textEmailAddress"
                 android:textSize="16sp" />
 
-            <!-- Password Section -->
             <TextView
                 android:id="@+id/password_label"
                 style="@style/TextAppearance.Yumi.LabelMedium"
@@ -133,9 +127,9 @@
                 android:gravity="center_vertical"
                 android:hint="@string/enter_your_password"
                 android:inputType="textPassword"
+                android:textColor="#CBCED4"
                 android:textSize="16sp" />
 
-            <!-- Login Button -->
             <Button
                 android:id="@+id/login_button"
                 style="@style/Widget.Yumi.Button.Secondary"
@@ -148,7 +142,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <!-- Divider: Or Continue With -->
             <include
                 android:id="@+id/continue_bar"
                 layout="@layout/layout_divider_with_text"
@@ -156,7 +149,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp" />
 
-            <!-- Google Sign In -->
             <ImageView
                 android:id="@+id/google_icon"
                 android:layout_width="50dp"
@@ -168,7 +160,6 @@
                 android:padding="12dp"
                 android:src="@drawable/google_icon" />
 
-            <!-- Register Section -->
             <LinearLayout
                 android:id="@+id/register_message"
                 android:layout_width="match_parent"
@@ -182,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/you_don_t_have_an_account"
-                    android:textColor="@color/text_disabled" />
+                    android:textColor="#CBCED4" />
 
                 <TextView
                     android:id="@+id/register_text"
@@ -195,7 +186,6 @@
 
             </LinearLayout>
 
-            <!-- Continue as Guest with Underline Decoration -->
             <TextView
                 android:id="@+id/continue_as_guest"
                 style="@style/TextAppearance.Yumi.BodyMedium"
@@ -206,7 +196,6 @@
                 android:text="@string/continue_as_guest"
                 android:textColor="@android:color/white" />
         </LinearLayout>
-
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
