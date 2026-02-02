@@ -1,15 +1,14 @@
 package com.example.yumi.presentation.home.view.activities;
 import android.os.Bundle;
-import android.util.Log;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
+import androidx.fragment.app.FragmentTransaction;
 import com.example.yumi.R;
 import com.example.yumi.databinding.ActivityHomeBaseBinding;
+import com.example.yumi.presentation.home.view.fragment.CalendarFragment;
 import com.example.yumi.presentation.home.view.fragment.FavoritesFragment;
 import com.example.yumi.presentation.home.view.fragment.HomeFragment;
 import com.example.yumi.presentation.home.view.fragment.ProfileFragment;
@@ -18,9 +17,17 @@ import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 
 public class HomeBaseActivity extends AppCompatActivity {
+
     private ActivityHomeBaseBinding binding;
-    private AnimatedBottomBar bottomBar;
-    private NavController navController;
+    private Fragment activeFragment;
+    private int currentTabIndex = 0;
+    private static final String TAG_HOME = "home";
+    private static final String TAG_SEARCH = "search";
+    private static final String TAG_CALENDAR = "calendar";
+    private static final String TAG_FAVORITES = "favorites";
+    private static final String TAG_PROFILE = "profile";
+    private static final String KEY_CURRENT_TAB = "current_tab";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,46 +36,131 @@ public class HomeBaseActivity extends AppCompatActivity {
         binding = ActivityHomeBaseBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        bottomBar = binding.bottomBar;
-        bottomBar.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener() {
-            @Override
-            public void onTabSelected(int oldIndex, @Nullable AnimatedBottomBar.Tab oldTab, int newIndex, @NonNull AnimatedBottomBar.Tab newTab) {
-                Fragment fragment = getFragmentByTabId(newTab.getId());
+        if (savedInstanceState == null) {
+            setupFragments();
+        } else {
+            currentTabIndex = savedInstanceState.getInt(KEY_CURRENT_TAB, 0);
+            restoreActiveFragment();
+        }
 
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, fragment)
-                        .commit();
+        setupBottomBar();
+        setupBackPressHandler();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_CURRENT_TAB, currentTabIndex);
+    }
+
+    private void setupFragments() {
+        Fragment homeFragment = new HomeFragment();
+        activeFragment = homeFragment;
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, homeFragment, TAG_HOME)
+                .commit();
+    }
+
+    private void restoreActiveFragment() {
+        String activeTag = getTagForIndex(currentTabIndex);
+        activeFragment = getSupportFragmentManager().findFragmentByTag(activeTag);
+
+        if (activeFragment == null) {
+            activeFragment = getSupportFragmentManager().findFragmentByTag(TAG_HOME);
+        }
+        if (activeFragment == null) {
+            setupFragments();
+        }
+    }
+
+    private void setupBottomBar() {
+        binding.bottomBar.selectTabAt(currentTabIndex, false);
+
+        binding.bottomBar.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener() {
+            @Override
+            public void onTabSelected(int oldIndex, @Nullable AnimatedBottomBar.Tab oldTab,
+                                      int newIndex, @NonNull AnimatedBottomBar.Tab newTab) {
+                if (currentTabIndex != newIndex) {
+                    currentTabIndex = newIndex;
+                    switchFragment(newIndex);
+                }
             }
 
             @Override
             public void onTabReselected(int index, @NonNull AnimatedBottomBar.Tab tab) {
-                Log.d("BottomNavBar", "onTabReselected " + index);
+                // Optional: scroll to top or refresh
             }
         });
+    }
 
-        setupBackPressHandler();
+    private void switchFragment(int index) {
+        String targetTag = getTagForIndex(index);
+        Fragment targetFragment = getSupportFragmentManager().findFragmentByTag(targetTag);
+
+        if (targetFragment != null && targetFragment == activeFragment) {
+            return;
+        }
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+
+        if (activeFragment != null) {
+            transaction.hide(activeFragment);
+        }
+
+        if (targetFragment == null) {
+            targetFragment = createFragment(index);
+            transaction.add(R.id.fragment_container, targetFragment, targetTag);
+        } else {
+            transaction.show(targetFragment);
+        }
+
+        transaction.commit();
+        activeFragment = targetFragment;
+    }
+
+    private String getTagForIndex(int index) {
+        switch (index) {
+            case 0:
+                return TAG_HOME;
+            case 1:
+                return TAG_SEARCH;
+            case 2:
+                return TAG_CALENDAR;
+            case 3:
+                return TAG_FAVORITES;
+            default:
+                return TAG_PROFILE;
+        }
+    }
+
+    @NonNull
+    private Fragment createFragment(int index) {
+        switch (index) {
+            case 0:
+                return new HomeFragment();
+            case 1:
+                return new SearchFragment();
+            case 2:
+                return new CalendarFragment();
+            case 3:
+                return new FavoritesFragment();
+            default:
+                return new ProfileFragment();
+        }
     }
 
     private void setupBackPressHandler() {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                moveTaskToBack(true);
+                if (currentTabIndex != 0) {
+                    binding.bottomBar.selectTabAt(0, true);
+                } else {
+                    moveTaskToBack(true);
+                }
             }
         });
-    }
-
-    Fragment getFragmentByTabId(int tabId){
-        if (R.id.calendarFragment == tabId){
-            return new HomeFragment();
-        }else if (R.id.searchFragment == tabId){
-             return new SearchFragment();
-        } else if (R.id.favoritesFragment == tabId) {
-            return new FavoritesFragment();
-        }else if (R.id.profileFragment == tabId){
-            return new ProfileFragment();
-        }
-
-        return new HomeFragment();
     }
 }
