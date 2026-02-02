@@ -63,6 +63,36 @@
     <!-- ==================== TEXT INPUT ==================== -->
 
     <!-- Text Input Layout -->
+    <style name="Widget.Yumi.TextInputLayout.Auth"
+        parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">@dimen/radius_lg</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/radius_lg</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/radius_lg</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/radius_lg</item>
+        <item name="boxStrokeColor">@color/input_stroke_color</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxBackgroundColor">@color/input_background</item>
+        <item name="hintTextColor">@color/muted_foreground</item>
+        <item name="android:background">@drawable/text_field_border</item>
+        <item name="android:drawableStart">@drawable/email_icon</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:inputType">textEmailAddress</item>
+        <item name="android:colorLongPressedHighlight">#CBCED4</item>
+        <item name="android:colorAccent">#CBCED4</item>
+        <item name="android:textColorHint">@color/muted_foreground</item>
+        <item name="android:textColorHighlightInverse">#CBCED4</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHighlight">#CBCED4</item>
+        <item name="android:textColorLink">#CBCED4</item>
+        <item name="android:textCursorDrawable">@drawable/shape_cursor</item>
+        <item name="android:textSelectHandle">@drawable/vector_text_handle</item>
+        <item name="android:textSelectHandleLeft">@drawable/vector_text_handle</item>
+        <item name="android:textSelectHandleRight">@drawable/vector_text_handle</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
     <style name="Widget.Yumi.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="boxCornerRadiusTopStart">@dimen/radius_lg</item>
         <item name="boxCornerRadiusTopEnd">@dimen/radius_lg</item>
@@ -357,4 +387,7 @@
         <item name="trackColor">#AAFFFFFF</item>
     </style>
 
+    <style name="TextAppearance.Yumi.Hint" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textColor">#CBCED4</item>
+    </style>
 </resources>

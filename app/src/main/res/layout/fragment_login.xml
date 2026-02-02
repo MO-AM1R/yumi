@@ -93,18 +93,11 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_text_field"
-                style="@style/Widget.Yumi.TextInputLayout"
+                style="@style/Widget.Yumi.TextInputLayout.Auth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/text_field_border"
-                android:drawableStart="@drawable/email_icon"
-                android:drawablePadding="12dp"
-                android:gravity="center_vertical"
-                android:hint="@string/enter_your_email"
-                android:textColor="#CBCED4"
-                android:inputType="textEmailAddress"
-                android:textSize="16sp" />
+                android:hint="@string/enter_your_email" />
 
             <TextView
                 android:id="@+id/password_label"
@@ -117,18 +110,12 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_text_field"
-                style="@style/Widget.Yumi.TextInputLayout"
+                style="@style/Widget.Yumi.TextInputLayout.Auth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/text_field_border"
-                android:drawableStart="@drawable/lock_icon"
-                android:drawablePadding="12dp"
-                android:gravity="center_vertical"
                 android:hint="@string/enter_your_password"
-                android:inputType="textPassword"
-                android:textColor="#CBCED4"
-                android:textSize="16sp" />
+                android:inputType="textPassword" />
 
             <Button
                 android:id="@+id/login_button"
