@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/authentication_nav_graph"
-    app:startDestination="@id/registerFragment">
+    app:startDestination="@id/splashFragment">
 
-    <!-- Splash Fragment -->
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.yumi.presentation.authentication.view.fragments.SplashFragment"
@@ -20,7 +19,6 @@
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
 
-        <!-- Direct to login (for returning users) -->
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -31,7 +29,6 @@
 
     </fragment>
 
-    <!-- Onboarding Fragment -->
     <fragment
         android:id="@+id/onboardingFragment"
         android:name="com.example.yumi.presentation.authentication.view.fragments.OnboardingFragment"
@@ -48,7 +45,6 @@
 
     </fragment>
 
-    <!-- Login Fragment -->
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.yumi.presentation.authentication.view.fragments.LoginFragment"
@@ -58,21 +54,14 @@
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment"
             app:launchSingleTop="true"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToSaveState="true"
+            app:restoreState="true" />
     </fragment>
+
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.yumi.presentation.authentication.view.fragments.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
-        <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/registerFragment"
-            app:popUpToInclusive="true" />
+        tools:layout="@layout/fragment_register">
     </fragment>
-
-
 </navigation>

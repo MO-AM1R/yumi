@@ -5,6 +5,10 @@ buildscript{
         google()
         maven { url = uri("https://jitpack.io") }
     }
+
+    dependencies{
+        classpath(libs.navigation.safe.args.gradle.plugin)
+    }
 }
 
 plugins {
