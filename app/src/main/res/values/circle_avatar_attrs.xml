@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CircleAvatarView">
+        <attr name="cav_radius" format="dimension" />
+        <attr name="cav_text" format="string" />
+        <attr name="cav_backgroundColor" format="color" />
+        <attr name="cav_foregroundColor" format="color" />
+        <attr name="cav_textSize" format="dimension" />
+        <attr name="cav_textBold" format="boolean" />
+    </declare-styleable>
+
+</resources>
