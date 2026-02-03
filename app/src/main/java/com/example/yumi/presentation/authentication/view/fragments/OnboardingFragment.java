@@ -23,7 +23,7 @@ import com.example.yumi.R;
 import com.example.yumi.presentation.custom.WormDotIndicator;
 import com.example.yumi.data.config.SharedPreferencesKeysConfig;
 import com.example.yumi.databinding.FragmentOnboardingBinding;
-import com.example.yumi.data.utils.AnimatorUtils;
+import com.example.yumi.utils.AnimatorUtils;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;

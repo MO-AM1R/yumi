@@ -13,9 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.yumi.databinding.FragmentHomeBinding;
+import com.example.yumi.domain.meals.model.Area;
+import com.example.yumi.domain.meals.model.Category;
+import com.example.yumi.domain.meals.model.Meal;
+import com.example.yumi.presentation.home.HomeContract;
+
+import java.util.List;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements HomeContract.View {
     private FragmentHomeBinding binding;
     private RecyclerView randomMealsRecyclerView;
     private RecyclerView countriesRecyclerView;
@@ -53,5 +59,45 @@ public class HomeFragment extends Fragment {
 
         randomMealsRecyclerView.setLayoutManager(layoutManager);
 //        randomMealsRecyclerView.setAdapter();
+    }
+
+    @Override
+    public void showMeals(List<Meal> meals) {
+
+    }
+
+    @Override
+    public void showCategories(List<Category> categories) {
+
+    }
+
+    @Override
+    public void showAreas(List<Area> areas) {
+
+    }
+
+    @Override
+    public void showEmptyState() {
+
+    }
+
+    @Override
+    public void navigateToMealDetail(String mealId) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
     }
 }

@@ -1,0 +1,25 @@
+package com.example.yumi.presentation.base;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
+public abstract class BasePresenter<V extends BaseView> {
+
+    protected V view;
+    protected final CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+    public void attachView(V view) {
+        this.view = view;
+    }
+
+    public void detachView() {
+        this.view = null;
+    }
+
+    public void onDestroy() {
+        compositeDisposable.clear();
+        detachView();
+    }
+
+    protected boolean isViewAttached() {
+        return view != null;
+    }
+}

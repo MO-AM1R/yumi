@@ -25,7 +25,7 @@ import android.widget.TextView;
 import com.example.yumi.R;
 import com.example.yumi.data.config.SharedPreferencesKeysConfig;
 import com.example.yumi.databinding.FragmentSplashBinding;
-import com.example.yumi.data.utils.AnimatorUtils;
+import com.example.yumi.utils.AnimatorUtils;
 import com.example.yumi.presentation.authentication.view.activities.AuthenticationActivity;
 import java.util.ArrayList;
 import java.util.List;

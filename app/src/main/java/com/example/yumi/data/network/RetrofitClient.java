@@ -1,6 +1,6 @@
 package com.example.yumi.data.network;
 import com.example.yumi.data.config.APIConfig;
-import com.example.yumi.data.foods.datasources.remote.api.FoodServiceAPI;
+import com.example.yumi.data.meals.datasources.remote.api.MealsServiceAPI;
 import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public enum RetrofitClient {
     INSTANCE;
 
-    private final FoodServiceAPI api;
+    private final MealsServiceAPI api;
 
     RetrofitClient() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -31,10 +31,10 @@ public enum RetrofitClient {
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
 
-        api = retrofit.create(FoodServiceAPI.class);
+        api = retrofit.create(MealsServiceAPI.class);
     }
 
-    public FoodServiceAPI getFoodApi() {
+    public MealsServiceAPI getFoodApi() {
         return api;
     }
 }
