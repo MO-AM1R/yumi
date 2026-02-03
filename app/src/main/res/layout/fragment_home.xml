@@ -8,7 +8,7 @@
     android:background="@color/background"
     android:paddingHorizontal="24dp"
     android:paddingVertical="50dp"
-    tools:context=".presentation.home.view.fragment.HomeFragment">
+    tools:context=".presentation.home.view.fragments.HomeFragment">
 
     <ScrollView
         android:layout_width="match_parent"

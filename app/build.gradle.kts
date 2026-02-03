@@ -47,6 +47,11 @@ dependencies {
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
     implementation(libs.animated.bottom.bar)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.glide)
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.yumi.R;
 import com.example.yumi.databinding.ActivityHomeBaseBinding;
-import com.example.yumi.presentation.home.view.fragment.CalendarFragment;
-import com.example.yumi.presentation.home.view.fragment.FavoritesFragment;
-import com.example.yumi.presentation.home.view.fragment.HomeFragment;
-import com.example.yumi.presentation.home.view.fragment.ProfileFragment;
-import com.example.yumi.presentation.home.view.fragment.SearchFragment;
+import com.example.yumi.presentation.home.view.fragments.CalendarFragment;
+import com.example.yumi.presentation.home.view.fragments.FavoritesFragment;
+import com.example.yumi.presentation.home.view.fragments.HomeFragment;
+import com.example.yumi.presentation.home.view.fragments.ProfileFragment;
+import com.example.yumi.presentation.home.view.fragments.SearchFragment;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 

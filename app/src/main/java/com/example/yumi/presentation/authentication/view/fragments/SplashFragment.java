@@ -1,7 +1,7 @@
 package com.example.yumi.presentation.authentication.view.fragments;
 import static android.content.Context.MODE_PRIVATE;
-import static com.example.yumi.data.utils.SharedPreferencesKeys.KEY_LOGGED_IN;
-import static com.example.yumi.data.utils.SharedPreferencesKeys.KEY_ONBOARDING_COMPLETED;
+import static com.example.yumi.data.config.SharedPreferencesKeysConfig.KEY_LOGGED_IN;
+import static com.example.yumi.data.config.SharedPreferencesKeysConfig.KEY_ONBOARDING_COMPLETED;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 import com.example.yumi.R;
-import com.example.yumi.data.utils.SharedPreferencesKeys;
+import com.example.yumi.data.config.SharedPreferencesKeysConfig;
 import com.example.yumi.databinding.FragmentSplashBinding;
 import com.example.yumi.data.utils.AnimatorUtils;
 import com.example.yumi.presentation.authentication.view.activities.AuthenticationActivity;
@@ -133,7 +133,7 @@ public class SplashFragment extends Fragment {
         Log.d("SplashActivity", "Navigating to next screen...");
 
         SharedPreferences prefs
-                = getActivity().getSharedPreferences(SharedPreferencesKeys.PREF_NAME, MODE_PRIVATE);
+                = getActivity().getSharedPreferences(SharedPreferencesKeysConfig.PREF_NAME, MODE_PRIVATE);
 
         boolean onboarding = prefs.getBoolean(KEY_ONBOARDING_COMPLETED, false);
 

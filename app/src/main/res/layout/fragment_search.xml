@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/searchFragment"
-    tools:context=".presentation.home.view.fragment.SearchFragment">
+    tools:context=".presentation.home.view.fragments.SearchFragment">
 
     <TextView
         android:layout_width="wrap_content"

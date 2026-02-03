@@ -1,7 +1,6 @@
 package com.example.yumi.presentation.authentication.view.fragments;
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -14,9 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.yumi.data.utils.SharedPreferencesKeys;
+import com.example.yumi.data.config.SharedPreferencesKeysConfig;
 import com.example.yumi.databinding.FragmentLoginBinding;
-import com.example.yumi.presentation.home.view.activities.HomeBaseActivity;
+
 import java.util.Objects;
 
 
@@ -63,8 +62,8 @@ public class LoginFragment extends Fragment {
         if (isAdded() && !isDetached()) {
             try {
                 SharedPreferences prefs = requireActivity()
-                        .getSharedPreferences(SharedPreferencesKeys.PREF_NAME, MODE_PRIVATE);
-                prefs.edit().putBoolean(SharedPreferencesKeys.KEY_LOGGED_IN, true).apply();
+                        .getSharedPreferences(SharedPreferencesKeysConfig.PREF_NAME, MODE_PRIVATE);
+                prefs.edit().putBoolean(SharedPreferencesKeysConfig.KEY_LOGGED_IN, true).apply();
 
                 NavController navController = Navigation.findNavController(binding.getRoot());
                 navController.navigate(

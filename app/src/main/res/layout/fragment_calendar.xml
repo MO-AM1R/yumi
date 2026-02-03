@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/calendarFragment"
-    tools:context=".presentation.home.view.fragment.CalendarFragment">
+    tools:context=".presentation.home.view.fragments.CalendarFragment">
 
     <TextView
         android:layout_width="wrap_content"

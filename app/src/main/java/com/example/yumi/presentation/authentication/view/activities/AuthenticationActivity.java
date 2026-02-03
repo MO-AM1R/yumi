@@ -1,5 +1,5 @@
 package com.example.yumi.presentation.authentication.view.activities;
-import static com.example.yumi.data.utils.SharedPreferencesKeys.KEY_LOGGED_IN;
+import static com.example.yumi.data.config.SharedPreferencesKeysConfig.KEY_LOGGED_IN;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +14,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavGraph;
 import androidx.navigation.fragment.NavHostFragment;
 import com.example.yumi.R;
-import com.example.yumi.data.utils.SharedPreferencesKeys;
+import com.example.yumi.data.config.SharedPreferencesKeysConfig;
 import com.example.yumi.presentation.home.view.activities.HomeBaseActivity;
 
 
@@ -39,7 +39,7 @@ public class AuthenticationActivity extends AppCompatActivity {
             splashShown = savedInstanceState.getBoolean("splashShown");
         }
 
-        prefs = getSharedPreferences(SharedPreferencesKeys.PREF_NAME, MODE_PRIVATE);
+        prefs = getSharedPreferences(SharedPreferencesKeysConfig.PREF_NAME, MODE_PRIVATE);
         setupNavigation();
     }
 
@@ -67,7 +67,7 @@ public class AuthenticationActivity extends AppCompatActivity {
     }
 
     private int determineStartDestination() {
-        boolean onboardingCompleted = prefs.getBoolean(SharedPreferencesKeys.KEY_ONBOARDING_COMPLETED, false);
+        boolean onboardingCompleted = prefs.getBoolean(SharedPreferencesKeysConfig.KEY_ONBOARDING_COMPLETED, false);
 
         if (!splashShown) {
             return R.id.splashFragment;

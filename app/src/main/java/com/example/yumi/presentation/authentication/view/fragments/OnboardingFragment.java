@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.yumi.R;
 import com.example.yumi.presentation.custom.WormDotIndicator;
-import com.example.yumi.data.utils.SharedPreferencesKeys;
+import com.example.yumi.data.config.SharedPreferencesKeysConfig;
 import com.example.yumi.databinding.FragmentOnboardingBinding;
 import com.example.yumi.data.utils.AnimatorUtils;
 import java.util.Arrays;
@@ -94,8 +94,8 @@ public class OnboardingFragment extends Fragment {
 
     private void NavigateToNextPage() {
         SharedPreferences prefs = requireActivity()
-                .getSharedPreferences(SharedPreferencesKeys.PREF_NAME, MODE_PRIVATE);
-        prefs.edit().putBoolean(SharedPreferencesKeys.KEY_ONBOARDING_COMPLETED, true).apply();
+                .getSharedPreferences(SharedPreferencesKeysConfig.PREF_NAME, MODE_PRIVATE);
+        prefs.edit().putBoolean(SharedPreferencesKeysConfig.KEY_ONBOARDING_COMPLETED, true).apply();
 
         if (isAdded() && !isDetached()) {
             try {
