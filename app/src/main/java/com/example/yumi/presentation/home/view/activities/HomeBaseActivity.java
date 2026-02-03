@@ -1,4 +1,5 @@
 package com.example.yumi.presentation.home.view.activities;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -74,8 +75,9 @@ public class HomeBaseActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     private void setupBottomBar() {
-        binding.bottomBar.selectTabAt(currentTabIndex, false);
+        binding.bottomBar.selectTabAt(currentTabIndex, true);
 
         binding.bottomBar.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener() {
             @Override

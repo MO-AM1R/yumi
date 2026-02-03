@@ -7,21 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".presentation.home.view.activities.HomeBaseActivity">
 
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="72dp" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <nl.joery.animatedbottombar.AnimatedBottomBar
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFF"
+        android:background="@color/card"
         app:abb_indicatorAppearance="round"
         app:abb_indicatorLocation="top"
         app:abb_indicatorHeight="4dp"
+        app:abb_tabColorSelected="@color/secondary"
+        app:abb_indicatorColor="@color/secondary"
+        app:abb_tabColor="@color/muted_foreground"
+        app:abb_rippleEnabled="true"
         app:abb_selectedIndex="0"
         app:abb_indicatorMargin="16dp"
         app:abb_selectedTabType="text"
