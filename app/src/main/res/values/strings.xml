@@ -47,4 +47,10 @@
     <string name="plans">Plans</string>
     <string name="favorites">Favorites</string>
     <string name="profile">Profile</string>
+    <string name="what_would_you_like_to_cook_today">What would you like to cook today?</string>
+    <string name="hello_food_lover">Hello, Food Lover! 👋</string>
+    <string name="meal_of_the_day">Meal of the Day</string>
+    <string name="meal_description">meal description</string>
+    <string name="add_sign">+ Add</string>
+    <string name="random_meals">Random Meals</string>
 </resources>
