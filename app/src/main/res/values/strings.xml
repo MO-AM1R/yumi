@@ -53,4 +53,10 @@
     <string name="meal_description">meal description</string>
     <string name="add_sign">+ Add</string>
     <string name="random_meals">Random Meals</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="ingredient_description">Ingredient description</string>
+    <string name="see_all"><![CDATA[See All >]]></string>
+    <string name="countries">Countries</string>
+    <string name="categories">Categories</string>
+    <string name="category_description">Category description</string>
 </resources>
