@@ -27,6 +27,7 @@
         app:abb_indicatorHeight="4dp"
         app:abb_tabColorSelected="@color/secondary"
         app:abb_indicatorColor="@color/secondary"
+        android:hapticFeedbackEnabled="true"
         app:abb_tabColor="@color/muted_foreground"
         app:abb_rippleEnabled="true"
         app:abb_selectedIndex="0"
