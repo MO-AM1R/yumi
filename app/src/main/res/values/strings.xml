@@ -61,4 +61,6 @@
     <string name="category_description">Category description</string>
 
     <string name="ingredients_count_message">%1$d ingredients</string>
+    <string name="browse_by_ingredient">Browse by Ingredient</string>
+    <string name="arrow_back_description">Arrow back description</string>
 </resources>

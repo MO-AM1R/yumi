@@ -79,4 +79,7 @@
     <color name="black_muted">#2A2A2A</color>
 
     <color name="glass_overlay_color_dark">#80000000</color>
+
+    <color name="arrow_back_background">#242424</color>
+
 </resources>
