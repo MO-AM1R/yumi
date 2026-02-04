@@ -1,7 +1,4 @@
 package com.example.yumi.presentation.home.presenter;
-
-import android.util.Log;
-
 import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
 import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
@@ -11,13 +8,12 @@ import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.domain.meals.repository.MealsRepository;
 import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.home.HomeContract;
-
 import java.util.List;
 import java.util.Random;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+
 
 public class HomePresenter extends BasePresenter<HomeContract.View>
         implements HomeContract.Presenter {
@@ -41,6 +37,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
 
         loadDayMeal();
         loadRandomMeals();
+        loadIngredients();
         loadCategories();
         loadAreas();
     }
@@ -71,6 +68,13 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
 
         view.hideLoading();
         view.showRandomMeals(meals);
+    }
+
+    private void onIngredientsLoaded(List<Ingredient> ingredients) {
+        if (isViewDetached()) return;
+
+        view.hideLoading();
+        view.showIngredients(ingredients);
     }
 
     private void onError(Throwable throwable) {
@@ -144,6 +148,21 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         this::onAreasLoaded,
+                        this::onError
+                );
+
+        compositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void loadIngredients() {
+        if (isViewDetached()) return;
+
+        Disposable disposable = repository.getAllIngredients()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        this::onIngredientsLoaded,
                         this::onError
                 );
 

@@ -20,6 +20,8 @@ public interface HomeContract {
 
         void showAreas(List<Area> areas);
 
+        void showIngredients(List<Ingredient> ingredients);
+
         void navigateToMealDetail(String mealId);
 
         void navigateToFilteredMeals(MealsFilter filter, String name);
@@ -37,6 +39,8 @@ public interface HomeContract {
         void loadCategories();
 
         void loadAreas();
+
+        void loadIngredients();
 
         void onMealClicked(Meal meal);
 

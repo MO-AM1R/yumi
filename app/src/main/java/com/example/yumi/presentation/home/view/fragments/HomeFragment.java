@@ -15,12 +15,14 @@ import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentHomeBinding;
 import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
+import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.presentation.home.HomeContract;
 import com.example.yumi.presentation.home.presenter.HomePresenter;
 import com.example.yumi.presentation.home.view.adapters.AreasRecyclerViewAdapter;
 import com.example.yumi.presentation.home.view.adapters.CategoriesRecyclerViewAdapter;
+import com.example.yumi.presentation.home.view.adapters.IngredientsRecyclerViewAdapter;
 import com.example.yumi.presentation.home.view.adapters.RandomMealsRecyclerViewAdapter;
 import com.example.yumi.utils.GlideUtil;
 import java.util.ArrayList;
@@ -33,8 +35,9 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     private RecyclerView countriesRecyclerView;
     private RecyclerView categoriesRecyclerView;
     private RecyclerView ingredientsRecyclerView;
-    private RandomMealsRecyclerViewAdapter mealsAdapter;
+    private IngredientsRecyclerViewAdapter ingredientsAdapter;
     private CategoriesRecyclerViewAdapter categoriesAdapter;
+    private RandomMealsRecyclerViewAdapter mealsAdapter;
     private AreasRecyclerViewAdapter areasAdapter;
     private HomePresenter presenter;
 
@@ -77,6 +80,9 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         areasAdapter = new AreasRecyclerViewAdapter(new ArrayList<>(),
                 area -> presenter.onAreaClicked(area)
         );
+
+        ingredientsAdapter = new IngredientsRecyclerViewAdapter(new ArrayList<>(),
+                ingredient -> presenter.onIngredientClicked(ingredient));
     }
 
     private void initRecyclerViews() {
@@ -101,6 +107,14 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         );
 
         binding.countriesRecyclerView.setAdapter(areasAdapter);
+
+
+        binding.ingredientsRecyclerView.setLayoutManager(
+                new LinearLayoutManager(requireContext(),
+                        LinearLayoutManager.HORIZONTAL, false)
+        );
+
+        binding.ingredientsRecyclerView.setAdapter(ingredientsAdapter);
     }
 
     private void initSwipeRefresh() {
@@ -134,6 +148,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public void showAreas(List<Area> areas) {
         areasAdapter.setAreas(areas.subList(0, 10));
+    }
+
+    @Override
+    public void showIngredients(List<Ingredient> ingredients) {
+        ingredientsAdapter.setIngredients(ingredients.subList(0, 10));
     }
 
     @Override
