@@ -27,7 +27,7 @@
                 android:layout_height="160dp"
                 android:contentDescription="@string/meal_description"
                 android:scaleType="centerCrop"
-                android:src="@drawable/temp_image" />
+                android:src="@drawable/ic_launcher_foreground" />
 
             <LinearLayout
                 android:layout_width="match_parent"
