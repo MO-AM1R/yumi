@@ -1,4 +1,5 @@
 package com.example.yumi.presentation.home.view.adapters;
+import static android.provider.Settings.System.getString;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -46,20 +47,24 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
         return meals.size();
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RandomMealsViewHolder holder, int position) {
         Meal meal = meals.get(position);
+        View view = holder.getMealImage().getRootView();
 
         holder.getMealName().setText(meal.getName());
         holder.getMealCategory().setText(meal.getCategory());
-        holder.getMealIngredientsCount().setText(meal.getIngredients().size() + " Ingredients");
+        holder.getMealIngredientsCount().
+                setText(view.getContext().
+                        getString(R.string.ingredients_count_message, meal.getIngredients().size()));
 
         GlideUtil.getImage(
                 holder.getMealImage().getContext(),
                 holder.getMealImage(),
                 meal.getThumbnailUrl()
         );
+
+        view.setOnClickListener(v -> onMealClick.onclick(meal));
     }
 
     public static class RandomMealsViewHolder extends RecyclerView.ViewHolder {

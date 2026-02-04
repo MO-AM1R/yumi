@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.blurview.vversion)
     implementation(libs.navigation.ui.ktx)
     implementation(libs.constraintlayout)
+    implementation(libs.refresh.layout)
     implementation(libs.converter.gson)
     implementation(libs.room.runtime)
     implementation(libs.rxandroid)

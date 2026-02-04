@@ -7,358 +7,360 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:paddingHorizontal="24dp"
-    android:paddingVertical="50dp"
+    android:paddingVertical="58dp"
     tools:context=".presentation.home.view.fragments.HomeFragment">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:trackColor="@color/secondary"
+        app:indicatorColor="@color/secondary"
         />
 
-    <ScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/hello_message"
-                style="@style/TextAppearance.Yumi.TitleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hello_food_lover"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                style="@style/TextAppearance.Yumi.BodySmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/what_would_you_like_to_cook_today"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/hello_message" />
-
-            <com.example.yumi.presentation.custom.CircleAvatarView
-                android:id="@+id/avatar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cav_backgroundColor="@color/primary"
-                app:cav_foregroundColor="@color/primary_foreground"
-                app:cav_radius="32dp"
-                app:cav_text="JD"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/meal_day"
-                style="@style/TextAppearance.Yumi.BodyLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/meal_of_the_day"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/avatar" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/meal_day_card"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/card"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="2dp"
-                app:cardUseCompatPadding="true"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/meal_day">
+                android:orientation="vertical">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/hello_message"
+                    style="@style/TextAppearance.Yumi.TitleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hello_food_lover"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    style="@style/TextAppearance.Yumi.BodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/what_would_you_like_to_cook_today"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/hello_message" />
+
+                <com.example.yumi.presentation.custom.CircleAvatarView
+                    android:id="@+id/avatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cav_backgroundColor="@color/primary"
+                    app:cav_foregroundColor="@color/primary_foreground"
+                    app:cav_radius="32dp"
+                    app:cav_text="JD"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/meal_day"
+                    style="@style/TextAppearance.Yumi.BodyLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/meal_of_the_day"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/avatar" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/meal_day_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/meal_day_image"
-                            android:layout_width="match_parent"
-                            android:layout_height="260dp"
-                            android:contentDescription="@string/meal_description"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/temp_image" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="18dp">
-
-                            <TextView
-                                android:id="@+id/meal_category"
-                                style="@style/TextAppearance.Yumi.LabelSmall"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:background="@drawable/shape_meal_category"
-                                android:textAllCaps="true"
-                                android:textColor="@android:color/black"
-                                android:textStyle="bold"
-                                tools:text="seafood" />
-
-                            <Space
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" />
-
-                            <eightbitlab.com.blurview.BlurView
-                                android:id="@+id/fav_btn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/glass_background"
-                                android:padding="8dp"
-                                app:blurOverlayColor="@color/glass_overlay_color">
-
-                                <View
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:background="@drawable/favorite"
-                                    android:backgroundTint="@android:color/white" />
-
-                            </eightbitlab.com.blurview.BlurView>
-
-                        </LinearLayout>
-                    </FrameLayout>
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/card"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="2dp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/meal_day">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingHorizontal="18dp"
-                        android:paddingVertical="14dp">
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/day_meal_name"
-                            style="@style/TextAppearance.Yumi.BodyMedium"
+                        <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            tools:text="Grilled Salmon with Asparagus" />
+                            android:layout_height="wrap_content">
 
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="16dp" />
+                            <ImageView
+                                android:id="@+id/meal_day_image"
+                                android:layout_width="match_parent"
+                                android:layout_height="260dp"
+                                android:contentDescription="@string/meal_description"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/temp_image" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="18dp">
+
+                                <TextView
+                                    android:id="@+id/meal_category"
+                                    style="@style/TextAppearance.Yumi.LabelSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:background="@drawable/shape_meal_category"
+                                    android:textAllCaps="true"
+                                    android:textColor="@android:color/black"
+                                    android:textStyle="bold"
+                                    tools:text="seafood" />
+
+                                <Space
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1" />
+
+                                <eightbitlab.com.blurview.BlurView
+                                    android:id="@+id/fav_btn"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/glass_background"
+                                    android:padding="8dp"
+                                    app:blurOverlayColor="@color/glass_overlay_color">
+
+                                    <View
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:background="@drawable/favorite"
+                                        android:backgroundTint="@android:color/white" />
+
+                                </eightbitlab.com.blurview.BlurView>
+
+                            </LinearLayout>
+                        </FrameLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="14dp">
 
                             <TextView
-                                android:id="@+id/day_meal_ingredients_count"
-                                style="@style/TextAppearance.Yumi.BodySmall"
-                                android:layout_width="wrap_content"
+                                android:id="@+id/day_meal_name"
+                                style="@style/TextAppearance.Yumi.BodyMedium"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                tools:text="6 ingredients" />
+                                android:textStyle="bold"
+                                tools:text="Grilled Salmon with Asparagus" />
 
                             <Space
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_width="match_parent"
+                                android:layout_height="16dp" />
 
-                            <include
-                                android:id="@+id/add_to_plan_btn"
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                layout="@layout/add_to_plan_button" />
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/day_meal_ingredients_count"
+                                    style="@style/TextAppearance.Yumi.BodySmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    tools:text="6 ingredients" />
+
+                                <Space
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1" />
+
+                                <include
+                                    android:id="@+id/add_to_plan_btn"
+                                    layout="@layout/add_to_plan_button"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
                     </LinearLayout>
 
+                </androidx.cardview.widget.CardView>
+
+
+                <TextView
+                    android:id="@+id/random_meals_text"
+                    style="@style/TextAppearance.Yumi.BodyLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/random_meals"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/meal_day_card" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/random_meals_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/random_meals_text"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/random_meal_item_raw">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <LinearLayout
+                    android:id="@+id/ingredients_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/random_meals_recycler_view">
+
+                    <TextView
+                        android:id="@+id/ingredients_title"
+                        style="@style/TextAppearance.Yumi.BodyLarge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/ingredients"
+                        android:textStyle="bold" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/ingredients_see_all_text"
+                        style="@style/TextAppearance.Yumi.BodyMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/see_all"
+                        android:textColor="@color/secondary"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
-
-
-            <TextView
-                android:id="@+id/random_meals_text"
-                style="@style/TextAppearance.Yumi.BodyLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/random_meals"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/meal_day_card" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/random_meals_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:listitem="@layout/random_meal_item_raw"
-                tools:itemCount="1"
-                app:layout_constraintTop_toBottomOf="@id/random_meals_text"
-                android:orientation="horizontal">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <LinearLayout
-                android:id="@+id/ingredients_section"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/random_meals_recycler_view">
-
-                <TextView
-                    android:id="@+id/ingredients_title"
-                    style="@style/TextAppearance.Yumi.BodyLarge"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ingredients_recycler_view"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/ingredients"
-                    android:textStyle="bold"
-                   />
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/ingredients_section"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/ingredient_raw_item">
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                </androidx.recyclerview.widget.RecyclerView>
 
-                <TextView
-                    android:id="@+id/ingredients_see_all_text"
-                    style="@style/TextAppearance.Yumi.BodyMedium"
-                    android:textColor="@color/secondary"
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:id="@+id/countries_section"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/see_all"
-                    android:textStyle="bold"
-                    />
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ingredients_recycler_view">
 
-            </LinearLayout>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/ingredients_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:listitem="@layout/ingredient_raw_item"
-                tools:itemCount="1"
-                app:layout_constraintTop_toBottomOf="@id/ingredients_section"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/countries_title"
+                        style="@style/TextAppearance.Yumi.BodyLarge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/countries"
+                        android:textStyle="bold" />
 
-            </androidx.recyclerview.widget.RecyclerView>
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
+                    <TextView
+                        android:id="@+id/countries_see_all_text"
+                        style="@style/TextAppearance.Yumi.BodyMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/see_all"
+                        android:textColor="@color/secondary"
+                        android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/countries_section"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                android:orientation="horizontal"
-                android:layout_marginTop="12dp"
-                app:layout_constraintTop_toBottomOf="@id/ingredients_recycler_view">
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/countries_title"
-                    style="@style/TextAppearance.Yumi.BodyLarge"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/countries_recycler_view"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/countries"
-                    android:textStyle="bold"
-                    />
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/countries_section"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/country_raw_item">
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                </androidx.recyclerview.widget.RecyclerView>
 
-                <TextView
-                    android:id="@+id/countries_see_all_text"
-                    style="@style/TextAppearance.Yumi.BodyMedium"
-                    android:textColor="@color/secondary"
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:id="@+id/categories_section"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/see_all"
-                    android:textStyle="bold"
-                    />
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/countries_recycler_view">
 
-            </LinearLayout>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/countries_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:listitem="@layout/country_raw_item"
-                tools:itemCount="1"
-                app:layout_constraintTop_toBottomOf="@id/countries_section"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/categories_title"
+                        style="@style/TextAppearance.Yumi.BodyLarge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/categories"
+                        android:textStyle="bold" />
 
-            </androidx.recyclerview.widget.RecyclerView>
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
+                    <TextView
+                        android:id="@+id/categories_see_all_text"
+                        style="@style/TextAppearance.Yumi.BodyMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/see_all"
+                        android:textColor="@color/secondary"
+                        android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/categories_section"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/countries_recycler_view">
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/categories_title"
-                    style="@style/TextAppearance.Yumi.BodyLarge"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/categories_recycler_view"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/categories"
-                    android:textStyle="bold"
-                    />
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/categories_section"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/category_raw_item">
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                </androidx.recyclerview.widget.RecyclerView>
 
-                <TextView
-                    android:id="@+id/categories_see_all_text"
-                    style="@style/TextAppearance.Yumi.BodyMedium"
-                    android:textColor="@color/secondary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/see_all"
-                    android:textStyle="bold"
-                    />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/categories_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:listitem="@layout/category_raw_item"
-                tools:itemCount="1"
-                app:layout_constraintTop_toBottomOf="@id/categories_section"
-                android:orientation="horizontal">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

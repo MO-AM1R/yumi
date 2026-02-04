@@ -59,4 +59,6 @@
     <string name="countries">Countries</string>
     <string name="categories">Categories</string>
     <string name="category_description">Category description</string>
+
+    <string name="ingredients_count_message">%1$d ingredients</string>
 </resources>
