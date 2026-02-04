@@ -75,7 +75,7 @@ public class CategoriesRecyclerViewAdapter extends RecyclerView.Adapter<Category
         notifyDataSetChanged();
     }
 
-    public static class CategoryViewHolder extends RecyclerView.ViewHolder {
+    static class CategoryViewHolder extends RecyclerView.ViewHolder {
         private final TextView categoryTxtView;
         private final ImageView categoryImageView;
         private final CardView cardBackground;

@@ -73,7 +73,7 @@ public class AreasRecyclerViewAdapter extends RecyclerView.Adapter<AreasRecycler
         notifyDataSetChanged();
     }
 
-    public static class AreaViewHolder extends RecyclerView.ViewHolder {
+    static class AreaViewHolder extends RecyclerView.ViewHolder {
         private final TextView areaLogo;
         private final TextView areaName;
         private final View itemView;

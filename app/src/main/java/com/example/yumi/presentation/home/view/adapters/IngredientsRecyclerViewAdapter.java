@@ -78,7 +78,7 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter<Ingredi
         notifyDataSetChanged();
     }
 
-    public static class IngredientViewHolder extends RecyclerView.ViewHolder {
+    static class IngredientViewHolder extends RecyclerView.ViewHolder {
         private final TextView ingredientName;
         private final ImageView ingredientImage;
         private final CardView cardBackground;
