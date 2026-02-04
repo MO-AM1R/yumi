@@ -67,7 +67,7 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
         view.setOnClickListener(v -> onMealClick.onclick(meal));
     }
 
-    static class RandomMealsViewHolder extends RecyclerView.ViewHolder {
+    public static class RandomMealsViewHolder extends RecyclerView.ViewHolder {
         private final TextView mealName, mealIngredientsCount,
                 mealCategory;
         private final ImageView mealImage;

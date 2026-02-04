@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yumi.R;
 import com.example.yumi.domain.meals.model.Ingredient;
-import com.example.yumi.presentation.home.view.callbacks.OnIngredientClick;
+import com.example.yumi.presentation.shared.callbacks.OnIngredientClick;
 import com.example.yumi.utils.GlideUtil;
 
 import java.util.List;
@@ -78,7 +78,7 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter<Ingredi
         notifyDataSetChanged();
     }
 
-    static class IngredientViewHolder extends RecyclerView.ViewHolder {
+    public static class IngredientViewHolder extends RecyclerView.ViewHolder {
         private final TextView ingredientName;
         private final ImageView ingredientImage;
         private final CardView cardBackground;

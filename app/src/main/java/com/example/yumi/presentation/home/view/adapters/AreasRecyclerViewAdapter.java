@@ -1,12 +1,10 @@
 package com.example.yumi.presentation.home.view.adapters;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,11 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yumi.R;
 import com.example.yumi.domain.meals.model.Area;
-import com.example.yumi.presentation.home.view.callbacks.OnAreaClick;
-import com.example.yumi.utils.GlideUtil;
+import com.example.yumi.presentation.shared.callbacks.OnAreaClick;
 
 import java.util.List;
-import java.util.Locale;
 
 
 public class AreasRecyclerViewAdapter extends RecyclerView.Adapter<AreasRecyclerViewAdapter.AreaViewHolder> {
@@ -73,7 +69,7 @@ public class AreasRecyclerViewAdapter extends RecyclerView.Adapter<AreasRecycler
         notifyDataSetChanged();
     }
 
-    static class AreaViewHolder extends RecyclerView.ViewHolder {
+    public static class AreaViewHolder extends RecyclerView.ViewHolder {
         private final TextView areaLogo;
         private final TextView areaName;
         private final View itemView;

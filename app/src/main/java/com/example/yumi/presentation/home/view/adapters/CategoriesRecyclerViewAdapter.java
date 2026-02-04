@@ -1,7 +1,6 @@
 package com.example.yumi.presentation.home.view.adapters;
 import static com.example.yumi.presentation.home.view.adapters.CategoriesRecyclerViewAdapter.*;
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.yumi.R;
 import com.example.yumi.domain.meals.model.Category;
-import com.example.yumi.presentation.home.view.callbacks.OnCategoryClick;
+import com.example.yumi.presentation.shared.callbacks.OnCategoryClick;
 import com.example.yumi.utils.GlideUtil;
 import java.util.List;
 
@@ -75,7 +74,7 @@ public class CategoriesRecyclerViewAdapter extends RecyclerView.Adapter<Category
         notifyDataSetChanged();
     }
 
-    static class CategoryViewHolder extends RecyclerView.ViewHolder {
+    public static class CategoryViewHolder extends RecyclerView.ViewHolder {
         private final TextView categoryTxtView;
         private final ImageView categoryImageView;
         private final CardView cardBackground;
