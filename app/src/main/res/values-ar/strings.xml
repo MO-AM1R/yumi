@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">يمي</string>
+    <string name="app_name">يومي</string>
     <string name="app_tagline">خطط لوجباتك</string>
     <string name="splash_screen_description">Splash Screen Description</string>
     <string name="logo_image_description">Logo image description</string>
