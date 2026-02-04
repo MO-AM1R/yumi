@@ -1,34 +1,27 @@
 package com.example.yumi.presentation.home.view.fragments;
-
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
-
-import android.annotation.SuppressLint;
-import android.opengl.Visibility;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentHomeBinding;
 import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Meal;
+import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.presentation.home.HomeContract;
 import com.example.yumi.presentation.home.presenter.HomePresenter;
+import com.example.yumi.presentation.home.view.adapters.CategoriesRecyclerViewAdapter;
 import com.example.yumi.presentation.home.view.adapters.RandomMealsRecyclerViewAdapter;
 import com.example.yumi.utils.GlideUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +33,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     private RecyclerView categoriesRecyclerView;
     private RecyclerView ingredientsRecyclerView;
     private RandomMealsRecyclerViewAdapter mealsAdapter;
-    //    private CategoriesAdapter categoriesAdapter;
+    private CategoriesRecyclerViewAdapter categoriesAdapter;
+
 //    private AreasAdapter areasAdapter;
     private HomePresenter presenter;
 
@@ -74,11 +68,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     private void initAdapters() {
-        mealsAdapter = new RandomMealsRecyclerViewAdapter(meal -> presenter.onMealClicked(meal), new ArrayList<>());
+        mealsAdapter = new RandomMealsRecyclerViewAdapter(meal ->
+                presenter.onMealClicked(meal), new ArrayList<>());
 
-//        categoriesAdapter = new CategoriesAdapter(category ->
-//                presenter.filterByCategory(category.getName())
-//        );
+        categoriesAdapter = new CategoriesRecyclerViewAdapter(new ArrayList<>(),
+                category -> presenter.onCategoryClicked(category));
 
 //        areasAdapter = new AreasAdapter(area ->
 //                presenter.filterByArea(area.getName())
@@ -86,21 +80,19 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     private void initRecyclerViews() {
-        // Meals RecyclerView - Grid
-//        binding.recyclerViewMeals.setLayoutManager(
-//                new GridLayoutManager(requireContext(), 2)
-//        );
-        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        binding.randomMealsRecyclerView.setLayoutManager(layoutManager);
-
+        binding.randomMealsRecyclerView.setLayoutManager(
+                new LinearLayoutManager(requireContext(),
+                        LinearLayoutManager.HORIZONTAL, false)
+        );
         binding.randomMealsRecyclerView.setAdapter(mealsAdapter);
 
-        // Categories RecyclerView - Horizontal
-//        binding.recyclerViewCategories.setLayoutManager(
-//                new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        );
-//        binding.recyclerViewCategories.setAdapter(categoriesAdapter);
+
+        binding.categoriesRecyclerView.setLayoutManager(
+                new LinearLayoutManager(requireContext(),
+                        LinearLayoutManager.HORIZONTAL, false)
+        );
+
+        binding.categoriesRecyclerView.setAdapter(categoriesAdapter);
 
         // Areas RecyclerView - Horizontal
 //        binding.recyclerViewAreas.setLayoutManager(
@@ -110,14 +102,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     private void initSwipeRefresh() {
-        binding.swipeRefreshLayout.setOnRefreshListener(this::loadData);
+        binding.swipeRefreshLayout.setOnRefreshListener(presenter::refreshData);
     }
 
     private void loadData() {
-        presenter.loadDayMeal();
-        presenter.loadRandomMeals();
-        presenter.loadCategories();
-        presenter.loadAreas();
+        presenter.loadHomeData();
     }
 
     @Override
@@ -137,7 +126,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void showCategories(List<Category> categories) {
-
+        categoriesAdapter.setCategories(categories);
     }
 
     @Override
@@ -147,6 +136,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void navigateToMealDetail(String mealId) {
+
+    }
+
+    @Override
+    public void navigateToFilteredMeals(MealsFilter filter, String name) {
 
     }
 

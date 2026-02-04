@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.fragment)
+    implementation(libs.palette)
     implementation(libs.rxjava)
     implementation(libs.okhttp)
     implementation(libs.glide)

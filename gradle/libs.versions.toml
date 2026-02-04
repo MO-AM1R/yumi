@@ -22,7 +22,7 @@ rxandroid = "3.0.2"
 rxjava = "3.1.12"
 retrofit-adapter-rxjava3 = "3.0.0"
 refresh-layout = "1.2.0"
-
+palette = "1.0.0"
 
 [libraries]
 blurview-vversion = { module = "com.github.Dimezis:BlurView", version.ref = "blurviewVersion" }
@@ -51,6 +51,8 @@ rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroi
 rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 retrofit-adapter-rxjava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "retrofit-adapter-rxjava3" }
 refresh-layout = {group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "refresh-layout"}
+palette = {group = "androidx.palette", name = "palette", version.ref="palette"}
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

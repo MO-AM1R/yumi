@@ -1,8 +1,13 @@
 package com.example.yumi.presentation.home.presenter;
+
+import android.util.Log;
+
 import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
 import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
+import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.domain.meals.model.Meal;
+import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.domain.meals.repository.MealsRepository;
 import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.home.HomeContract;
@@ -19,8 +24,25 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
 
     private final MealsRepository repository;
 
+
     public HomePresenter() {
         this.repository = new MealsRepositoryImpl();
+    }
+
+    public void refreshData(){
+        view.showLoading();
+
+        loadDayMeal();
+        loadRandomMeals();
+    }
+
+    public void loadHomeData() {
+        view.showLoading();
+
+        loadDayMeal();
+        loadRandomMeals();
+        loadCategories();
+        loadAreas();
     }
 
     private void onDayMealLoaded(Meal meal) {
@@ -66,8 +88,6 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
     public void loadDayMeal() {
         if (isViewDetached()) return;
 
-        view.showLoading();
-
         Disposable disposable = repository.getDayMeal()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -83,10 +103,11 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
     public void loadRandomMeals() {
         if (isViewDetached()) return;
 
-        view.showLoading();
-
         Random random = new Random();
-        int index = random.nextInt(26) + 65;
+        int index;
+        do {
+            index = random.nextInt(26) + 97;
+        }while (index == 120);
 
         Disposable disposable = repository.getRandomMeals((char) index + "")
                 .subscribeOn(Schedulers.io())
@@ -103,8 +124,6 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
     public void loadCategories() {
         if (isViewDetached()) return;
 
-        view.showLoading();
-
         Disposable disposable = repository.getAllCategories()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -120,8 +139,6 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
     public void loadAreas() {
         if (isViewDetached()) return;
 
-        view.showLoading();
-
         Disposable disposable = repository.getAllAreas()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -136,5 +153,20 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
     @Override
     public void onMealClicked(Meal meal) {
         view.navigateToMealDetail(meal.getId());
+    }
+
+    @Override
+    public void onCategoryClicked(Category category) {
+        view.navigateToFilteredMeals(MealsFilter.CATEGORY, category.getId());
+    }
+
+    @Override
+    public void onIngredientClicked(Ingredient ingredient) {
+        view.navigateToFilteredMeals(MealsFilter.INGREDIENT, ingredient.getName());
+    }
+
+    @Override
+    public void onAreaClicked(Area area) {
+        view.navigateToFilteredMeals(MealsFilter.AREA, area.getName());
     }
 }

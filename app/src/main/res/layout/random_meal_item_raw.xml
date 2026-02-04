@@ -81,6 +81,7 @@
                 android:id="@+id/random_meal_name"
                 style="@style/TextAppearance.Yumi.BodyMedium"
                 android:layout_width="match_parent"
+                android:maxLines="1"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 tools:text="Grilled Salmon with Asparagus" />
