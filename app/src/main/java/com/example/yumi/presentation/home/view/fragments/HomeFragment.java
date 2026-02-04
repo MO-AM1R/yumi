@@ -22,6 +22,7 @@ import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.model.MealsFilter;
+import com.example.yumi.presentation.browsecategories.fragments.CategoriesFragment;
 import com.example.yumi.presentation.browsecountries.fragments.CountriesFragment;
 import com.example.yumi.presentation.home.HomeContract;
 import com.example.yumi.presentation.home.presenter.HomePresenter;
@@ -86,6 +87,15 @@ public class HomeFragment extends Fragment implements HomeContract.View {
             if (navigationCallback != null) {
                 navigationCallback.navigateToFragment(
                         new CountriesFragment(),
+                        "countries"
+                );
+            }
+        });
+
+        binding.categoriesSeeAllText.setOnClickListener(v -> {
+            if (navigationCallback != null) {
+                navigationCallback.navigateToFragment(
+                        new CategoriesFragment(),
                         "countries"
                 );
             }
