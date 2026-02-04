@@ -2,16 +2,12 @@ package com.example.yumi.presentation.home.view.fragments;
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
-
 import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +20,7 @@ import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.presentation.browsecategories.fragments.CategoriesFragment;
 import com.example.yumi.presentation.browsecountries.fragments.CountriesFragment;
+import com.example.yumi.presentation.browseingredients.fragments.IngredientsFragment;
 import com.example.yumi.presentation.home.HomeContract;
 import com.example.yumi.presentation.home.presenter.HomePresenter;
 import com.example.yumi.presentation.home.view.adapters.AreasRecyclerViewAdapter;
@@ -96,7 +93,16 @@ public class HomeFragment extends Fragment implements HomeContract.View {
             if (navigationCallback != null) {
                 navigationCallback.navigateToFragment(
                         new CategoriesFragment(),
-                        "countries"
+                        "categories"
+                );
+            }
+        });
+
+        binding.ingredientsSeeAllText.setOnClickListener(v -> {
+            if (navigationCallback != null) {
+                navigationCallback.navigateToFragment(
+                        new IngredientsFragment(),
+                        "ingredients"
                 );
             }
         });
