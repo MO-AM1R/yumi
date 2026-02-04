@@ -19,6 +19,7 @@ import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.presentation.home.HomeContract;
 import com.example.yumi.presentation.home.presenter.HomePresenter;
+import com.example.yumi.presentation.home.view.adapters.AreasRecyclerViewAdapter;
 import com.example.yumi.presentation.home.view.adapters.CategoriesRecyclerViewAdapter;
 import com.example.yumi.presentation.home.view.adapters.RandomMealsRecyclerViewAdapter;
 import com.example.yumi.utils.GlideUtil;
@@ -34,8 +35,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     private RecyclerView ingredientsRecyclerView;
     private RandomMealsRecyclerViewAdapter mealsAdapter;
     private CategoriesRecyclerViewAdapter categoriesAdapter;
-
-//    private AreasAdapter areasAdapter;
+    private AreasRecyclerViewAdapter areasAdapter;
     private HomePresenter presenter;
 
 
@@ -74,9 +74,9 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         categoriesAdapter = new CategoriesRecyclerViewAdapter(new ArrayList<>(),
                 category -> presenter.onCategoryClicked(category));
 
-//        areasAdapter = new AreasAdapter(area ->
-//                presenter.filterByArea(area.getName())
-//        );
+        areasAdapter = new AreasRecyclerViewAdapter(new ArrayList<>(),
+                area -> presenter.onAreaClicked(area)
+        );
     }
 
     private void initRecyclerViews() {
@@ -94,11 +94,13 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
         binding.categoriesRecyclerView.setAdapter(categoriesAdapter);
 
-        // Areas RecyclerView - Horizontal
-//        binding.recyclerViewAreas.setLayoutManager(
-//                new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        );
-//        binding.recyclerViewAreas.setAdapter(areasAdapter);
+
+        binding.countriesRecyclerView.setLayoutManager(
+                new LinearLayoutManager(requireContext(),
+                        LinearLayoutManager.HORIZONTAL, false)
+        );
+
+        binding.countriesRecyclerView.setAdapter(areasAdapter);
     }
 
     private void initSwipeRefresh() {
@@ -126,12 +128,12 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void showCategories(List<Category> categories) {
-        categoriesAdapter.setCategories(categories);
+        categoriesAdapter.setCategories(categories.subList(0, 10));
     }
 
     @Override
     public void showAreas(List<Area> areas) {
-
+        areasAdapter.setAreas(areas.subList(0, 10));
     }
 
     @Override
