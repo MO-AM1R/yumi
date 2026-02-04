@@ -77,4 +77,6 @@
     <color name="skip_glass_background_color">#80000000</color>
 
     <color name="black_muted">#2A2A2A</color>
+
+    <color name="glass_overlay_color_dark">#80000000</color>
 </resources>

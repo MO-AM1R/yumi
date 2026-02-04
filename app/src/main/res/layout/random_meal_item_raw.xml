@@ -55,7 +55,7 @@
                     android:id="@+id/random_fav_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/glass_background"
+                    android:background="@drawable/fav_btn_glass_background"
                     android:padding="8dp"
                     app:blurOverlayColor="@color/glass_overlay_color">
 

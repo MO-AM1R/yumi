@@ -14,13 +14,12 @@
         android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:indicatorColor="@color/secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:trackColor="@color/secondary"
-        app:indicatorColor="@color/secondary"
-        />
+        app:trackColor="@color/secondary" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
@@ -130,7 +129,7 @@
                                     android:id="@+id/fav_btn"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/glass_background"
+                                    android:background="@drawable/fav_btn_glass_background"
                                     android:padding="8dp"
                                     app:blurOverlayColor="@color/glass_overlay_color">
 
@@ -157,8 +156,8 @@
                                 style="@style/TextAppearance.Yumi.BodyMedium"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textStyle="bold"
                                 android:maxLines="1"
+                                android:textStyle="bold"
                                 tools:text="Grilled Salmon with Asparagus" />
 
                             <Space
@@ -259,9 +258,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:paddingVertical="8dp"
                     app:layout_constraintTop_toBottomOf="@id/ingredients_section"
                     tools:itemCount="1"
-                    android:paddingVertical="8dp"
                     tools:listitem="@layout/ingredient_raw_item">
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -350,10 +349,10 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categories_recycler_view"
-                    android:paddingVertical="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:paddingVertical="8dp"
                     app:layout_constraintTop_toBottomOf="@id/categories_section"
                     tools:itemCount="1"
                     tools:listitem="@layout/category_raw_item">
