@@ -1,5 +1,9 @@
 package com.example.yumi.presentation.home.view.fragments;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,7 +21,10 @@ import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.presentation.home.HomeContract;
+import com.example.yumi.presentation.home.presenter.HomePresenter;
+import com.example.yumi.presentation.home.view.adapters.RandomMealsRecyclerViewAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,6 +34,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     private RecyclerView countriesRecyclerView;
     private RecyclerView categoriesRecyclerView;
     private RecyclerView ingredientsRecyclerView;
+    private RandomMealsRecyclerViewAdapter mealsAdapter;
+    //    private CategoriesAdapter categoriesAdapter;
+//    private AreasAdapter areasAdapter;
+    private HomePresenter presenter;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -46,24 +58,74 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        presenter = new HomePresenter();
 
-        setupRandomMealRecyclerView();
+        initAdapters();
+        initRecyclerViews();
+        initSwipeRefresh();
+
+        presenter.attachView(this);
+        loadData();
     }
 
-    void setupRandomMealRecyclerView(){
-        randomMealsRecyclerView = binding.randomMealsRecyclerView;
+    private void initAdapters() {
+        mealsAdapter = new RandomMealsRecyclerViewAdapter(meal -> presenter.onMealClicked(meal), new ArrayList<>());
+
+//        categoriesAdapter = new CategoriesAdapter(category ->
+//                presenter.filterByCategory(category.getName())
+//        );
+
+//        areasAdapter = new AreasAdapter(area ->
+//                presenter.filterByArea(area.getName())
+//        );
+    }
+
+    private void initRecyclerViews() {
+        // Meals RecyclerView - Grid
+//        binding.recyclerViewMeals.setLayoutManager(
+//                new GridLayoutManager(requireContext(), 2)
+//        );
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        binding.randomMealsRecyclerView.setLayoutManager(layoutManager);
 
+        binding.randomMealsRecyclerView.setAdapter(mealsAdapter);
 
+        // Categories RecyclerView - Horizontal
+//        binding.recyclerViewCategories.setLayoutManager(
+//                new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        );
+//        binding.recyclerViewCategories.setAdapter(categoriesAdapter);
 
-        randomMealsRecyclerView.setLayoutManager(layoutManager);
-//        randomMealsRecyclerView.setAdapter();
+        // Areas RecyclerView - Horizontal
+//        binding.recyclerViewAreas.setLayoutManager(
+//                new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        );
+//        binding.recyclerViewAreas.setAdapter(areasAdapter);
+    }
+
+    private void initSwipeRefresh() {
+//        binding.swipeRefreshLayout.setOnRefreshListener(this::loadData);
+    }
+
+    private void loadData() {
+        presenter.loadDayMeal();
+        presenter.loadRandomMeals();
+//        presenter.loadCategories();
+//        presenter.loadAreas();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void showDayMeal(Meal meal) {
+        binding.mealCategory.setText(meal.getCategory());
+        binding.dayMealIngredientsCount.setText(meal.getIngredients().size() + " ingredients");
+        binding.dayMealName.setText(meal.getName());
     }
 
     @Override
-    public void showMeals(List<Meal> meals) {
-
+    public void showRandomMeals(List<Meal> meals) {
+        mealsAdapter.setMeals(meals);
     }
 
     @Override
@@ -77,23 +139,20 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
-    public void showEmptyState() {
-
-    }
-
-    @Override
     public void navigateToMealDetail(String mealId) {
 
     }
 
     @Override
     public void showLoading() {
-
+        binding.loading.setIndeterminate(true);
+        binding.loading.setVisibility(VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        binding.loading.setIndeterminate(false);
+        binding.loading.setVisibility(GONE);
     }
 
     @Override

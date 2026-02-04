@@ -19,7 +19,7 @@ public abstract class BasePresenter<V extends BaseView> {
         detachView();
     }
 
-    protected boolean isViewAttached() {
-        return view != null;
+    protected boolean isViewDetached() {
+        return view == null;
     }
 }

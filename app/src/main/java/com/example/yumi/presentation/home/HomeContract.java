@@ -8,22 +8,20 @@ import java.util.List;
 public interface HomeContract {
 
     interface View extends BaseView {
-        void showMeals(List<Meal> meals);
+        void showDayMeal(Meal meal);
+        void showRandomMeals(List<Meal> meals);
         void showCategories(List<Category> categories);
         void showAreas(List<Area> areas);
-        void showEmptyState();
         void navigateToMealDetail(String mealId);
     }
 
     interface Presenter {
         void attachView(View view);
         void detachView();
+        void loadDayMeal();
         void loadRandomMeals();
         void loadCategories();
         void loadAreas();
-        void searchMeals(String query);
-        void filterByCategory(String category);
-        void filterByArea(String area);
         void onMealClicked(Meal meal);
         void onDestroy();
     }

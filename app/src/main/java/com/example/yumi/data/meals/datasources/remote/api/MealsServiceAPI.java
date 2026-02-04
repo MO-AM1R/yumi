@@ -3,39 +3,39 @@ import com.example.yumi.data.meals.model.responses.AreasResponse;
 import com.example.yumi.data.meals.model.responses.CategoriesResponse;
 import com.example.yumi.data.meals.model.responses.IngredientsResponse;
 import com.example.yumi.data.meals.model.responses.MealsResponse;
-import retrofit2.Call;
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface MealsServiceAPI {
 
+public interface MealsServiceAPI {
     @GET("random.php")
-    Call<MealsResponse> getRandomMeal();
+    Single<MealsResponse> getDayMeal();
 
     @GET("lookup.php")
-    Call<MealsResponse> getMealById(@Query("i") String mealId);
+    Single<MealsResponse> getMealById(@Query("i") String mealId);
 
     @GET("search.php")
-    Call<MealsResponse> searchMealsByName(@Query("s") String mealName);
+    Single<MealsResponse> searchMealsByName(@Query("s") String mealName);
 
     @GET("search.php")
-    Call<MealsResponse> searchMealsByFirstLetter(@Query("f") String firstLetter);
+    Single<MealsResponse> searchMealsByFirstLetter(@Query("f") String firstLetter);
 
     @GET("filter.php")
-    Call<MealsResponse> filterMealsByCategory(@Query("c") String category);
+    Single<MealsResponse> filterMealsByCategory(@Query("c") String category);
 
     @GET("filter.php")
-    Call<MealsResponse> filterMealsByArea(@Query("a") String area);
+    Single<MealsResponse> filterMealsByArea(@Query("a") String area);
 
     @GET("filter.php")
-    Call<MealsResponse> filterMealsByIngredient(@Query("i") String ingredient);
+    Single<MealsResponse> filterMealsByIngredient(@Query("i") String ingredient);
 
     @GET("categories.php")
-    Call<CategoriesResponse> getAllCategories();
+    Single<CategoriesResponse> getAllCategories();
 
     @GET("list.php?a=list")
-    Call<AreasResponse> getAllAreas();
+    Single<AreasResponse> getAllAreas();
 
     @GET("list.php?i=list")
-    Call<IngredientsResponse> getAllIngredients();
+    Single<IngredientsResponse> getAllIngredients();
 }
