@@ -1,5 +1,7 @@
 package com.example.yumi.presentation.home.view.activities;
-import android.annotation.SuppressLint;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -14,14 +16,18 @@ import com.example.yumi.presentation.home.view.fragments.FavoritesFragment;
 import com.example.yumi.presentation.home.view.fragments.HomeFragment;
 import com.example.yumi.presentation.home.view.fragments.ProfileFragment;
 import com.example.yumi.presentation.home.view.fragments.SearchFragment;
+import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
+import java.util.Stack;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 
-public class HomeBaseActivity extends AppCompatActivity {
+public class HomeBaseActivity extends AppCompatActivity implements NavigationCallback {
 
     private ActivityHomeBaseBinding binding;
     private Fragment activeFragment;
     private int currentTabIndex = 0;
+    private final Stack<Fragment> fragmentStack = new Stack<>();
+
     private static final String TAG_HOME = "home";
     private static final String TAG_SEARCH = "search";
     private static final String TAG_CALENDAR = "calendar";
@@ -29,11 +35,9 @@ public class HomeBaseActivity extends AppCompatActivity {
     private static final String TAG_PROFILE = "profile";
     private static final String KEY_CURRENT_TAB = "current_tab";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityHomeBaseBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -75,7 +79,6 @@ public class HomeBaseActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("ResourceAsColor")
     private void setupBottomBar() {
         binding.bottomBar.selectTabAt(currentTabIndex, true);
 
@@ -84,6 +87,7 @@ public class HomeBaseActivity extends AppCompatActivity {
             public void onTabSelected(int oldIndex, @Nullable AnimatedBottomBar.Tab oldTab,
                                       int newIndex, @NonNull AnimatedBottomBar.Tab newTab) {
                 if (currentTabIndex != newIndex) {
+                    clearFragmentStack();
                     currentTabIndex = newIndex;
                     switchFragment(newIndex);
                 }
@@ -91,7 +95,7 @@ public class HomeBaseActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(int index, @NonNull AnimatedBottomBar.Tab tab) {
-                // Optional: scroll to top or refresh
+                popToRoot();
             }
         });
     }
@@ -124,32 +128,22 @@ public class HomeBaseActivity extends AppCompatActivity {
 
     private String getTagForIndex(int index) {
         switch (index) {
-            case 0:
-                return TAG_HOME;
-            case 1:
-                return TAG_SEARCH;
-            case 2:
-                return TAG_CALENDAR;
-            case 3:
-                return TAG_FAVORITES;
-            default:
-                return TAG_PROFILE;
+            case 0: return TAG_HOME;
+            case 1: return TAG_SEARCH;
+            case 2: return TAG_CALENDAR;
+            case 3: return TAG_FAVORITES;
+            default: return TAG_PROFILE;
         }
     }
 
     @NonNull
     private Fragment createFragment(int index) {
         switch (index) {
-            case 0:
-                return new HomeFragment();
-            case 1:
-                return new SearchFragment();
-            case 2:
-                return new CalendarFragment();
-            case 3:
-                return new FavoritesFragment();
-            default:
-                return new ProfileFragment();
+            case 0: return new HomeFragment();
+            case 1: return new SearchFragment();
+            case 2: return new CalendarFragment();
+            case 3: return new FavoritesFragment();
+            default: return new ProfileFragment();
         }
     }
 
@@ -157,12 +151,124 @@ public class HomeBaseActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (currentTabIndex != 0) {
+                if (!fragmentStack.isEmpty()) {
+                    popFragment();
+                } else if (currentTabIndex != 0) {
                     binding.bottomBar.selectTabAt(0, true);
                 } else {
                     moveTaskToBack(true);
                 }
             }
         });
+    }
+
+
+    @Override
+    public void navigateToFragment(Fragment fragment, String tag) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left,
+                R.anim.slide_in_left,
+                R.anim.slide_out_right
+        );
+
+        if (activeFragment != null) {
+            transaction.hide(activeFragment);
+            fragmentStack.push(activeFragment);
+        }
+
+
+        transaction.add(R.id.fragment_container, fragment, tag);
+        transaction.commit();
+
+        activeFragment = fragment;
+        hideBottomBar();
+    }
+
+    @Override
+    public void popFragment() {
+        if (!fragmentStack.isEmpty()) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_right
+            );
+
+            transaction.remove(activeFragment);
+
+            Fragment previousFragment = fragmentStack.pop();
+            transaction.show(previousFragment);
+            transaction.commit();
+
+            activeFragment = previousFragment;
+
+            if (fragmentStack.isEmpty()) {
+                showBottomBar();
+            }
+        }
+    }
+
+    @Override
+    public void popToRoot() {
+        if (fragmentStack.isEmpty()) return;
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.remove(activeFragment);
+
+        while (fragmentStack.size() > 1) {
+            Fragment fragment = fragmentStack.pop();
+            transaction.remove(fragment);
+        }
+
+        Fragment rootFragment = fragmentStack.pop();
+        transaction.show(rootFragment);
+        transaction.commit();
+
+        activeFragment = rootFragment;
+        showBottomBar();
+    }
+
+    @Override
+    public void clearStackAndNavigate(Fragment fragment, String tag) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        if (activeFragment != null) {
+            transaction.remove(activeFragment);
+        }
+
+        while (!fragmentStack.isEmpty()) {
+            Fragment f = fragmentStack.pop();
+            transaction.remove(f);
+        }
+
+        transaction.add(R.id.fragment_container, fragment, tag);
+        transaction.commit();
+
+        activeFragment = fragment;
+    }
+
+    @Override
+    public void showBottomBar() {
+        binding.bottomBar.setVisibility(VISIBLE);
+    }
+
+    @Override
+    public void hideBottomBar() {
+        binding.bottomBar.setVisibility(GONE);
+    }
+
+    private void clearFragmentStack() {
+        if (fragmentStack.isEmpty()) return;
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        while (!fragmentStack.isEmpty()) {
+            Fragment fragment = fragmentStack.pop();
+            transaction.remove(fragment);
+        }
+
+        transaction.commit();
     }
 }

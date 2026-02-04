@@ -19,7 +19,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.yumi.presentation.home.view.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_countriesFragment"
+            app:destination="@id/countriesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.yumi.presentation.home.view.fragments.ProfileFragment"
@@ -30,4 +34,9 @@
         android:name="com.example.yumi.presentation.home.view.fragments.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/countriesFragment"
+        android:name="com.example.yumi.presentation.browsecountries.fragments.CountriesFragment"
+        android:label="fragment_countries"
+        tools:layout="@layout/fragment_countries" />
 </navigation>

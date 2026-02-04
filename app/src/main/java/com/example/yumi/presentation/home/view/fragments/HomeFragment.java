@@ -2,12 +2,16 @@ package com.example.yumi.presentation.home.view.fragments;
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
+
+import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +22,14 @@ import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.model.MealsFilter;
+import com.example.yumi.presentation.browsecountries.fragments.CountriesFragment;
 import com.example.yumi.presentation.home.HomeContract;
 import com.example.yumi.presentation.home.presenter.HomePresenter;
 import com.example.yumi.presentation.home.view.adapters.AreasRecyclerViewAdapter;
 import com.example.yumi.presentation.home.view.adapters.CategoriesRecyclerViewAdapter;
 import com.example.yumi.presentation.home.view.adapters.IngredientsRecyclerViewAdapter;
 import com.example.yumi.presentation.home.view.adapters.RandomMealsRecyclerViewAdapter;
+import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
 import com.example.yumi.utils.GlideUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,16 +37,20 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeContract.View {
     private FragmentHomeBinding binding;
-    private RecyclerView randomMealsRecyclerView;
-    private RecyclerView countriesRecyclerView;
-    private RecyclerView categoriesRecyclerView;
-    private RecyclerView ingredientsRecyclerView;
     private IngredientsRecyclerViewAdapter ingredientsAdapter;
     private CategoriesRecyclerViewAdapter categoriesAdapter;
     private RandomMealsRecyclerViewAdapter mealsAdapter;
     private AreasRecyclerViewAdapter areasAdapter;
     private HomePresenter presenter;
+    private NavigationCallback navigationCallback;
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof NavigationCallback) {
+            navigationCallback = (NavigationCallback) context;
+        }
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -65,9 +75,21 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         initAdapters();
         initRecyclerViews();
         initSwipeRefresh();
+        initSeeAllButtons();
 
         presenter.attachView(this);
         loadData();
+    }
+
+    private void initSeeAllButtons() {
+        binding.countriesSeeAllText.setOnClickListener(v -> {
+            if (navigationCallback != null) {
+                navigationCallback.navigateToFragment(
+                        new CountriesFragment(),
+                        "countries"
+                );
+            }
+        });
     }
 
     private void initAdapters() {
