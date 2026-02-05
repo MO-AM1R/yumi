@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:paddingHorizontal="24dp"
-    android:paddingVertical="58dp"
+    android:padding="@dimen/padding_screen"
     tools:context=".presentation.home.view.fragments.HomeFragment">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -247,6 +246,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
                         android:text="@string/see_all"
                         android:textColor="@color/secondary"
                         android:textStyle="bold" />
@@ -292,6 +292,7 @@
                         android:id="@+id/countries_see_all_text"
                         style="@style/TextAppearance.Yumi.BodyMedium"
                         android:layout_width="wrap_content"
+                        android:layout_marginEnd="8dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/see_all"
@@ -339,6 +340,7 @@
                         android:id="@+id/categories_see_all_text"
                         style="@style/TextAppearance.Yumi.BodyMedium"
                         android:layout_width="wrap_content"
+                        android:layout_marginEnd="8dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/see_all"
@@ -361,8 +363,9 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="24dp"
+                    android:layout_height="48dp"
                     app:layout_constraintTop_toBottomOf="@id/categories_recycler_view" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

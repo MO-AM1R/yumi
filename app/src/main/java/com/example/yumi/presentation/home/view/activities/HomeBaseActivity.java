@@ -1,12 +1,17 @@
 package com.example.yumi.presentation.home.view.activities;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Window;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.yumi.R;
@@ -22,18 +27,17 @@ import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 
 public class HomeBaseActivity extends AppCompatActivity implements NavigationCallback {
-
     private ActivityHomeBaseBinding binding;
     private Fragment activeFragment;
     private int currentTabIndex = 0;
     private final Stack<Fragment> fragmentStack = new Stack<>();
-
     private static final String TAG_HOME = "home";
     private static final String TAG_SEARCH = "search";
     private static final String TAG_CALENDAR = "calendar";
     private static final String TAG_FAVORITES = "favorites";
     private static final String TAG_PROFILE = "profile";
     private static final String KEY_CURRENT_TAB = "current_tab";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +52,46 @@ public class HomeBaseActivity extends AppCompatActivity implements NavigationCal
             restoreActiveFragment();
         }
 
+        setupSystemBars();
+        applyWindowInsets();
         setupBottomBar();
         setupBackPressHandler();
     }
+
+    private void setupSystemBars() {
+        Window window = getWindow();
+
+        window.setStatusBarColor(android.graphics.Color.TRANSPARENT);
+        window.setNavigationBarColor(getResources().getColor(R.color.card, getTheme()));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false);
+        } else {
+            WindowCompat.setDecorFitsSystemWindows(window, false);
+        }
+    }
+
+    private void applyWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main, (view, windowInsets) -> {
+            Insets systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            Insets displayCutout = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout());
+
+            int topInset = Math.max(systemBars.top, displayCutout.top);
+            int bottomInset = systemBars.bottom;
+
+            binding.fragmentContainer.setPadding(0, topInset, 0, 0);
+
+            binding.bottomBar.setPadding(
+                    binding.bottomBar.getPaddingLeft(),
+                    binding.bottomBar.getPaddingTop(),
+                    binding.bottomBar.getPaddingRight(),
+                    bottomInset
+            );
+
+            return WindowInsetsCompat.CONSUMED;
+        });
+    }
+
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
