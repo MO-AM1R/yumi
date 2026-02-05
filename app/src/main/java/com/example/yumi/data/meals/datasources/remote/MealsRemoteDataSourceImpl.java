@@ -32,7 +32,7 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
     }
 
     public Single<MealsResponse> filterMealsByCategory(String category){
-        return mealsServiceAPI.searchMealsByFirstLetter(category);
+        return mealsServiceAPI.filterMealsByCategory(category);
     }
 
     public Single<MealsResponse> filterMealsByArea(String area){
