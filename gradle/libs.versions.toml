@@ -23,6 +23,11 @@ rxjava = "3.1.12"
 retrofit-adapter-rxjava3 = "3.0.0"
 refresh-layout = "1.2.0"
 palette = "1.0.0"
+firebaseBom = "34.8.0"
+credentials = "1.5.0"
+googleid = "1.2.0"
+googleservices = "4.4.4"
+
 
 [libraries]
 blurview-vversion = { module = "com.github.Dimezis:BlurView", version.ref = "blurviewVersion" }
@@ -52,8 +57,15 @@ rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 retrofit-adapter-rxjava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "retrofit-adapter-rxjava3" }
 refresh-layout = {group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "refresh-layout"}
 palette = {group = "androidx.palette", name = "palette", version.ref="palette"}
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
+credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
+credentials-play-services = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
+googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 
 
 [plugins]
+google-services = { id = "com.google.gms.google-services", version.ref = "googleservices" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 safe-args = {id = "androidx.navigation.safeargs" }

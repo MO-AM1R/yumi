@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
     alias(libs.plugins.safe.args)
 }
 
@@ -37,20 +38,26 @@ android {
 }
 
 dependencies {
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.credentials.play.services)
     implementation(libs.retrofit.adapter.rxjava3)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.animated.bottom.bar)
     annotationProcessor(libs.glide.compiler)
     implementation(libs.logging.interceptor)
     annotationProcessor(libs.room.compiler)
+    implementation(libs.firebase.firestore)
     implementation(libs.blurview.vversion)
     implementation(libs.navigation.ui.ktx)
     implementation(libs.constraintlayout)
     implementation(libs.refresh.layout)
     implementation(libs.converter.gson)
+    implementation(libs.firebase.auth)
     implementation(libs.room.runtime)
+    implementation(libs.credentials)
     implementation(libs.rxandroid)
     implementation(libs.appcompat)
+    implementation(libs.googleid)
     implementation(libs.retrofit)
     implementation(libs.material)
     implementation(libs.activity)
