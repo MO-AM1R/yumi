@@ -2,9 +2,10 @@ package com.example.yumi.domain.meals.model;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class MealsFilter {
+public class MealsFilter implements Serializable {
     private MealsFilterType type;
     private String query;
 

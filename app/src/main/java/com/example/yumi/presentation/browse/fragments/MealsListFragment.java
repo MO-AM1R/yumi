@@ -23,10 +23,14 @@ import android.os.Bundle;
 
 public class MealsListFragment extends Fragment implements MealsListContract.View {
     private NavigationCallback navigationCallback;
+    private final String FILTER_KEY = "filter";
     private FragmentMealsListBinding binding;
     private MealsListPresenter presenter;
     private MealsGridAdapter adapter;
-    private final MealsFilter filter;
+    private MealsFilter filter;
+
+
+    public MealsListFragment() { }
 
     public MealsListFragment(MealsFilter filter) {
         this.filter = filter;
@@ -53,9 +57,21 @@ public class MealsListFragment extends Fragment implements MealsListContract.Vie
             binding = FragmentMealsListBinding.bind(view);
         }
 
+        if (savedInstanceState != null)
+            restoreFilter(savedInstanceState);
+
         return view;
     }
 
+    private void restoreFilter(Bundle savedInstanceState) {
+        filter = (MealsFilter) savedInstanceState.getSerializable(FILTER_KEY);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(FILTER_KEY, filter);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
