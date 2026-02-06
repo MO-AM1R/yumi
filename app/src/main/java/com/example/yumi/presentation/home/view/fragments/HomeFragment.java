@@ -199,7 +199,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
-    public void navigateToFilteredMeals(MealsFilter filter, String name) {
+    public void navigateToFilteredMeals(MealsFilter filter) {
 
     }
 

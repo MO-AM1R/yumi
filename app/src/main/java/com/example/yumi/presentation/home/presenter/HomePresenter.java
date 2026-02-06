@@ -5,6 +5,7 @@ import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.model.MealsFilter;
+import com.example.yumi.domain.meals.model.MealsFilterType;
 import com.example.yumi.domain.meals.repository.MealsRepository;
 import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.home.HomeContract;
@@ -176,16 +177,16 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
 
     @Override
     public void onCategoryClicked(Category category) {
-        view.navigateToFilteredMeals(MealsFilter.CATEGORY, category.getId());
+        view.navigateToFilteredMeals(new MealsFilter(MealsFilterType.CATEGORY, category.getName()));
     }
 
     @Override
     public void onIngredientClicked(Ingredient ingredient) {
-        view.navigateToFilteredMeals(MealsFilter.INGREDIENT, ingredient.getName());
+        view.navigateToFilteredMeals(new MealsFilter(MealsFilterType.INGREDIENT, ingredient.getName()));
     }
 
     @Override
     public void onAreaClicked(Area area) {
-        view.navigateToFilteredMeals(MealsFilter.AREA, area.getName());
+        view.navigateToFilteredMeals(new MealsFilter(MealsFilterType.AREA, area.getName()));
     }
 }

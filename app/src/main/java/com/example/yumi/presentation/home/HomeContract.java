@@ -24,7 +24,7 @@ public interface HomeContract {
 
         void navigateToMealDetail(String mealId);
 
-        void navigateToFilteredMeals(MealsFilter filter, String name);
+        void navigateToFilteredMeals(MealsFilter filter);
     }
 
     interface Presenter {
