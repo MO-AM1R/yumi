@@ -81,12 +81,10 @@ public class HomeBaseActivity extends AppCompatActivity implements NavigationCal
 
             binding.fragmentContainer.setPadding(0, topInset, 0, 0);
 
-            binding.bottomBar.setPadding(
-                    binding.bottomBar.getPaddingLeft(),
-                    binding.bottomBar.getPaddingTop(),
-                    binding.bottomBar.getPaddingRight(),
-                    bottomInset
-            );
+            androidx.constraintlayout.widget.ConstraintLayout.LayoutParams params =
+                    (androidx.constraintlayout.widget.ConstraintLayout.LayoutParams) binding.bottomBar.getLayoutParams();
+            params.bottomMargin = bottomInset;
+            binding.bottomBar.setLayoutParams(params);
 
             return WindowInsetsCompat.CONSUMED;
         });
