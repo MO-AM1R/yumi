@@ -1,7 +1,5 @@
 package com.example.yumi.domain.meals.model;
 
-import com.example.yumi.data.config.APIConfig;
-
 public class MealIngredient {
     private final String name;
     private final String measure;
@@ -24,13 +22,5 @@ public class MealIngredient {
 
     public String getThumbnailUrl() {
         return thumbnailUrl;
-    }
-
-    public String getImageUrl() {
-        if (name == null || name.isEmpty()) {
-            return "";
-        }
-
-        return APIConfig.INGREDIENTS_IMAGE_BASE_URL + name + ".png";
     }
 }
