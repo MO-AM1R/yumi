@@ -1,80 +1,64 @@
 package com.example.yumi.presentation.authentication.view.fragments;
-import static android.content.Context.MODE_PRIVATE;
-import static com.example.yumi.data.config.SharedPreferencesKeysConfig.KEY_LOGGED_IN;
-import static com.example.yumi.data.config.SharedPreferencesKeysConfig.KEY_ONBOARDING_COMPLETED;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import com.example.yumi.R;
-import com.example.yumi.data.config.SharedPreferencesKeysConfig;
 import com.example.yumi.databinding.FragmentSplashBinding;
-import com.example.yumi.utils.AnimatorUtils;
+import com.example.yumi.presentation.authentication.AuthContract;
+import com.example.yumi.presentation.authentication.presenter.SplashPresenter;
 import com.example.yumi.presentation.authentication.view.activities.AuthenticationActivity;
+import com.example.yumi.utils.AnimatorUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicBoolean;
 import eightbitlab.com.blurview.BlurView;
 import eightbitlab.com.blurview.RenderEffectBlur;
 
 
 @SuppressLint("CustomSplashScreen")
-public class SplashFragment extends Fragment {
+public class SplashFragment extends Fragment implements AuthContract.SplashView {
     private FragmentSplashBinding binding;
-    private Handler mainHandler = new Handler(Looper.getMainLooper());
-    private AtomicBoolean isOperationComplete = new AtomicBoolean(false);
-    private ExecutorService executorService;
+    private SplashPresenter presenter;
     private TextView[] foods;
     private final List<ObjectAnimator> foodAnimators = new ArrayList<>();
     private Random random = new Random();
+    private boolean animationsCompleted = false;
 
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-
-        if (view == null) {
-            binding = FragmentSplashBinding.inflate(inflater);
-            view = binding.getRoot();
-        } else {
-            binding = FragmentSplashBinding.bind(view);
-        }
-
-        return view;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        binding = FragmentSplashBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        BlurView blurView = binding.splashBlurView;
-        ViewGroup rootView = binding.splashScreen;
+        presenter = new SplashPresenter(requireActivity().getApplication(), this);
+        presenter.attachView(this);
+
         foods = new TextView[]{
                 binding.fruit1, binding.fruit2, binding.fruit3,
                 binding.fruit4, binding.fruit5, binding.fruit6
         };
 
-        setupBlurView(blurView, rootView);
+        setupBlurView(binding.splashBlurView, binding.splashScreen);
         setupAnimations();
     }
 
@@ -93,7 +77,8 @@ public class SplashFragment extends Fragment {
         sequentialAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                startLoadingWithTimeout();
+                animationsCompleted = true;
+                presenter.onAnimationsComplete();
             }
         });
 
@@ -101,75 +86,53 @@ public class SplashFragment extends Fragment {
         sequentialAnimator.start();
     }
 
-    private void startLoadingWithTimeout() {
-        executorService = Executors.newSingleThreadExecutor();
-
-        long MAX_LOADING_TIME_MS = 2000;
-        mainHandler.postDelayed(this::onLoadingComplete, MAX_LOADING_TIME_MS);
-        executorService.execute(this::performNetworkOperation);
-    }
-
-    private void performNetworkOperation() {
-        if (isOperationComplete.compareAndSet(false, true)) {
-            mainHandler.post(this::onLoadingComplete);
-        }
-    }
-
-    private void onLoadingComplete() {
-        if (!isOperationComplete.compareAndSet(false, true)) {
-            // If already true, check if this is the first call to actually proceed
-            // This handles the race condition between timeout and operation completion
-        }
-
-        // Remove any pending timeout callbacks
-        mainHandler.removeCallbacksAndMessages(null);
-
-        ((AuthenticationActivity) getActivity()).markSplashSeen();
-        Log.d("SplashActivity", "Loading complete, proceeding to next screen");
-        navigateToNextScreen();
-    }
-
-    private void navigateToNextScreen() {
-        Log.d("SplashActivity", "Navigating to next screen...");
-
-        SharedPreferences prefs
-                = getActivity().getSharedPreferences(SharedPreferencesKeysConfig.PREF_NAME, MODE_PRIVATE);
-
-        boolean onboarding = prefs.getBoolean(KEY_ONBOARDING_COMPLETED, false);
-
-        if (onboarding) {
-            boolean loggedIn = prefs.getBoolean(KEY_LOGGED_IN, false);
-
-            if (loggedIn) {
-                Navigation.findNavController(requireView())
-                        .navigate(SplashFragmentDirections.actionSplashFragmentToHomeBaseActivity());
-
-                requireActivity().finish();
-            } else {
-                Navigation.findNavController(requireView())
-                        .navigate(R.id.action_splashFragment_to_loginFragment);
-            }
-        } else {
+    @Override
+    public void navigateToOnboarding() {
+        if (isAdded() && !isDetached()) {
+            markSplashSeen();
             Navigation.findNavController(requireView())
                     .navigate(R.id.action_splashFragment_to_onboardingFragment);
         }
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        mainHandler.removeCallbacksAndMessages(null);
-        if (executorService != null && !executorService.isShutdown()) {
-            executorService.shutdownNow();
+    public void navigateToLogin() {
+        if (isAdded() && !isDetached()) {
+            markSplashSeen();
+            Navigation.findNavController(requireView())
+                    .navigate(R.id.action_splashFragment_to_loginFragment);
         }
+    }
 
-        mainHandler = null;
-        isOperationComplete = null;
-        executorService = null;
-        foods = null;
-        random = null;
-        stopFoodsAnimation();
+    @Override
+    public void navigateToHome() {
+        if (isAdded() && !isDetached()) {
+            markSplashSeen();
+            Navigation.findNavController(requireView())
+                    .navigate(SplashFragmentDirections.actionSplashFragmentToHomeBaseActivity());
+            requireActivity().finish();
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        binding.splashCircularProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        binding.splashCircularProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showError(String message) {
+        // Splash typically doesn't show errors, but implement if needed
+    }
+
+    private void markSplashSeen() {
+        if (getActivity() instanceof AuthenticationActivity) {
+            ((AuthenticationActivity) getActivity()).markSplashSeen();
+        }
     }
 
     private void setupFoodsAnimation() {
@@ -179,6 +142,8 @@ public class SplashFragment extends Fragment {
     }
 
     private void startRandomFadeAnimation(TextView textView) {
+        if (!isAdded()) return;
+
         long duration = 1000 + random.nextInt(2300);
         long startDelay = random.nextInt(800);
 
@@ -190,7 +155,9 @@ public class SplashFragment extends Fragment {
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                startRandomFadeAnimation(textView);
+                if (isAdded()) {
+                    startRandomFadeAnimation(textView);
+                }
             }
         });
 
@@ -257,11 +224,33 @@ public class SplashFragment extends Fragment {
     private void setupBlurView(BlurView blurView, ViewGroup rootView) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             blurView.setupWith(rootView, new RenderEffectBlur())
-                    .setBlurRadius((float) 10.0)
+                    .setBlurRadius(10.0f)
                     .setBlurAutoUpdate(true);
         } else {
             blurView.setupWith(rootView)
-                    .setBlurRadius((float) 10.0);
+                    .setBlurRadius(10.0f);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (presenter != null) {
+            presenter.detachView();
+        }
+
+        stopFoodsAnimation();
+        foods = null;
+        random = null;
+        binding = null;
+    }
+
+    public boolean isAnimationsCompleted() {
+        return animationsCompleted;
+    }
+
+    public void setAnimationsCompleted(boolean animationsCompleted) {
+        this.animationsCompleted = animationsCompleted;
     }
 }
