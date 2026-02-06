@@ -1,4 +1,4 @@
-package com.example.yumi.presentation.browsecountries.adapters;
+package com.example.yumi.presentation.browse.adapters;
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;

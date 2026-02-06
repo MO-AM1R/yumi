@@ -1,4 +1,4 @@
-package com.example.yumi.presentation.browsecountries;
+package com.example.yumi.presentation.browse.contracts;
 import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.presentation.base.BaseView;
 import java.util.List;

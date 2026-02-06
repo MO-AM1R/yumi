@@ -1,4 +1,4 @@
-package com.example.yumi.presentation.browsecategories;
+package com.example.yumi.presentation.browse.contracts;
 
 import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.presentation.base.BaseView;

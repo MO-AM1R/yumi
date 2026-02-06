@@ -1,4 +1,4 @@
-package com.example.yumi.presentation.browseingredients.fragments;
+package com.example.yumi.presentation.browse.fragments;
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -12,21 +12,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.yumi.R;
-import com.example.yumi.databinding.FragmentIngredientsBinding;
-import com.example.yumi.domain.meals.model.Ingredient;
-import com.example.yumi.presentation.browseingredients.BrowseIngredientsContract;
-import com.example.yumi.presentation.browseingredients.adapters.IngredientsBrowserAdapter;
-import com.example.yumi.presentation.browseingredients.presenter.BrowseIngredientsPresenter;
+import com.example.yumi.databinding.FragmentCategoriesBinding;
+import com.example.yumi.domain.meals.model.Category;
+import com.example.yumi.presentation.browse.contracts.BrowseCategoriesContract;
+import com.example.yumi.presentation.browse.adapters.CategoriesBrowserAdapter;
+import com.example.yumi.presentation.browse.presenter.BrowseCategoriesPresenter;
 import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class IngredientsFragment extends Fragment implements BrowseIngredientsContract.View {
-    private FragmentIngredientsBinding binding;
+public class CategoriesFragment extends Fragment implements BrowseCategoriesContract.View {
+    private FragmentCategoriesBinding binding;
     private NavigationCallback navigationCallback;
-    private IngredientsBrowserAdapter adapter;
-    private BrowseIngredientsPresenter presenter;
+    private CategoriesBrowserAdapter adapter;
+    private BrowseCategoriesPresenter presenter;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -39,13 +39,13 @@ public class IngredientsFragment extends Fragment implements BrowseIngredientsCo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ingredients, container, false);
+        View view = inflater.inflate(R.layout.fragment_categories, container, false);
 
         if (view == null) {
-            binding = FragmentIngredientsBinding.inflate(inflater);
+            binding = FragmentCategoriesBinding.inflate(inflater);
             view = binding.getRoot();
         } else {
-            binding = FragmentIngredientsBinding.bind(view);
+            binding = FragmentCategoriesBinding.bind(view);
         }
 
         return view;
@@ -54,18 +54,18 @@ public class IngredientsFragment extends Fragment implements BrowseIngredientsCo
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new BrowseIngredientsPresenter();
+        presenter = new BrowseCategoriesPresenter();
         presenter.attachView(this);
 
-        adapter = new IngredientsBrowserAdapter(new ArrayList<>(),
+        adapter = new CategoriesBrowserAdapter(new ArrayList<>(),
                 category -> navigateToFilteredMeals(category.getName()));
 
-        binding.ingredientsBrowseRecyclerView.setLayoutManager(
+        binding.categoriesBrowseRecyclerView.setLayoutManager(
                 new LinearLayoutManager(requireContext(),
                         LinearLayoutManager.VERTICAL, false)
         );
 
-        binding.ingredientsBrowseRecyclerView.setAdapter(adapter);
+        binding.categoriesBrowseRecyclerView.setAdapter(adapter);
 
         binding.backArrowBtn.setOnClickListener(v -> {
             if (isAdded() && !isDetached()) {
@@ -75,12 +75,12 @@ public class IngredientsFragment extends Fragment implements BrowseIngredientsCo
             }
         });
 
-        presenter.loadIngredients();
+        presenter.loadCategories();
     }
 
     @Override
-    public void showIngredients(List<Ingredient> ingredients) {
-        adapter.setIngredients(ingredients);
+    public void showCategories(List<Category> categories) {
+        adapter.setCategories(categories);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class IngredientsFragment extends Fragment implements BrowseIngredientsCo
     }
 
     private void toggleAllViewsVisibility(int visibility) {
-        binding.ingredientsBrowseRecyclerView.setVisibility(visibility);
+        binding.categoriesBrowseRecyclerView.setVisibility(visibility);
     }
 
     public void navigateToFilteredMeals(String name) {

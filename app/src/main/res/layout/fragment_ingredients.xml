@@ -6,7 +6,7 @@
     android:id="@+id/countriesFragment"
     android:paddingBottom="@dimen/padding_screen"
     android:layout_height="match_parent"
-    tools:context=".presentation.browseingredients.fragments.IngredientsFragment">
+    tools:context=".presentation.browse.fragments.IngredientsFragment">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/loading"

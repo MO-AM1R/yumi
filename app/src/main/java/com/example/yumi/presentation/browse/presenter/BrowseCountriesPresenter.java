@@ -1,33 +1,30 @@
-package com.example.yumi.presentation.browseingredients.presenter;
+package com.example.yumi.presentation.browse.presenter;
 
 import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
-import com.example.yumi.domain.meals.model.Category;
-import com.example.yumi.domain.meals.model.Ingredient;
+import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.repository.MealsRepository;
 import com.example.yumi.presentation.base.BasePresenter;
-import com.example.yumi.presentation.browseingredients.BrowseIngredientsContract;
-
-import java.util.List;
-
+import com.example.yumi.presentation.browse.contracts.BrowseCountriesContract;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import java.util.List;
 
 
-public class BrowseIngredientsPresenter extends BasePresenter<BrowseIngredientsContract.View>
-        implements BrowseIngredientsContract.Presenter {
+public class BrowseCountriesPresenter extends BasePresenter<BrowseCountriesContract.View>
+        implements BrowseCountriesContract.Presenter {
     private final MealsRepository repository;
 
 
-    public BrowseIngredientsPresenter() {
+    public BrowseCountriesPresenter() {
         this.repository = new MealsRepositoryImpl();
     }
 
-    private void onCategoriesLoaded(List<Ingredient> ingredients) {
+    private void onAreasLoaded(List<Area> areas) {
         if (isViewDetached()) return;
 
         view.hideLoading();
-        view.showIngredients(ingredients);
+        view.showAreas(areas);
     }
 
     private void onError(Throwable throwable) {
@@ -41,14 +38,14 @@ public class BrowseIngredientsPresenter extends BasePresenter<BrowseIngredientsC
     }
 
     @Override
-    public void loadIngredients() {
+    public void loadAreas() {
         if (isViewDetached()) return;
 
-        Disposable disposable = repository.getAllIngredients()
+        Disposable disposable = repository.getAllAreas()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        this::onCategoriesLoaded,
+                        this::onAreasLoaded,
                         this::onError
                 );
 

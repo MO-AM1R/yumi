@@ -36,7 +36,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/countriesFragment"
-        android:name="com.example.yumi.presentation.browsecountries.fragments.CountriesFragment"
+        android:name="com.example.yumi.presentation.browse.fragments.CountriesFragment"
         android:label="fragment_countries"
         tools:layout="@layout/fragment_countries" />
 </navigation>

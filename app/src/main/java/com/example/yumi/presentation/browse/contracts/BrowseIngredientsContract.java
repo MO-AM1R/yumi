@@ -1,6 +1,5 @@
-package com.example.yumi.presentation.browseingredients;
+package com.example.yumi.presentation.browse.contracts;
 
-import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.presentation.base.BaseView;
 
