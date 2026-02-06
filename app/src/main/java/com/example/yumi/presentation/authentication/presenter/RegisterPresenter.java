@@ -11,13 +11,13 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
-public class SignUpPresenter extends BasePresenter<AuthContract.SignUpView>
-        implements AuthContract.SignUpPresenter {
+public class RegisterPresenter extends BasePresenter<AuthContract.RegisterView>
+        implements AuthContract.RegisterPresenter {
 
     private final UserRepository repository;
-    private final AuthContract.SignUpView view;
+    private final AuthContract.RegisterView view;
 
-    public SignUpPresenter(Application application, AuthContract.SignUpView view) {
+    public RegisterPresenter(Application application, AuthContract.RegisterView view) {
         this.repository = new UserRepositoryImpl(application.getApplicationContext());
         this.view = view;
     }

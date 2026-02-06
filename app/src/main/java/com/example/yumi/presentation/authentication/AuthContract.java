@@ -44,7 +44,7 @@ public interface AuthContract {
         void loginWithGoogle(android.content.Context context);
     }
 
-    interface SignUpView extends BaseView {
+    interface RegisterView extends BaseView {
         void showUsernameError(String error);
         void showEmailError(String error);
         void showPasswordError(String error);
@@ -53,8 +53,8 @@ public interface AuthContract {
         void showSuccess(String message);
     }
 
-    interface SignUpPresenter {
-        void attachView(SignUpView view);
+    interface RegisterPresenter {
+        void attachView(RegisterView view);
         void detachView();
         void signUp(String name, String email, String password);
         void signUpWithGoogle(android.content.Context context);

@@ -14,13 +14,13 @@ import androidx.navigation.Navigation;
 import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentRegisterBinding;
 import com.example.yumi.presentation.authentication.AuthContract;
-import com.example.yumi.presentation.authentication.presenter.SignUpPresenter;
+import com.example.yumi.presentation.authentication.presenter.RegisterPresenter;
 import com.google.android.material.snackbar.Snackbar;
 
-public class RegisterFragment extends Fragment implements AuthContract.SignUpView {
+public class RegisterFragment extends Fragment implements AuthContract.RegisterView {
 
     private FragmentRegisterBinding binding;
-    private SignUpPresenter presenter;
+    private RegisterPresenter presenter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -33,7 +33,7 @@ public class RegisterFragment extends Fragment implements AuthContract.SignUpVie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter = new SignUpPresenter(requireActivity().getApplication(), this);
+        presenter = new RegisterPresenter(requireActivity().getApplication(), this);
         presenter.attachView(this);
 
         setupClickListeners();
