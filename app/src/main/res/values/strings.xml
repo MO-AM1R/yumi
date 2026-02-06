@@ -65,4 +65,7 @@
     <string name="arrow_back_description">Arrow back description</string>
     <string name="browse_by_category">Browse By Category</string>
     <string name="browse_by_country">Browse By Country</string>
+
+    <string name="register_success">You registered successfully</string>
+    <string name="login_success">You logged in successfully</string>
 </resources>

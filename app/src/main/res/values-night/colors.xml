@@ -81,5 +81,6 @@
     <color name="glass_overlay_color_dark">#80000000</color>
 
     <color name="arrow_back_background">#242424</color>
+    <color name="error_color">#FF0000</color>
 
 </resources>

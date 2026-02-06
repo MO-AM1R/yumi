@@ -8,6 +8,30 @@
     android:background="@drawable/splash_background"
     tools:context=".presentation.authentication.view.fragments.LoginFragment">
 
+    <View
+        android:id="@+id/progress_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:elevation="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="11dp"
+        android:indeterminateTint="@color/secondary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_top"
         android:layout_width="wrap_content"
@@ -61,7 +85,7 @@
     <ScrollView
         android:id="@+id/login_form_scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
@@ -91,13 +115,29 @@
                 android:text="@string/email"
                 android:textColor="#CBCED4" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email_text_field"
-                style="@style/Widget.Yumi.TextInputLayout.Auth"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="0dp"
+                app:cursorColor="#CBCED4"
                 android:layout_marginTop="8dp"
-                android:hint="@string/enter_your_email" />
+                app:boxBackgroundColor="@android:color/transparent"
+                app:errorEnabled="true"
+                app:errorTextColor="@color/error_color"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_text_field"
+                    style="@style/Widget.Yumi.TextInputLayout.Auth"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/enter_your_email"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/text_hint" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/password_label"
@@ -108,14 +148,31 @@
                 android:text="@string/password"
                 android:textColor="#CBCED4" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password_text_field"
-                style="@style/Widget.Yumi.TextInputLayout.Auth"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="0dp"
+                app:cursorColor="#CBCED4"
                 android:layout_marginTop="8dp"
-                android:hint="@string/enter_your_password"
-                android:inputType="textPassword" />
+                app:boxBackgroundColor="@android:color/transparent"
+                app:endIconMode="password_toggle"
+                app:endIconTint="#CBCED4"
+                app:errorEnabled="true"
+                app:errorTextColor="@color/error_color"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password_text_field"
+                    style="@style/Widget.Yumi.TextInputLayout.Auth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_your_password"
+                    android:inputType="textPassword"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/text_hint" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/login_button"
