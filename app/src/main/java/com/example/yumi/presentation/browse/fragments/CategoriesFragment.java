@@ -28,7 +28,6 @@ public class CategoriesFragment extends Fragment implements BrowseCategoriesCont
     private FragmentCategoriesBinding binding;
     private NavigationCallback navigationCallback;
     private CategoriesBrowserAdapter adapter;
-    private BrowseCategoriesPresenter presenter;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -56,7 +55,7 @@ public class CategoriesFragment extends Fragment implements BrowseCategoriesCont
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new BrowseCategoriesPresenter();
+        BrowseCategoriesPresenter presenter = new BrowseCategoriesPresenter();
         presenter.attachView(this);
 
         adapter = new CategoriesBrowserAdapter(new ArrayList<>(),

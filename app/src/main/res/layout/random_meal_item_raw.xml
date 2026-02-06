@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:id="@+id/random_meal_card"
+<androidx.cardview.widget.CardView
+    android:id="@+id/random_meal_card"
     android:layout_height="wrap_content"
     android:layout_width="300dp"
     android:backgroundTint="@color/card"
@@ -8,6 +9,9 @@
     app:cardUseCompatPadding="true"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/meal_day"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">

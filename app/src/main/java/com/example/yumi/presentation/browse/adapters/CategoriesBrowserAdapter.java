@@ -47,7 +47,8 @@ public class CategoriesBrowserAdapter extends RecyclerView.Adapter<CategoriesBro
                 holder.getCardBackground(),
                 category.getThumbnailUrl()
         );
-        view.setOnClickListener(v -> onCategoryClick.onclick(category));
+
+        holder.getCardView().setOnClickListener(v -> onCategoryClick.onclick(category));
     }
 
     @Override
@@ -65,7 +66,7 @@ public class CategoriesBrowserAdapter extends RecyclerView.Adapter<CategoriesBro
     public static class AreaViewHolder extends RecyclerView.ViewHolder {
         private final ImageView categoryImage;
         private final TextView categoryName;
-        private final CardView cardBackground;
+        private final CardView cardBackground, cardView;
         private final View itemView;
 
         public AreaViewHolder(@NonNull View itemView) {
@@ -74,6 +75,11 @@ public class CategoriesBrowserAdapter extends RecyclerView.Adapter<CategoriesBro
             categoryImage = itemView.findViewById(R.id.category_image_view);
             categoryName = itemView.findViewById(R.id.category_name);
             cardBackground = itemView.findViewById(R.id.category_background);
+            cardView = itemView.findViewById(R.id.category_raw);
+        }
+
+        public CardView getCardView() {
+            return cardView;
         }
 
         public View getItemView() {

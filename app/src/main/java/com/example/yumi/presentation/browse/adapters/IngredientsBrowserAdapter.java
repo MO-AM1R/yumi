@@ -46,7 +46,8 @@ public class IngredientsBrowserAdapter extends RecyclerView.Adapter<IngredientsB
                 holder.getCardBackground(),
                 ingredient.getThumbnailUrl()
         );
-        view.setOnClickListener(v -> onIngredientClick.onclick(ingredient));
+
+        holder.getCardRaw().setOnClickListener(v -> onIngredientClick.onclick(ingredient));
     }
 
     @Override
@@ -65,6 +66,7 @@ public class IngredientsBrowserAdapter extends RecyclerView.Adapter<IngredientsB
         private final ImageView ingredientImage;
         private final TextView ingredientName;
         private final CardView cardBackground;
+        private final CardView cardRaw;
         private final View itemView;
 
         public IngredientViewHolder(@NonNull View itemView) {
@@ -73,6 +75,11 @@ public class IngredientsBrowserAdapter extends RecyclerView.Adapter<IngredientsB
             ingredientImage = itemView.findViewById(R.id.ingredient_image_view);
             ingredientName = itemView.findViewById(R.id.ingredient_name);
             cardBackground = itemView.findViewById(R.id.ingredient_background);
+            cardRaw = itemView.findViewById(R.id.ingredient_raw);
+        }
+
+        public CardView getCardRaw() {
+            return cardRaw;
         }
 
         public View getItemView() {

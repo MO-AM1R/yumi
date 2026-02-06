@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yumi.R;
@@ -54,7 +55,7 @@ public class AreasRecyclerViewAdapter extends RecyclerView.Adapter<AreasRecycler
         holder.getAreaName().setText(area.getName());
         holder.getAreaLogo().setText(area.getName().substring(0, 2).toLowerCase());
 
-        view.setOnClickListener(v -> onAreaClick.onclick(area));
+        holder.getCardView().setOnClickListener(v -> onAreaClick.onclick(area));
     }
 
     @Override
@@ -73,12 +74,18 @@ public class AreasRecyclerViewAdapter extends RecyclerView.Adapter<AreasRecycler
         private final TextView areaLogo;
         private final TextView areaName;
         private final View itemView;
+        private final CardView cardView;
 
         public AreaViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView = itemView;
             areaLogo = itemView.findViewById(R.id.area_logo);
             areaName = itemView.findViewById(R.id.area_name);
+            cardView = itemView.findViewById(R.id.category_card_view);
+        }
+
+        public CardView getCardView() {
+            return cardView;
         }
 
         public View getItemView() {

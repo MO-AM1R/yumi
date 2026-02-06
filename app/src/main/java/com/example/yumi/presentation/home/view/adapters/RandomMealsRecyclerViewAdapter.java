@@ -1,6 +1,4 @@
 package com.example.yumi.presentation.home.view.adapters;
-import static android.provider.Settings.System.getString;
-
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yumi.R;
@@ -64,13 +63,14 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
                 meal.getThumbnailUrl()
         );
 
-        view.setOnClickListener(v -> onMealClick.onclick(meal));
+        holder.getCardView().setOnClickListener(v -> onMealClick.onclick(meal));
     }
 
     public static class RandomMealsViewHolder extends RecyclerView.ViewHolder {
         private final TextView mealName, mealIngredientsCount,
                 mealCategory;
         private final ImageView mealImage;
+        private final CardView cardView;
 
 
         public RandomMealsViewHolder(@NonNull View itemView) {
@@ -79,6 +79,7 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
             mealCategory = itemView.findViewById(R.id.random_meal_category);
             mealImage = itemView.findViewById(R.id.random_meal_image);
             mealName = itemView.findViewById(R.id.random_meal_name);
+            cardView = itemView.findViewById(R.id.random_meal_card);
         }
 
         public TextView getMealName() {
@@ -95,6 +96,10 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
 
         public ImageView getMealImage() {
             return mealImage;
+        }
+
+        public CardView getCardView() {
+            return cardView;
         }
     }
 }

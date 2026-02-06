@@ -28,7 +28,6 @@ public class IngredientsFragment extends Fragment implements BrowseIngredientsCo
     private FragmentIngredientsBinding binding;
     private NavigationCallback navigationCallback;
     private IngredientsBrowserAdapter adapter;
-    private BrowseIngredientsPresenter presenter;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -56,7 +55,7 @@ public class IngredientsFragment extends Fragment implements BrowseIngredientsCo
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new BrowseIngredientsPresenter();
+        BrowseIngredientsPresenter presenter = new BrowseIngredientsPresenter();
         presenter.attachView(this);
 
         adapter = new IngredientsBrowserAdapter(new ArrayList<>(),

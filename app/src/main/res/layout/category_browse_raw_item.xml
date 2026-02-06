@@ -6,11 +6,15 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/category_raw"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:backgroundTint="@color/card"
         android:elevation="2dp"
         app:cardCornerRadius="8dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         app:cardUseCompatPadding="true">
 
         <LinearLayout

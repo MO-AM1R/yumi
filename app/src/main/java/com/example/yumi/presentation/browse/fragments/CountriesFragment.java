@@ -29,7 +29,6 @@ import java.util.List;
 public class CountriesFragment extends Fragment implements BrowseCountriesContract.View {
     private FragmentCountriesBinding binding;
     private CountriesBrowserAdapter countriesBrowserAdapter;
-    private BrowseCountriesPresenter presenter;
 
     private NavigationCallback navigationCallback;
 
@@ -60,7 +59,7 @@ public class CountriesFragment extends Fragment implements BrowseCountriesContra
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new BrowseCountriesPresenter();
+        BrowseCountriesPresenter presenter = new BrowseCountriesPresenter();
         presenter.attachView(this);
 
         countriesBrowserAdapter = new CountriesBrowserAdapter(new ArrayList<>(),
