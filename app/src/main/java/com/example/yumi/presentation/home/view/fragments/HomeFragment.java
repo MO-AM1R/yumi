@@ -21,6 +21,7 @@ import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.presentation.browse.fragments.CategoriesFragment;
 import com.example.yumi.presentation.browse.fragments.CountriesFragment;
 import com.example.yumi.presentation.browse.fragments.IngredientsFragment;
+import com.example.yumi.presentation.browse.fragments.MealsListFragment;
 import com.example.yumi.presentation.home.HomeContract;
 import com.example.yumi.presentation.home.presenter.HomePresenter;
 import com.example.yumi.presentation.home.view.adapters.AreasRecyclerViewAdapter;
@@ -200,7 +201,12 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void navigateToFilteredMeals(MealsFilter filter) {
-
+        if (navigationCallback != null) {
+            navigationCallback.navigateToFragment(
+                    new MealsListFragment(filter),
+                    "meals"
+            );
+        }
     }
 
     @Override
