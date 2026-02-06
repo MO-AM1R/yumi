@@ -1,5 +1,9 @@
 package com.example.yumi.domain.meals.model;
 
+import androidx.annotation.NonNull;
+
+import java.util.Objects;
+
 public class MealsFilter {
     private MealsFilterType type;
     private String query;
@@ -26,5 +30,14 @@ public class MealsFilter {
 
     public void setQuery(String query) {
         this.query = query;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        if (Objects.requireNonNull(type) == MealsFilterType.AREA) {
+            return "Meals with " + query;
+        }
+        return query + " Meals";
     }
 }
