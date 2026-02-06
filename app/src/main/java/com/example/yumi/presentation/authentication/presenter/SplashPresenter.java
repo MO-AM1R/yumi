@@ -30,7 +30,7 @@ public class SplashPresenter extends BasePresenter<AuthContract.SplashView>
         if (isViewDetached()) return;
 
         boolean onboardingCompleted = repository.isOnboardingCompleted();
-        boolean isLoggedIn = false;
+        boolean isLoggedIn = repository.isLoggedIn();
 
         if (!onboardingCompleted) {
             view.navigateToOnboarding();
