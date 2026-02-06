@@ -9,7 +9,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.yami"
+        applicationId = "com.example.yumi"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.room.runtime)
     implementation(libs.credentials)
+    implementation(libs.google.gms)
     implementation(libs.rxandroid)
     implementation(libs.appcompat)
     implementation(libs.googleid)

@@ -27,6 +27,7 @@ firebaseBom = "34.8.0"
 credentials = "1.5.0"
 googleid = "1.2.0"
 googleservices = "4.4.4"
+google-gms = "21.5.0"
 
 
 [libraries]
@@ -63,7 +64,7 @@ credentials-play-services = { module = "androidx.credentials:credentials-play-se
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-
+google-gms = { module = "com.google.android.gms:play-services-auth", version.ref = "google-gms" }
 
 [plugins]
 google-services = { id = "com.google.gms.google-services", version.ref = "googleservices" }
