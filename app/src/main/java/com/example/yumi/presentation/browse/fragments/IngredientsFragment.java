@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentIngredientsBinding;
 import com.example.yumi.domain.meals.model.Ingredient;
+import com.example.yumi.domain.meals.model.MealsFilter;
+import com.example.yumi.domain.meals.model.MealsFilterType;
 import com.example.yumi.presentation.browse.contracts.BrowseIngredientsContract;
 import com.example.yumi.presentation.browse.adapters.IngredientsBrowserAdapter;
 import com.example.yumi.presentation.browse.presenter.BrowseIngredientsPresenter;
@@ -109,6 +111,11 @@ public class IngredientsFragment extends Fragment implements BrowseIngredientsCo
     }
 
     public void navigateToFilteredMeals(String name) {
-
+        if (navigationCallback != null) {
+            navigationCallback.navigateToFragment(
+                    new MealsListFragment(new MealsFilter(MealsFilterType.INGREDIENT, name)),
+                    "meals"
+            );
+        }
     }
 }

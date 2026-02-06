@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentCategoriesBinding;
 import com.example.yumi.domain.meals.model.Category;
+import com.example.yumi.domain.meals.model.MealsFilter;
+import com.example.yumi.domain.meals.model.MealsFilterType;
 import com.example.yumi.presentation.browse.contracts.BrowseCategoriesContract;
 import com.example.yumi.presentation.browse.adapters.CategoriesBrowserAdapter;
 import com.example.yumi.presentation.browse.presenter.BrowseCategoriesPresenter;
@@ -109,6 +111,11 @@ public class CategoriesFragment extends Fragment implements BrowseCategoriesCont
     }
 
     public void navigateToFilteredMeals(String name) {
-
+        if (navigationCallback != null) {
+            navigationCallback.navigateToFragment(
+                    new MealsListFragment(new MealsFilter(MealsFilterType.CATEGORY, name)),
+                    "meals"
+            );
+        }
     }
 }

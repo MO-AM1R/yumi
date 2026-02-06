@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentCountriesBinding;
 import com.example.yumi.domain.meals.model.Area;
+import com.example.yumi.domain.meals.model.MealsFilter;
+import com.example.yumi.domain.meals.model.MealsFilterType;
 import com.example.yumi.presentation.browse.contracts.BrowseCountriesContract;
 import com.example.yumi.presentation.browse.adapters.CountriesBrowserAdapter;
 import com.example.yumi.presentation.browse.presenter.BrowseCountriesPresenter;
@@ -114,6 +116,11 @@ public class CountriesFragment extends Fragment implements BrowseCountriesContra
     }
 
     public void navigateToFilteredMeals(String name) {
-
+        if (navigationCallback != null) {
+            navigationCallback.navigateToFragment(
+                    new MealsListFragment(new MealsFilter(MealsFilterType.AREA, name)),
+                    "meals"
+            );
+        }
     }
 }
