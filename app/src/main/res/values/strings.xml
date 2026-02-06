@@ -68,4 +68,6 @@
 
     <string name="register_success">You registered successfully</string>
     <string name="login_success">You logged in successfully</string>
+
+    <string name="meals_list_count">%1$d recipes found</string>
 </resources>

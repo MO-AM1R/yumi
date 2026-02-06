@@ -5,7 +5,6 @@ import com.example.yumi.data.meals.model.mapper.AreaMapper;
 import com.example.yumi.data.meals.model.mapper.CategoryMapper;
 import com.example.yumi.data.meals.model.mapper.IngredientMapper;
 import com.example.yumi.data.meals.model.mapper.MealMapper;
-import com.example.yumi.data.meals.model.responses.MealsResponse;
 import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
@@ -71,17 +70,38 @@ public class MealsRepositoryImpl implements MealsRepository {
 
     @Override
     public Single<List<Meal>> filterMealsByCategory(String category) {
-        return null;
+        return mealsRemoteDataSource.filterMealsByCategory(category).map(
+                mealsResponse -> {
+                    if (mealsResponse.getMeals().isEmpty())
+                        return null;
+
+                    return MealMapper.mapToDomainList(mealsResponse.getMeals());
+                }
+        );
     }
 
     @Override
     public Single<List<Meal>> filterMealsByArea(String area) {
-        return null;
+        return mealsRemoteDataSource.filterMealsByArea(area).map(
+                mealsResponse -> {
+                    if (mealsResponse.getMeals().isEmpty())
+                        return null;
+
+                    return MealMapper.mapToDomainList(mealsResponse.getMeals());
+                }
+        );
     }
 
     @Override
     public Single<List<Meal>> filterMealsByIngredient(String ingredient) {
-        return null;
+        return mealsRemoteDataSource.filterMealsByIngredient(ingredient).map(
+                mealsResponse -> {
+                    if (mealsResponse.getMeals().isEmpty())
+                        return null;
+
+                    return MealMapper.mapToDomainList(mealsResponse.getMeals());
+                }
+        );
     }
 
     @Override
