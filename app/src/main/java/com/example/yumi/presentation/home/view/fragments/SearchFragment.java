@@ -47,11 +47,12 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     private List<Ingredient> allIngredients = new ArrayList<>();
     private List<Meal> allMeals = new ArrayList<>();
     private int currentTabIndex = 0;
-    private final long SEARCH_DEBOUNCE_MS = 300;
     private final int TAB_CATEGORIES = 0;
     private final int TAB_COUNTRIES = 1;
     private final int TAB_INGREDIENTS = 2;
     private final int TAB_MEALS = 3;
+    private final String CURRENT_TAB_KEY = "current_tab";
+
     private final String[] SEARCH_HINTS = {
             "Search categories...",
             "Search countries...",
@@ -89,7 +90,19 @@ public class SearchFragment extends Fragment implements SearchContract.View {
         setupTabs();
         setupSearch();
 
-        loadDataForTab(TAB_CATEGORIES);
+        if (savedInstanceState != null) {
+            currentTabIndex = savedInstanceState.getInt(CURRENT_TAB_KEY);
+        }
+
+        Objects.requireNonNull(binding.tabLayout.getTabAt(currentTabIndex)).select();
+        setupViewForTab(currentTabIndex);
+        loadDataForTab(currentTabIndex);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(CURRENT_TAB_KEY, currentTabIndex);
     }
 
     private void setupAdapters() {
@@ -166,13 +179,14 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     private void setupSearch() {
-        binding.etSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                hideKeyboard();
-                return true;
-            }
-            return false;
-        });
+        binding.etSearch.setOnEditorActionListener(
+                (v, actionId, event) -> {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                        hideKeyboard();
+                        return true;
+                    }
+                    return false;
+                });
 
         Observable<String> observable = Observable.create(emitter -> {
             TextWatcher textWatcher = new TextWatcher() {
@@ -182,14 +196,16 @@ public class SearchFragment extends Fragment implements SearchContract.View {
                 }
 
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
 
                 @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
             };
 
             binding.etSearch.addTextChangedListener(textWatcher);
-            emitter.setCancellable(() ->  binding.etSearch.removeTextChangedListener(textWatcher));
+            emitter.setCancellable(() -> binding.etSearch.removeTextChangedListener(textWatcher));
         });
 
         long DEBOUNCE_DELAY = 500;
@@ -308,6 +324,9 @@ public class SearchFragment extends Fragment implements SearchContract.View {
                 break;
             case TAB_INGREDIENTS:
                 presenter.loadIngredients();
+                break;
+            case TAB_MEALS:
+                presenter.loadMeals(Objects.requireNonNull(binding.etSearch.getText()).toString());
                 break;
         }
     }
