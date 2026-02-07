@@ -68,7 +68,7 @@
 
     <FrameLayout
         android:id="@+id/content_container"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -78,11 +78,12 @@
 
         <GridView
             android:id="@+id/grid_view"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:horizontalSpacing="12dp"
             android:numColumns="3"
+            android:gravity="center_horizontal"
             android:paddingHorizontal="16dp"
             android:paddingBottom="16dp"
             android:scrollbarStyle="outsideOverlay"
@@ -91,12 +92,13 @@
 
         <GridView
             android:id="@+id/list_view"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:horizontalSpacing="12dp"
             android:numColumns="2"
             android:paddingHorizontal="16dp"
+            android:gravity="center_horizontal"
             android:paddingBottom="16dp"
             android:scrollbarStyle="outsideOverlay"
             android:verticalSpacing="24dp" />
