@@ -1,9 +1,8 @@
 package com.example.yumi.domain.meals.model;
-
 import androidx.annotation.NonNull;
-
 import java.io.Serializable;
 import java.util.Objects;
+
 
 public class MealsFilter implements Serializable {
     private MealsFilterType type;
@@ -36,7 +35,7 @@ public class MealsFilter implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        if (Objects.requireNonNull(type) == MealsFilterType.AREA) {
+        if (Objects.requireNonNull(type) == MealsFilterType.INGREDIENT) {
             return "Meals with " + query;
         }
         return query + " Meals";
