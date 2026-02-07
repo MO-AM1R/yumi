@@ -7,13 +7,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.cardview.widget.CardView;
 import com.example.yumi.R;
 import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.presentation.shared.callbacks.OnIngredientClick;
 import com.example.yumi.utils.GlideUtil;
-import com.google.android.material.card.MaterialCardView;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class IngredientSearchGridViewAdapter extends BaseAdapter {
     private List<Ingredient> ingredients = new ArrayList<>();
@@ -76,7 +77,7 @@ public class IngredientSearchGridViewAdapter extends BaseAdapter {
     }
 
     private static class IngredientViewHolder {
-        private final MaterialCardView cardIngredient;
+        private final CardView cardIngredient;
         private final ImageView ivIngredientImage;
         private final TextView tvIngredientName;
 
