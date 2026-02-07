@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.yumi.R;
@@ -12,10 +13,10 @@ import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.presentation.home.view.callbacks.OnMealClick;
 import com.example.yumi.presentation.shared.callbacks.OnAddToPlanButtonClick;
 import com.example.yumi.utils.GlideUtil;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class MealSearchGridView extends BaseAdapter {
     private List<Meal> meals = new ArrayList<>();
@@ -56,7 +57,7 @@ public class MealSearchGridView extends BaseAdapter {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(context)
-                    .inflate(R.layout.item_meal_grid, parent, false);
+                    .inflate(R.layout.item_meal_search_row, parent, false);
             holder = new MealViewHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -68,7 +69,11 @@ public class MealSearchGridView extends BaseAdapter {
         holder.tvMealName.setText(meal.getName());
 
         int ingredientsCount = meal.getIngredients().size();
-        holder.tvIngredientsCount.setText(ingredientsCount);
+        holder.tvIngredientsCount.setText(
+                holder.tvMealName.getContext().
+                        getString(R.string.ingredients_count_message,
+                                ingredientsCount)
+        );
 
         GlideUtil.getImage(context, holder.ivMealImage, meal.getThumbnailUrl());
 
@@ -92,7 +97,7 @@ public class MealSearchGridView extends BaseAdapter {
         private final ImageView ivMealImage;
         private final TextView tvMealName;
         private final TextView tvIngredientsCount;
-        private final MaterialButton btnAdd;
+        private final TextView btnAdd;
 
         MealViewHolder(View itemView) {
             cardMeal = itemView.findViewById(R.id.card_meal);
