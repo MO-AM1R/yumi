@@ -23,7 +23,7 @@ import com.example.yumi.presentation.browse.fragments.CountriesFragment;
 import com.example.yumi.presentation.browse.fragments.IngredientsFragment;
 import com.example.yumi.presentation.browse.fragments.MealsListFragment;
 import com.example.yumi.presentation.details.view.fragment.MealDetailsFragment;
-import com.example.yumi.presentation.home.HomeContract;
+import com.example.yumi.presentation.home.contract.HomeContract;
 import com.example.yumi.presentation.home.presenter.HomePresenter;
 import com.example.yumi.presentation.home.view.adapters.AreasRecyclerViewAdapter;
 import com.example.yumi.presentation.home.view.adapters.CategoriesRecyclerViewAdapter;

@@ -8,7 +8,7 @@ import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.domain.meals.model.MealsFilterType;
 import com.example.yumi.domain.meals.repository.MealsRepository;
 import com.example.yumi.presentation.base.BasePresenter;
-import com.example.yumi.presentation.home.HomeContract;
+import com.example.yumi.presentation.home.contract.HomeContract;
 import java.util.List;
 import java.util.Random;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;

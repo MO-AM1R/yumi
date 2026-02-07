@@ -1,4 +1,4 @@
-package com.example.yumi.presentation.home;
+package com.example.yumi.presentation.home.contract;
 
 import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
@@ -28,10 +28,6 @@ public interface HomeContract {
     }
 
     interface Presenter {
-        void attachView(View view);
-
-        void detachView();
-
         void loadDayMeal();
 
         void loadRandomMeals();
@@ -43,8 +39,6 @@ public interface HomeContract {
         void loadIngredients();
 
         void onMealClicked(Meal meal);
-
-        void onDestroy();
 
         void onCategoryClicked(Category category);
 
