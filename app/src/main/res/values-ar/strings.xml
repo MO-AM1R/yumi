@@ -84,4 +84,5 @@
     <string name="ingredient">Ingredient</string>
     <string name="search_hint">Search...</string>
     <string name="no_results_found">No results found</string>
+    <string name="add_icon">+</string>
 </resources>
