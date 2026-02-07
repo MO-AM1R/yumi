@@ -47,7 +47,7 @@ public class IngredientsBrowserAdapter extends RecyclerView.Adapter<IngredientsB
                 ingredient.getThumbnailUrl()
         );
 
-        holder.getCardRaw().setOnClickListener(v -> onIngredientClick.onclick(ingredient));
+        holder.getCardRaw().setOnClickListener(v -> onIngredientClick.onClick(ingredient));
     }
 
     @Override

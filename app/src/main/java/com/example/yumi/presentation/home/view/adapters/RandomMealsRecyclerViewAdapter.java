@@ -63,7 +63,7 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
                 meal.getThumbnailUrl()
         );
 
-        holder.getCardView().setOnClickListener(v -> onMealClick.onclick(meal));
+        holder.getCardView().setOnClickListener(v -> onMealClick.onClick(meal));
     }
 
     public static class RandomMealsViewHolder extends RecyclerView.ViewHolder {

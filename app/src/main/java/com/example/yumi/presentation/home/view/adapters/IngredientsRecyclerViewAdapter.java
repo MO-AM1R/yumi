@@ -63,7 +63,7 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter<Ingredi
         );
 
 
-        view.setOnClickListener(v -> onIngredientClick.onclick(ingredient));
+        view.setOnClickListener(v -> onIngredientClick.onClick(ingredient));
     }
 
     @Override

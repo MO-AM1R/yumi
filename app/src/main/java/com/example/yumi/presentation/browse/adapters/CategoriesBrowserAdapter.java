@@ -48,7 +48,7 @@ public class CategoriesBrowserAdapter extends RecyclerView.Adapter<CategoriesBro
                 category.getThumbnailUrl()
         );
 
-        holder.getCardView().setOnClickListener(v -> onCategoryClick.onclick(category));
+        holder.getCardView().setOnClickListener(v -> onCategoryClick.onClick(category));
     }
 
     @Override

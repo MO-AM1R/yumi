@@ -59,7 +59,7 @@ public class CategoriesRecyclerViewAdapter extends RecyclerView.Adapter<Category
                 category.getThumbnailUrl()
         );
 
-        view.setOnClickListener(v -> onCategoryClick.onclick(category));
+        view.setOnClickListener(v -> onCategoryClick.onClick(category));
     }
 
     @Override

@@ -38,7 +38,7 @@ public class CountriesBrowserAdapter extends RecyclerView.Adapter<CountriesBrows
         holder.getAreaName().setText(area.getName());
         holder.getAreaLogo().setText(area.getName().substring(0, 2).toLowerCase());
 
-        holder.getCardView().setOnClickListener(v -> onAreaClick.onclick(area));
+        holder.getCardView().setOnClickListener(v -> onAreaClick.onClick(area));
     }
 
     @Override
