@@ -19,7 +19,6 @@ import com.example.yumi.presentation.details.view.MealDetailsContract;
 import com.example.yumi.presentation.details.view.adapter.IngredientsAdapter;
 import com.example.yumi.presentation.details.view.adapter.InstructionsAdapter;
 import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
-import com.example.yumi.utils.YouTubeHelper;
 import com.google.android.material.tabs.TabLayout;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -34,7 +33,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     private Meal meal;
     private IngredientsAdapter ingredientsAdapter;
     private InstructionsAdapter instructionsAdapter;
-    private String videoId;
 
 
     public MealDetailsFragment() {}
@@ -76,6 +74,19 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         } else {
             binding = FragmentMealDatailsBinding.bind(view);
         }
+
+        getLifecycle().addObserver(binding.youtubePlayerView);
+        binding.youtubePlayerView.addYouTubePlayerListener(
+                new AbstractYouTubePlayerListener() {
+                    @Override
+                    public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                        String id = meal.getYoutubeUrl().
+                                substring(meal.getYoutubeUrl().indexOf("=") + 1);
+                        youTubePlayer.loadVideo(id, 0);
+                        youTubePlayer.pause();
+                    }
+                }
+        );
 
         return view;
     }
@@ -160,11 +171,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
 
         binding.addToPlanBtn.setOnClickListener(v -> showAddToPlanBottomSheet());
 
-        binding.playButtonContainer.setOnClickListener(v -> {
-            if (videoId != null && !videoId.isEmpty()) {
-                playYouTubeVideo();
-            }
-        });
+        binding.playButtonContainer.setOnClickListener(v -> playYouTubeVideo());
     }
 
     private void showIngredientsTab() {
@@ -186,21 +193,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     }
 
     private void playYouTubeVideo() {
-        if (videoId == null) return;
-
         binding.videoCard.setVisibility(View.GONE);
         binding.youtubePlayerView.setVisibility(View.VISIBLE);
 
-        getLifecycle().addObserver(binding.youtubePlayerView);
-
-        binding.youtubePlayerView.addYouTubePlayerListener(
-                new AbstractYouTubePlayerListener() {
-                    @Override
-                    public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                        youTubePlayer.loadVideo(videoId, 0);
-                    }
-                }
-        );
+        binding.youtubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::play);
     }
 
     private void showAddToPlanBottomSheet() {
@@ -242,17 +238,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
 
     @Override
     public void showVideoSection(String videoUrl) {
-        videoId = YouTubeHelper.getYoutubeVideoId(videoUrl);
-
-        if (videoId != null) {
-            binding.videoTitle.setText(
-                    getString(R.string.how_to_make_meal, meal.getName())
-            );
-        } else {
-            binding.videoContainer.setVisibility(View.GONE);
-        }
+        binding.videoTitle.setText(
+                getString(R.string.how_to_make_meal, meal.getName())
+        );
     }
-
 
     @Override
     public void updateFavoriteStatus(boolean isFavorite) {
