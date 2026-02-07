@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,7 @@ import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
 import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -164,6 +166,14 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     private void setupSearch() {
+        binding.etSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                hideKeyboard();
+                return true;
+            }
+            return false;
+        });
+
         Observable<String> observable = Observable.create(emitter -> {
             TextWatcher textWatcher = new TextWatcher() {
                 @Override
@@ -188,32 +198,6 @@ public class SearchFragment extends Fragment implements SearchContract.View {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(this::performSearch);
     }
-
-//    private void setupSearch() {
-//        binding.etSearch.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//            }
-//        });
-//
-//        binding.etSearch.setOnEditorActionListener((v, actionId, event) -> {
-//            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                hideKeyboard();
-//                performSearch(Objects.requireNonNull(binding.etSearch.getText()).toString().trim());
-//                return true;
-//            }
-//            return false;
-//        });
-//    }
 
     private void updateSearchHint() {
         binding.etSearch.setHint(SEARCH_HINTS[currentTabIndex]);
