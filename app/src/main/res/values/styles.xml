@@ -450,4 +450,11 @@
     <style name="Widget.Yumi.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
         <item name="android:popupBackground">@drawable/bg_dropdown_popup</item>
     </style>
+
+    <style name="RoundedTopCorners" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
 </resources>

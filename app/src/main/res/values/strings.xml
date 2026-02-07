@@ -82,4 +82,6 @@
     <string name="meal_type">Meal Type</string>
     <string name="date">Date</string>
     <string name="ingredient">Ingredient</string>
+    <string name="search_hint">Search...</string>
+    <string name="no_results_found">No results found</string>
 </resources>
