@@ -63,8 +63,15 @@ public class MealsRepositoryImpl implements MealsRepository {
     }
 
     @Override
-    public Single<Meal> searchMealsByName(String mealName) {
-        return null;
+    public Single<List<Meal>> searchMealsByName(String mealName) {
+        return mealsRemoteDataSource.searchMealsByName(mealName).map(
+                mealsResponse -> {
+                    if (mealsResponse.getMeals().isEmpty())
+                        return null;
+
+                    return MealMapper.mapToDomainList(mealsResponse.getMeals());
+                }
+        );
     }
 
     @Override

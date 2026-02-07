@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,17 +15,26 @@ import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.domain.meals.model.Meal;
+import com.example.yumi.domain.meals.model.MealsFilter;
+import com.example.yumi.presentation.browse.fragments.MealsListFragment;
+import com.example.yumi.presentation.details.view.fragment.MealDetailsFragment;
+import com.example.yumi.presentation.home.contract.SearchContract;
+import com.example.yumi.presentation.home.presenter.SearchPresenter;
 import com.example.yumi.presentation.home.view.adapters.AreaSearchGridViewAdapter;
 import com.example.yumi.presentation.home.view.adapters.CategorySearchGridViewAdapter;
 import com.example.yumi.presentation.home.view.adapters.IngredientSearchGridViewAdapter;
 import com.example.yumi.presentation.home.view.adapters.MealSearchGridView;
+import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
 import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements SearchContract.View {
     private FragmentSearchBinding binding;
     private CategorySearchGridViewAdapter categoryAdapter;
     private AreaSearchGridViewAdapter areaAdapter;
@@ -37,19 +45,30 @@ public class SearchFragment extends Fragment {
     private List<Ingredient> allIngredients = new ArrayList<>();
     private List<Meal> allMeals = new ArrayList<>();
     private int currentTabIndex = 0;
-    private static final long SEARCH_DEBOUNCE_MS = 300;
-
-    private static final int TAB_CATEGORIES = 0;
-    private static final int TAB_COUNTRIES = 1;
-    private static final int TAB_INGREDIENTS = 2;
-    private static final int TAB_MEALS = 3;
-    private static final String[] SEARCH_HINTS = {
+    private final long SEARCH_DEBOUNCE_MS = 300;
+    private final int TAB_CATEGORIES = 0;
+    private final int TAB_COUNTRIES = 1;
+    private final int TAB_INGREDIENTS = 2;
+    private final int TAB_MEALS = 3;
+    private final String[] SEARCH_HINTS = {
             "Search categories...",
             "Search countries...",
             "Search ingredients...",
             "Search meals..."
     };
 
+    private SearchPresenter presenter;
+    private NavigationCallback navigationCallback;
+    private Disposable disposable;
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof NavigationCallback) {
+            navigationCallback = (NavigationCallback) context;
+        }
+    }
 
     @Nullable
     @Override
@@ -62,19 +81,30 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        presenter = new SearchPresenter(this);
 
         setupAdapters();
         setupTabs();
         setupSearch();
 
-        loadDataForTab(TAB_MEALS);
+        loadDataForTab(TAB_CATEGORIES);
     }
 
     private void setupAdapters() {
-        categoryAdapter = new CategorySearchGridViewAdapter(this::onCategoryClick);
-        areaAdapter = new AreaSearchGridViewAdapter(this::onAreaClick);
-        ingredientAdapter = new IngredientSearchGridViewAdapter(this::onIngredientClick);
-        mealAdapter = new MealSearchGridView(this::onMealClick, this::onMealAddClick);
+        categoryAdapter = new CategorySearchGridViewAdapter(category ->
+                presenter.onCategoryClicked(category));
+
+        areaAdapter = new AreaSearchGridViewAdapter(
+                area -> presenter.onAreaClicked(area)
+        );
+
+        ingredientAdapter = new IngredientSearchGridViewAdapter(
+                ingredient -> presenter.onIngredientClicked(ingredient)
+        );
+
+        mealAdapter = new MealSearchGridView(
+                meal -> presenter.onMealClicked(meal),
+                this::onMealAddClick);
 
         binding.gridView.setAdapter(categoryAdapter);
     }
@@ -134,30 +164,56 @@ public class SearchFragment extends Fragment {
     }
 
     private void setupSearch() {
-        binding.etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+        Observable<String> observable = Observable.create(emitter -> {
+            TextWatcher textWatcher = new TextWatcher() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    emitter.onNext(s.toString());
+                }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-            }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            };
 
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
+            binding.etSearch.addTextChangedListener(textWatcher);
+            emitter.setCancellable(() ->  binding.etSearch.removeTextChangedListener(textWatcher));
         });
 
-        binding.etSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                hideKeyboard();
-                performSearch(Objects.requireNonNull(binding.etSearch.getText()).toString().trim());
-                return true;
-            }
-            return false;
-        });
+        long DEBOUNCE_DELAY = 500;
+        disposable =
+                observable.debounce(DEBOUNCE_DELAY, TimeUnit.MILLISECONDS)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::performSearch);
     }
+
+//    private void setupSearch() {
+//        binding.etSearch.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
+//
+//        binding.etSearch.setOnEditorActionListener((v, actionId, event) -> {
+//            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                hideKeyboard();
+//                performSearch(Objects.requireNonNull(binding.etSearch.getText()).toString().trim());
+//                return true;
+//            }
+//            return false;
+//        });
+//    }
 
     private void updateSearchHint() {
         binding.etSearch.setHint(SEARCH_HINTS[currentTabIndex]);
@@ -255,27 +311,21 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchMeals(String query) {
-        // TODO: Call presenter to search meals by name from API
+        presenter.loadMeals(query);
     }
 
     private void loadDataForTab(int tabIndex) {
-        // TODO: Call your presenter to load data
-    }
-
-    private void onCategoryClick(Category category) {
-        // TODO: Navigate to category meals list
-    }
-
-    private void onAreaClick(Area area) {
-        // TODO: Navigate to area meals list
-    }
-
-    private void onIngredientClick(Ingredient ingredient) {
-        // TODO: Navigate to ingredient meals list
-    }
-
-    private void onMealClick(Meal meal) {
-        // TODO: Navigate to meal details
+        switch (tabIndex) {
+            case TAB_CATEGORIES:
+                presenter.loadCategories();
+                break;
+            case TAB_COUNTRIES:
+                presenter.loadAreas();
+                break;
+            case TAB_INGREDIENTS:
+                presenter.loadIngredients();
+                break;
+        }
     }
 
     private void onMealAddClick(Meal meal) {
@@ -283,7 +333,6 @@ public class SearchFragment extends Fragment {
     }
 
     public void showCategories(List<Category> categories) {
-        hideLoading();
         allCategories = new ArrayList<>(categories);
 
         if (categories.isEmpty()) {
@@ -295,7 +344,6 @@ public class SearchFragment extends Fragment {
     }
 
     public void showAreas(List<Area> areas) {
-        hideLoading();
         allAreas = new ArrayList<>(areas);
 
         if (areas.isEmpty()) {
@@ -307,7 +355,6 @@ public class SearchFragment extends Fragment {
     }
 
     public void showIngredients(List<Ingredient> ingredients) {
-        hideLoading();
         allIngredients = new ArrayList<>(ingredients);
 
         if (ingredients.isEmpty()) {
@@ -318,8 +365,28 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    @Override
+    public void navigateToMealDetail(Meal meal) {
+        if (navigationCallback != null) {
+            navigationCallback.navigateToFragment(
+                    new MealDetailsFragment(meal),
+                    "meals"
+            );
+        }
+    }
+
+    @Override
+    public void navigateToFilteredMeals(MealsFilter filter) {
+        if (navigationCallback != null) {
+            navigationCallback.navigateToFragment(
+                    new MealsListFragment(filter),
+                    "meals"
+            );
+        }
+    }
+
+    @Override
     public void showMeals(List<Meal> meals) {
-        hideLoading();
         allMeals = new ArrayList<>(meals);
 
         if (meals.isEmpty()) {
@@ -330,6 +397,7 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    @Override
     public void showLoading() {
         binding.progressBar.setVisibility(View.VISIBLE);
         binding.gridView.setVisibility(View.GONE);
@@ -337,6 +405,7 @@ public class SearchFragment extends Fragment {
         binding.emptyState.setVisibility(View.GONE);
     }
 
+    @Override
     public void hideLoading() {
         binding.progressBar.setVisibility(View.GONE);
 
@@ -364,8 +433,8 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    @Override
     public void showError(String message) {
-        hideLoading();
         showEmptyState(message);
     }
 
@@ -383,6 +452,9 @@ public class SearchFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (disposable != null && !disposable.isDisposed())
+            disposable.dispose();
+
         binding = null;
     }
 }

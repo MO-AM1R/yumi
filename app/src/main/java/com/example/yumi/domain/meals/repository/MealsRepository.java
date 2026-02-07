@@ -18,8 +18,7 @@ public interface MealsRepository {
 
     Single<Meal> getMealById(String mealId);
 
-    Single<Meal> searchMealsByName(String mealName);
-
+    Single<List<Meal>> searchMealsByName(String mealName);
     Single<List<Meal>> searchMealsByFirstLetter(String firstLetter);
 
     Single<List<Meal>> filterMealsByCategory(String category);
