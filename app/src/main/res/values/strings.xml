@@ -70,4 +70,16 @@
     <string name="login_success">You logged in successfully</string>
 
     <string name="meals_list_count">%1$d recipes found</string>
+    <string name="add_to_meal_plan">Add to Meal Plan</string>
+    <string name="play_video">Play Video</string>
+    <string name="favorite">Favorite</string>
+    <string name="back_arrow">Back Arrow</string>
+
+    <string name="how_to_make_meal">How to Make %1$s</string>
+    <string name="watch_the_full_video_tutorial_for_this_recipe">Watch the full video tutorial for this recipe</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="meal_type">Meal Type</string>
+    <string name="date">Date</string>
+    <string name="ingredient">Ingredient</string>
 </resources>

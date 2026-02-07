@@ -22,6 +22,7 @@ import com.example.yumi.presentation.browse.fragments.CategoriesFragment;
 import com.example.yumi.presentation.browse.fragments.CountriesFragment;
 import com.example.yumi.presentation.browse.fragments.IngredientsFragment;
 import com.example.yumi.presentation.browse.fragments.MealsListFragment;
+import com.example.yumi.presentation.details.view.fragment.MealDetailsFragment;
 import com.example.yumi.presentation.home.HomeContract;
 import com.example.yumi.presentation.home.presenter.HomePresenter;
 import com.example.yumi.presentation.home.view.adapters.AreasRecyclerViewAdapter;
@@ -172,6 +173,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
         GlideUtil.getImage(getContext(), binding.mealDayImage, meal.getThumbnailUrl());
         binding.mealDayCard.setVisibility(VISIBLE);
+        binding.mealDayCard.setOnClickListener(v -> navigateToMealDetail(meal));
     }
 
     @Override
@@ -195,8 +197,13 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
-    public void navigateToMealDetail(String mealId) {
-
+    public void navigateToMealDetail(Meal meal) {
+        if (navigationCallback != null) {
+            navigationCallback.navigateToFragment(
+                    new MealDetailsFragment(meal),
+                    "meals"
+            );
+        }
     }
 
     @Override

@@ -93,6 +93,17 @@
     </style>
 
 
+    <style name="Widget.Yumi.TextInputLayout.BottomSheet"
+        parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">@dimen/radius_lg</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/radius_lg</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/radius_lg</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/radius_lg</item>
+        <item name="boxStrokeColor">@color/secondary</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="Widget.Yumi.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="boxCornerRadiusTopStart">@dimen/radius_lg</item>
         <item name="boxCornerRadiusTopEnd">@dimen/radius_lg</item>
@@ -389,5 +400,54 @@
 
     <style name="TextAppearance.Yumi.Hint" parent="TextAppearance.Material3.LabelSmall">
         <item name="android:textColor">#CBCED4</item>
+    </style>
+
+    <style name="ThemeOverlay.Yumi.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Yumi.BottomSheet.Modal</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/card</item>
+    </style>
+
+    <!-- Bottom Sheet Style -->
+    <style name="Widget.Yumi.BottomSheet.Modal" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Yumi.BottomSheet</item>
+        <item name="behavior_peekHeight">auto</item>
+        <item name="behavior_fitToContents">true</item>
+        <item name="behavior_draggable">true</item>
+    </style>
+
+    <!-- Bottom Sheet Shape -->
+    <style name="ShapeAppearance.Yumi.BottomSheet" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">24dp</item>
+        <item name="cornerSizeTopRight">24dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <!-- Date Picker Theme (for Material Date Picker) -->
+    <style name="ThemeOverlay.Yumi.DatePicker" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/secondary</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSurface">@color/card</item>
+        <item name="colorOnSurface">?attr/colorOnSurface</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Yumi.DatePicker</item>
+    </style>
+
+    <style name="ShapeAppearance.Yumi.DatePicker" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <!-- Dropdown Menu Style -->
+    <style name="ThemeOverlay.Yumi.ExposedDropdownMenu" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox.Dense">
+        <item name="colorPrimary">@color/secondary</item>
+    </style>
+
+    <style name="Widget.Yumi.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
+        <item name="android:popupBackground">@drawable/bg_dropdown_popup</item>
     </style>
 </resources>

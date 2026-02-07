@@ -3,7 +3,11 @@ import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.domain.meals.model.Meal;
+import com.example.yumi.domain.user.model.MealPlan;
+
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 
@@ -29,4 +33,6 @@ public interface MealsRepository {
     Single<List<Area>> getAllAreas();
 
     Single<List<Ingredient>> getAllIngredients();
+
+    Completable addToMealPlan(MealPlan mealPlan);
 }

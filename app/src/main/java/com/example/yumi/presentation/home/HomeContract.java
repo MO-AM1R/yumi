@@ -22,7 +22,7 @@ public interface HomeContract {
 
         void showIngredients(List<Ingredient> ingredients);
 
-        void navigateToMealDetail(String mealId);
+        void navigateToMealDetail(Meal meal);
 
         void navigateToFilteredMeals(MealsFilter filter);
     }

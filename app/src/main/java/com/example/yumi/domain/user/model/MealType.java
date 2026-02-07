@@ -24,4 +24,13 @@ public enum MealType {
         }
         throw new IllegalArgumentException("Unknown meal type: " + value);
     }
+
+    public static String fromMealType(MealType type){
+        switch (type){
+            case SNACK: return "Snack";
+            case BREAKFAST: return "Breakfast";
+            case DINNER: return "Dinner";
+            default: return "Lunch";
+        }
+    }
 }

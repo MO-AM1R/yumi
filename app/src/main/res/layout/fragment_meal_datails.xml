@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:fitsSystemWindows="true">
+
+    <ImageView
+        android:id="@+id/meal_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/meal_description"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_launcher_foreground" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45"
+        />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="top"
+        android:background="@drawable/gradient_top_shadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:padding="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content">
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/back_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="start|center_vertical"
+            android:background="@drawable/fav_btn_glass_background"
+            android:padding="8dp"
+            app:blurOverlayColor="@color/glass_overlay_color">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/back_arrow"
+                android:src="@drawable/arrow_left"
+                app:tint="@android:color/white" />
+
+        </eightbitlab.com.blurview.BlurView>
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/favorite_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/fav_btn_glass_background"
+            android:padding="8dp"
+            app:blurOverlayColor="@color/glass_overlay_color">
+
+            <ImageView
+                android:id="@+id/favorite_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/favorite"
+                android:src="@drawable/favorite"
+                app:tint="@android:color/white" />
+
+        </eightbitlab.com.blurview.BlurView>
+
+    </FrameLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/meal_details_container"
+        android:paddingBottom="12dp"
+        android:paddingTop="24dp"
+        app:layout_constraintTop_toTopOf="@id/guideline"
+        app:layout_constraintBottom_toTopOf="@id/add_to_plan_btn_frame"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/meal_name"
+                    style="@style/TextAppearance.Yumi.HeadlineMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    tools:text="Grilled Salmon with Asparagus" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/meal_area"
+                    android:layout_width="wrap_content"
+                    style="@style/TextAppearance.Yumi.BodySmall"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_meal_category"
+                    android:textColor="@android:color/black"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"
+                    android:layout_marginEnd="12dp"
+                    android:textAllCaps="true"
+                    tools:text="SEAFOOD" />
+
+                <TextView
+                    android:id="@+id/meal_category"
+                    style="@style/TextAppearance.Yumi.BodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_meal_category"
+                    android:textColor="@android:color/black"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"
+                    android:textAllCaps="true"
+                    tools:text="SEAFOOD" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:tabGravity="start"
+                app:tabIndicatorColor="@color/secondary"
+                app:tabIndicatorFullWidth="false"
+                app:tabMode="fixed"
+                app:tabPaddingEnd="16dp"
+                app:tabPaddingStart="0dp"
+                app:tabRippleColor="@android:color/transparent"
+                app:tabSelectedTextColor="@color/secondary"
+                app:tabTextAppearance="@style/TextAppearance.Yumi.BodyMedium"
+                app:tabTextColor="@color/text_secondary" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <FrameLayout
+                android:id="@+id/content_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ingredients_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_ingredient_details" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/instructions_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="gone"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_instruction" />
+
+                <LinearLayout
+                    android:id="@+id/video_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/video_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/card"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:padding="24dp">
+
+                            <FrameLayout
+                                android:id="@+id/play_button_container"
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:background="@drawable/bg_play_button"
+                                android:clickable="true"
+                                android:focusable="true">
+
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@string/play_video"
+                                    android:src="@drawable/ic_play"
+                                    app:tint="@color/secondary" />
+
+                            </FrameLayout>
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="16dp" />
+
+                            <TextView
+                                android:id="@+id/video_title"
+                                style="@style/TextAppearance.Yumi.BodyMedium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                tools:text="How to Make Grilled Salmon with Asparagus" />
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="8dp" />
+
+                            <TextView
+                                android:id="@+id/video_subtitle"
+                                style="@style/TextAppearance.Yumi.BodySmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/watch_the_full_video_tutorial_for_this_recipe"
+                                android:textColor="@color/text_secondary" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                        android:id="@+id/youtube_player_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/add_to_plan_btn_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_bottom_gradient"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_to_plan_btn"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:backgroundTint="@color/foreground"
+            android:text="@string/add_to_meal_plan"
+            android:textAllCaps="false"
+            android:textColor="@color/background"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="28dp" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

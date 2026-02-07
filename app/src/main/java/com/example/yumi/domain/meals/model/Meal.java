@@ -1,8 +1,9 @@
 package com.example.yumi.domain.meals.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Meal {
+public class Meal implements Serializable {
     private final String id;
     private final String name;
     private final String alternateName;

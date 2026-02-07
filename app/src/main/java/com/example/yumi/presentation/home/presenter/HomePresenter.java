@@ -172,7 +172,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
 
     @Override
     public void onMealClicked(Meal meal) {
-        view.navigateToMealDetail(meal.getId());
+        view.navigateToMealDetail(meal);
     }
 
     @Override
