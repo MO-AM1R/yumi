@@ -1,4 +1,6 @@
 package com.example.yumi.presentation.base;
+import java.util.function.Consumer;
+
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public abstract class BasePresenter<V extends BaseView> {
@@ -11,6 +13,7 @@ public abstract class BasePresenter<V extends BaseView> {
     }
 
     public void detachView() {
+        compositeDisposable.clear();
         this.view = null;
     }
 
@@ -21,5 +24,11 @@ public abstract class BasePresenter<V extends BaseView> {
 
     protected boolean isViewDetached() {
         return view == null;
+    }
+
+    protected void withView(Consumer<V> action) {
+        if (view != null) {
+            action.accept(view);
+        }
     }
 }

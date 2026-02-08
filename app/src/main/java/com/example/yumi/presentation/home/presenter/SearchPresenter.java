@@ -8,6 +8,7 @@ import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.domain.meals.model.MealsFilterType;
 import com.example.yumi.domain.meals.repository.MealsRepository;
 import com.example.yumi.presentation.base.BasePresenter;
+import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.home.contract.SearchContract;
 import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -27,34 +28,44 @@ public class SearchPresenter extends BasePresenter<SearchContract.View>
     }
 
     private void onMealsLoaded(List<Meal> meals){
-        view.hideLoading();
-        view.showMeals(meals);
+        withView(v -> {
+            v.hideLoading();
+            v.showMeals(meals);
+        });
     }
 
     private void onCategoriesLoaded(List<Category> categories){
-        view.hideLoading();
-        view.showCategories(categories);
+        withView(v -> {
+            v.hideLoading();
+            v.showCategories(categories);
+        });
     }
 
     private void onIngredientsLoaded(List<Ingredient> ingredients){
-        view.hideLoading();
-        view.showIngredients(ingredients);
+        withView(v -> {
+            v.hideLoading();
+            v.showIngredients(ingredients);
+        });
     }
 
     private void onAreasLoaded(List<Area> areas){
-        view.hideLoading();
-        view.showAreas(areas);
+        withView(v -> {
+            v.hideLoading();
+            v.showAreas(areas);
+        });
     }
 
     @Override
     public void onError(String error){
-        view.hideLoading();
-        view.showError(error);
+        withView(v -> {
+            v.hideLoading();
+            v.showError(error);
+        });
     }
 
     @Override
     public void loadMeals(String query) {
-        view.showLoading();
+        withView(BaseView::showLoading);
 
         Disposable disposable = repository.searchMealsByName(query)
                 .subscribeOn(Schedulers.io())
@@ -69,7 +80,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.View>
 
     @Override
     public void loadCategories() {
-        view.showLoading();
+        withView(BaseView::showLoading);
 
         Disposable disposable = repository.getAllCategories()
                 .subscribeOn(Schedulers.io())
@@ -84,7 +95,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.View>
 
     @Override
     public void loadAreas() {
-        view.showLoading();
+        withView(BaseView::showLoading);
 
         Disposable disposable = repository.getAllAreas()
                 .subscribeOn(Schedulers.io())
@@ -99,7 +110,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.View>
 
     @Override
     public void loadIngredients() {
-        view.showLoading();
+        withView(BaseView::showLoading);
 
         Disposable disposable = repository.getAllIngredients()
                 .subscribeOn(Schedulers.io())

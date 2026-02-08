@@ -85,6 +85,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter = new SearchPresenter(this);
+        presenter.attachView(this);
 
         setupAdapters();
         setupTabs();
@@ -216,10 +217,12 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     private void updateSearchHint() {
+        if (!isAdded() || binding == null) return;
         binding.etSearch.setHint(SEARCH_HINTS[currentTabIndex]);
     }
 
     private void clearSearch() {
+        if (!isAdded() || binding == null) return;
         binding.etSearch.setText("");
     }
 
@@ -245,6 +248,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     private void filterCategories(String query) {
+        if (!isAdded() || binding == null) return;
         if (query.isEmpty()) {
             categoryAdapter.setCategories(allCategories);
             hideEmptyState();
@@ -267,6 +271,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     private void filterAreas(String query) {
+        if (!isAdded() || binding == null) return;
         if (query.isEmpty()) {
             areaAdapter.setAreas(allAreas);
             hideEmptyState();
@@ -289,6 +294,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     private void filterIngredients(String query) {
+        if (!isAdded() || binding == null) return;
         if (query.isEmpty()) {
             ingredientAdapter.setIngredients(allIngredients);
             hideEmptyState();
@@ -311,10 +317,12 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     private void searchMeals(String query) {
+        if (!isAdded() || binding == null) return;
         presenter.loadMeals(query);
     }
 
     private void loadDataForTab(int tabIndex) {
+        if (!isAdded() || binding == null) return;
         switch (tabIndex) {
             case TAB_CATEGORIES:
                 presenter.loadCategories();
@@ -336,6 +344,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     public void showCategories(List<Category> categories) {
+        if (!isAdded() || binding == null) return;
         allCategories = new ArrayList<>(categories);
 
         if (categories.isEmpty()) {
@@ -347,6 +356,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     public void showAreas(List<Area> areas) {
+        if (!isAdded() || binding == null) return;
         allAreas = new ArrayList<>(areas);
 
         if (areas.isEmpty()) {
@@ -358,6 +368,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     public void showIngredients(List<Ingredient> ingredients) {
+        if (!isAdded() || binding == null) return;
         allIngredients = new ArrayList<>(ingredients);
 
         if (ingredients.isEmpty()) {
@@ -370,6 +381,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
 
     @Override
     public void navigateToMealDetail(Meal meal) {
+        if (!isAdded() || binding == null) return;
         if (navigationCallback != null) {
             navigationCallback.navigateToFragment(
                     new MealDetailsFragment(meal),
@@ -380,6 +392,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
 
     @Override
     public void navigateToFilteredMeals(MealsFilter filter) {
+        if (!isAdded() || binding == null) return;
         if (navigationCallback != null) {
             navigationCallback.navigateToFragment(
                     new MealsListFragment(filter),
@@ -390,6 +403,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
 
     @Override
     public void showMeals(List<Meal> meals) {
+        if (!isAdded() || binding == null) return;
         allMeals = new ArrayList<>(meals);
 
         if (meals.isEmpty()) {
@@ -402,6 +416,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
 
     @Override
     public void showLoading() {
+        if (!isAdded() || binding == null) return;
         binding.progressBar.setVisibility(View.VISIBLE);
         binding.gridView.setVisibility(View.GONE);
         binding.listView.setVisibility(View.GONE);
@@ -410,6 +425,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
 
     @Override
     public void hideLoading() {
+        if (!isAdded() || binding == null) return;
         binding.progressBar.setVisibility(View.GONE);
 
         if (currentTabIndex == TAB_MEALS) {
@@ -420,6 +436,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     public void showEmptyState(String message) {
+        if (!isAdded() || binding == null) return;
         binding.emptyState.setVisibility(View.VISIBLE);
         binding.tvEmptyMessage.setText(message);
         binding.gridView.setVisibility(View.GONE);
@@ -427,6 +444,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     public void hideEmptyState() {
+        if (!isAdded() || binding == null) return;
         binding.emptyState.setVisibility(View.GONE);
 
         if (currentTabIndex == TAB_MEALS) {
@@ -438,6 +456,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
 
     @Override
     public void showError(String message) {
+        if (!isAdded() || binding == null) return;
         showEmptyState(message);
     }
 
@@ -457,6 +476,9 @@ public class SearchFragment extends Fragment implements SearchContract.View {
         super.onDestroyView();
         if (disposable != null && !disposable.isDisposed())
             disposable.dispose();
+        if (presenter != null)
+            presenter.detachView();
+
 
         binding = null;
     }
