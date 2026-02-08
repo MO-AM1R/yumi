@@ -31,7 +31,13 @@ public class AuthenticationActivity extends BaseActivity {
             return insets;
         });
 
-        if (savedInstanceState == null){
+        Intent intent = getIntent();
+        boolean splash = intent.getBooleanExtra("SPLASH", true);
+
+        if (!splash){
+            splashShown = true;
+        }
+        else if (savedInstanceState == null){
             splashShown = false;
         }else{
             splashShown = savedInstanceState.getBoolean("splashShown");

@@ -147,6 +147,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
                 AuthenticationActivity.class
         );
 
+        intent.putExtra("SPLASH", false);
         startActivity(intent);
     }
 
