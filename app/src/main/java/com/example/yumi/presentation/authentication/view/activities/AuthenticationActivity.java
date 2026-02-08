@@ -1,24 +1,22 @@
 package com.example.yumi.presentation.authentication.view.activities;
 import static com.example.yumi.data.config.SharedPreferencesKeysConfig.KEY_LOGGED_IN;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.navigation.NavController;
 import androidx.navigation.NavGraph;
 import androidx.navigation.fragment.NavHostFragment;
 import com.example.yumi.R;
+import com.example.yumi.app.BaseActivity;
 import com.example.yumi.data.config.SharedPreferencesKeysConfig;
 import com.example.yumi.presentation.home.view.activities.HomeBaseActivity;
 
 
-public class AuthenticationActivity extends AppCompatActivity {
+public class AuthenticationActivity extends BaseActivity {
     private NavController navController;
     private SharedPreferences prefs;
     private boolean splashShown;

@@ -7,7 +7,6 @@ import android.view.Window;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
@@ -15,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.yumi.R;
+import com.example.yumi.app.BaseActivity;
 import com.example.yumi.databinding.ActivityHomeBaseBinding;
 import com.example.yumi.presentation.home.view.fragments.CalendarFragment;
 import com.example.yumi.presentation.home.view.fragments.FavoritesFragment;
@@ -27,7 +27,7 @@ import java.util.Stack;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 
-public class HomeBaseActivity extends AppCompatActivity implements NavigationCallback {
+public class HomeBaseActivity  extends BaseActivity implements NavigationCallback {
     private ActivityHomeBaseBinding binding;
     private Fragment activeFragment;
     private int currentTabIndex = 0;

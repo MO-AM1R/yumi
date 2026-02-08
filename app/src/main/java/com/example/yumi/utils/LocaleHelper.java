@@ -1,22 +1,27 @@
 package com.example.yumi.utils;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.util.Log;
 
-import static com.example.yumi.data.config.SharedPreferencesKeysConfig.PREF_NAME;
+import androidx.annotation.Nullable;
+
 import static com.example.yumi.data.config.SharedPreferencesKeysConfig.KEY_LANGUAGE;
-
-import com.example.yumi.R;
+import static com.example.yumi.data.config.SharedPreferencesKeysConfig.PREF_NAME;
 
 import java.util.Locale;
+import java.util.Objects;
 
-public class LocaleHelper {
+
+public abstract class LocaleHelper {
+    public static final String LANG_ENGLISH = "en";
+    public static final String LANG_ARABIC = "ar";
+
+    @Nullable
     public static String getSavedLanguage(Context context) {
-        return context.getSharedPreferences(
-                PREF_NAME, Context.MODE_PRIVATE)
-                .getString(KEY_LANGUAGE,
-                        Locale.getDefault().getLanguage());
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return prefs.getString(KEY_LANGUAGE, null);
     }
 
     public static void saveLanguage(Context context, String lang) {
@@ -26,28 +31,50 @@ public class LocaleHelper {
                 .apply();
     }
 
-    public static void setLocale(Context context, String lang) {
-        Locale locale = new Locale(lang);
+    public static Context attach(Context context) {
+        String savedLang = getSavedLanguage(context);
+
+        if (savedLang == null) {
+            return context;
+        }
+
+        return updateLocale(context, new Locale(savedLang));
+    }
+
+    public static Context setLocale(Context context, String language) {
+        saveLanguage(context, language);
+        return updateLocale(context, new Locale(language));
+    }
+
+    private static Context updateLocale(Context context, Locale locale) {
         Locale.setDefault(locale);
 
         Resources resources = context.getResources();
         Configuration config = new Configuration(resources.getConfiguration());
-        config.setLocale(locale);
 
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
+        config.setLocale(locale);
+        config.setLayoutDirection(locale);
+
+        return context.createConfigurationContext(config);
     }
 
     public static boolean isSameLanguage(Context context, String selectedLang) {
-        String currentLangCode = getSavedLanguage(context);
+        String savedLang = getSavedLanguage(context);
 
-        String localizedLang = context.getString(R.string.ar);
-        if (currentLangCode.equalsIgnoreCase("en"))
-            localizedLang = context.getString(R.string.en);
+        return
+                Objects.requireNonNullElseGet(
+                                savedLang,
+                                () -> Locale.getDefault().getLanguage())
+                        .equalsIgnoreCase(selectedLang);
 
+    }
 
-        Log.d("TAG", "currentLangCode: " + currentLangCode);
-        Log.d("TAG", "localizedLang: " + currentLangCode);
-        Log.d("TAG", "Selected: " + selectedLang);
-        return localizedLang.equalsIgnoreCase(selectedLang);
+    public static String getCurrentLanguage(Context context) {
+        String savedLang = getSavedLanguage(context);
+        return savedLang != null ? savedLang : Locale.getDefault().getLanguage();
+    }
+
+    public static boolean isArabic(Context context) {
+        return LANG_ARABIC.equals(getCurrentLanguage(context));
     }
 }
