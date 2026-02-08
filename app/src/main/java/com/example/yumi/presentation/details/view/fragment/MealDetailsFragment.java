@@ -122,9 +122,15 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     }
 
     private void setupTabs() {
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Ingredients"));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Instructions"));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Video"));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(
+                requireActivity().getString(R.string.ingredients)
+        ));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(
+                requireActivity().getString(R.string.instructions)
+        ));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(
+                requireActivity().getString(R.string.video)
+        ));
 
         binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
