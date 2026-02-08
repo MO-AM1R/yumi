@@ -81,5 +81,13 @@
     <color name="glass_overlay_color_dark">#80000000</color>
 
     <color name="arrow_back_background">#F5F5F7</color>
+
     <color name="error_color">#FF0000</color>
+
+    <color name="circle_avatar_background">#EEEEEE</color>
+    <color name="circle_avatar_foreground">#161716</color>
+    
+    <color name="setting_option_background">#FFF0E6</color>
+
+    <color name="switch_track_tint">#ECECF0</color>
 </resources>
