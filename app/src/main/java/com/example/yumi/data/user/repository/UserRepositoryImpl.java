@@ -229,13 +229,7 @@ public class UserRepositoryImpl implements UserRepository {
         userLocalDataSource.setUserId(user.getUid());
 
         return remoteDataSource.getUser(user.getUid())
-                .doOnSuccess(fullUser -> {
-                    userLocalDataSource.setCurrentUser(fullUser);
-
-                    if (fullUser.getSettings() != null) {
-                        userLocalDataSource.cacheSettings(fullUser.getSettings());
-                    }
-                })
+                .doOnSuccess(userLocalDataSource::setCurrentUser)
                 .onErrorResumeNext(e -> {
                     userLocalDataSource.setCurrentUser(user);
                     return Single.just(user);
