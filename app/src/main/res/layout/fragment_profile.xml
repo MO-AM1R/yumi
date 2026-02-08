@@ -225,7 +225,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/TextAppearance.Yumi.BodyMedium"
-                                android:text="Dark Mode"
+                                android:text="@string/dark_mode"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -234,7 +234,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="Off"
+                                android:text="@string/off"
                                 android:textColor="@color/muted_foreground"
                                 android:textSize="12sp" />
 
@@ -279,13 +279,18 @@
                         </FrameLayout>
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             style="@style/TextAppearance.Yumi.BodyMedium"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
-                            android:layout_weight="1"
-                            android:text="Language"
+                            android:text="@string/language"
                             android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            />
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="100dp"
@@ -357,7 +362,7 @@
                         android:layout_height="wrap_content"
                         style="@style/TextAppearance.Yumi.BodyLarge"
                         android:layout_marginStart="12dp"
-                        android:text="Logout"
+                        android:text="@string/logout"
                         android:textColor="@color/error_color"
                         android:textStyle="bold" />
 

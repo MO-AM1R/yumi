@@ -1,20 +1,17 @@
 package com.example.yumi.presentation.home.view.fragments;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
 import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentProfileBinding;
+import com.example.yumi.utils.LocaleHelper;
 
 
 public class ProfileFragment extends Fragment {
@@ -40,6 +37,28 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setupLanguageSpinner();
+
+        binding.spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedLang = binding.spinnerLanguage
+                        .getItemAtPosition(position)
+                        .toString();
+
+                if (LocaleHelper.isSameLanguage(requireActivity(), selectedLang)) {
+                    return;
+                }
+
+                selectedLang = selectedLang.substring(0, 2).toLowerCase();
+                LocaleHelper.saveLanguage(requireContext(), selectedLang);
+                LocaleHelper.setLocale(requireContext(), selectedLang);
+
+                requireActivity().recreate();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
     }
 
     private void setupLanguageSpinner() {
@@ -51,16 +70,5 @@ public class ProfileFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("TAG", "Position: " + position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 }
