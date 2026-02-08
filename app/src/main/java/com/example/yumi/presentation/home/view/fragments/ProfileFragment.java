@@ -1,9 +1,12 @@
 package com.example.yumi.presentation.home.view.fragments;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +16,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentProfileBinding;
+import com.example.yumi.domain.user.model.User;
+import com.example.yumi.presentation.authentication.view.activities.AuthenticationActivity;
+import com.example.yumi.presentation.home.contract.ProfileContract;
+import com.example.yumi.presentation.home.presenter.ProfilePresenter;
 import com.example.yumi.utils.LocaleHelper;
 import com.example.yumi.utils.ThemeHelper;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements ProfileContract.View {
     private FragmentProfileBinding binding;
     private boolean isSpinnerInitialized = false;
-
+    private ProfilePresenter presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,9 +47,14 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        presenter = new ProfilePresenter(requireActivity().getApplicationContext());
+        presenter.attachView(this);
 
         setupLanguageSpinner();
         setupDarkModeSwitch();
+        presenter.loadUserDetails();
+
+        binding.cardLogout.setOnClickListener(v -> presenter.logout());
     }
 
     private void setupLanguageSpinner() {
@@ -68,14 +80,7 @@ public class ProfileFragment extends Fragment {
                     return;
                 }
 
-                String selectedLang = getLangCodeFromPosition(pos);
-
-                if (LocaleHelper.isSameLanguage(requireContext(), selectedLang)) {
-                    return;
-                }
-
-                LocaleHelper.saveLanguage(requireContext(), selectedLang);
-                requireActivity().recreate();
+                presenter.onLanguageChanged(getLangCodeFromPosition(pos));
             }
 
             @Override
@@ -113,13 +118,67 @@ public class ProfileFragment extends Fragment {
 
         binding.switchDarkMode.setChecked(isDark);
 
-        binding.switchDarkMode.setOnCheckedChangeListener((buttonView, checked) -> {
-            ThemeHelper.saveTheme(requireContext(), checked);
-            AppCompatDelegate.setDefaultNightMode(
-                    checked
-                            ? AppCompatDelegate.MODE_NIGHT_YES
-                            : AppCompatDelegate.MODE_NIGHT_NO
-            );
-        });
+        binding.switchDarkMode.setOnCheckedChangeListener(
+                (buttonView, checked) -> presenter.onModeChanged(checked));
+    }
+
+    @Override
+    public void showUserDetails(User user) {
+        binding.userAvatar.setText(user.getDisplayName().substring(0, 2).toUpperCase());
+        binding.userNameText.setText(user.getDisplayName());
+        binding.emailTextView.setText(user.getEmail());
+        binding.favoriteCountText.setText(String.valueOf(user.getFavoriteMealIds().size()));
+    }
+
+    @Override
+    public void showUserPlannedMealsCounter(int plannedMeals) {
+        binding.plannedCountText.setText(String.valueOf(plannedMeals));
+    }
+
+    @Override
+    public void resetLanguage() {
+        requireActivity().recreate();
+    }
+
+    @Override
+    public void onLogout() {
+        Intent intent = new Intent(
+                requireActivity(),
+                AuthenticationActivity.class
+        );
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (presenter != null) {
+            presenter.onDestroy();
+            presenter = null;
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        binding.loading.setVisibility(VISIBLE);
+        toggleView(GONE);
+    }
+
+    @Override
+    public void hideLoading() {
+        binding.loading.setVisibility(GONE);
+        toggleView(VISIBLE);
+    }
+
+    private void toggleView(int visibility) {
+        binding.plannedCountText.setVisibility(visibility);
+        binding.favoriteCountText.setVisibility(visibility);
+    }
+
+    @Override
+    public void showError(String message) {
+
     }
 }
