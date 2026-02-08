@@ -55,16 +55,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-
-        if (view == null) {
-            binding = FragmentHomeBinding.inflate(inflater);
-            view = binding.getRoot();
-        } else {
-            binding = FragmentHomeBinding.bind(view);
-        }
-
-        return view;
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
@@ -167,6 +159,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void showDayMeal(Meal meal) {
+        if (isDetached()) return;
+
         binding.mealCategory.setText(meal.getCategory());
         binding.dayMealIngredientsCount.setText(getString(R.string.ingredients_count_message, meal.getIngredients().size()));
         binding.dayMealName.setText(meal.getName());
@@ -178,21 +172,25 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void showRandomMeals(List<Meal> meals) {
+        if (!isAdded() || binding == null) return;
         mealsAdapter.setMeals(meals);
     }
 
     @Override
     public void showCategories(List<Category> categories) {
+        if (!isAdded() || binding == null) return;
         categoriesAdapter.setCategories(categories.subList(0, 10));
     }
 
     @Override
     public void showAreas(List<Area> areas) {
+        if (!isAdded() || binding == null) return;
         areasAdapter.setAreas(areas.subList(0, 10));
     }
 
     @Override
     public void showIngredients(List<Ingredient> ingredients) {
+        if (!isAdded() || binding == null) return;
         ingredientsAdapter.setIngredients(ingredients.subList(0, 10));
     }
 
@@ -218,6 +216,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void showLoading() {
+        if (!isAdded() || binding == null) return;
         binding.loading.setIndeterminate(true);
         binding.loading.setVisibility(VISIBLE);
 
@@ -226,6 +225,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void hideLoading() {
+        if (!isAdded() || binding == null) return;
         binding.loading.setIndeterminate(false);
         binding.loading.setVisibility(GONE);
         binding.swipeRefreshLayout.setRefreshing(false);
@@ -235,14 +235,26 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void showError(String message) {
-
+        if (!isAdded() || binding == null) return;
     }
 
     private void toggleAllViewsVisibility(int visibility) {
+        if (!isAdded() || binding == null) return;
         binding.randomMealsRecyclerView.setVisibility(visibility);
         binding.categoriesRecyclerView.setVisibility(visibility);
         binding.ingredientsRecyclerView.setVisibility(visibility);
         binding.countriesRecyclerView.setVisibility(visibility);
         binding.mealDayCard.setVisibility(visibility);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (presenter != null) {
+            presenter.detachView();
+        }
+
+        binding = null;
     }
 }

@@ -8,6 +8,7 @@ import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.domain.meals.model.MealsFilterType;
 import com.example.yumi.domain.meals.repository.MealsRepository;
 import com.example.yumi.presentation.base.BasePresenter;
+import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.home.contract.HomeContract;
 import java.util.List;
 import java.util.Random;
@@ -27,7 +28,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
     }
 
     public void refreshData(){
-        view.showLoading();
+        withView(BaseView::showLoading);
 
         loadDayMeal();
         loadRandomMeals();
@@ -44,48 +45,48 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
     }
 
     private void onDayMealLoaded(Meal meal) {
-        if (isViewDetached()) return;
-
-        view.hideLoading();
-        view.showDayMeal(meal);
-    }
-
-    private void onCategoriesLoaded(List<Category> categories) {
-        if (isViewDetached()) return;
-
-        view.hideLoading();
-        view.showCategories(categories);
-    }
-
-    private void onAreasLoaded(List<Area> areas) {
-        if (isViewDetached()) return;
-
-        view.hideLoading();
-        view.showAreas(areas);
-    }
-
-    private void onRandomMealsLoaded(List<Meal> meals) {
-        if (isViewDetached()) return;
-
-        view.hideLoading();
-        view.showRandomMeals(meals);
-    }
-
-    private void onIngredientsLoaded(List<Ingredient> ingredients) {
-        if (isViewDetached()) return;
-
-        view.hideLoading();
-        view.showIngredients(ingredients);
+        withView(v -> {
+            v.hideLoading();
+            v.showDayMeal(meal);
+        });
     }
 
     private void onError(Throwable throwable) {
-        if (isViewDetached()) return;
+        withView(v -> {
+            v.hideLoading();
+            String msg = throwable.getLocalizedMessage() != null
+                    ? throwable.getLocalizedMessage()
+                    : "Unexpected error";
+            v.showError(msg);
+        });
+    }
 
-        view.hideLoading();
-        String errorMessage = throwable.getLocalizedMessage() != null
-                ? throwable.getLocalizedMessage()
-                : "An unexpected error occurred";
-        view.showError(errorMessage);
+    private void onCategoriesLoaded(List<Category> categories) {
+        withView(v -> {
+            v.hideLoading();
+            v.showCategories(categories);
+        });
+    }
+
+    private void onAreasLoaded(List<Area> areas) {
+        withView(v -> {
+            v.hideLoading();
+            v.showAreas(areas);
+        });
+    }
+
+    private void onRandomMealsLoaded(List<Meal> meals) {
+        withView(v -> {
+            v.hideLoading();
+            v.showRandomMeals(meals);
+        });
+    }
+
+    private void onIngredientsLoaded(List<Ingredient> ingredients) {
+        withView(v -> {
+            v.hideLoading();
+            v.showIngredients(ingredients);
+        });
     }
 
 
