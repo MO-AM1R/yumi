@@ -105,6 +105,9 @@
     <string name="on">مفعل</string>
     <string name="language">اللغة</string>
     <string name="logout">تسجيل الخروج</string>
+    <string name="my_favorites">My Favorites</string>
+    <string name="fav_image_description">Fav Image Description</string>
+    <string name="add_to_plan">+ Add to Plan</string>
 
     <string-array name="languages_array">
         <item>الإنجليزية</item>
