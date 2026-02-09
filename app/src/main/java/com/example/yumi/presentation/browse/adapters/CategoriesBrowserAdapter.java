@@ -16,7 +16,7 @@ import com.example.yumi.utils.GlideUtil;
 import java.util.List;
 
 
-public class CategoriesBrowserAdapter extends RecyclerView.Adapter<CategoriesBrowserAdapter.AreaViewHolder> {
+public class CategoriesBrowserAdapter extends RecyclerView.Adapter<CategoriesBrowserAdapter.CategoryViewHolder> {
     private List<Category> categories;
     private final OnCategoryClick onCategoryClick;
 
@@ -27,15 +27,15 @@ public class CategoriesBrowserAdapter extends RecyclerView.Adapter<CategoriesBro
 
     @NonNull
     @Override
-    public AreaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.category_browse_raw_item, parent, false);
 
-        return new AreaViewHolder(view);
+        return new CategoryViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AreaViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         Category category = categories.get(position);
         View view = holder.getItemView();
 
@@ -63,13 +63,13 @@ public class CategoriesBrowserAdapter extends RecyclerView.Adapter<CategoriesBro
         notifyDataSetChanged();
     }
 
-    public static class AreaViewHolder extends RecyclerView.ViewHolder {
+    public static class CategoryViewHolder extends RecyclerView.ViewHolder {
         private final ImageView categoryImage;
         private final TextView categoryName;
         private final CardView cardBackground, cardView;
         private final View itemView;
 
-        public AreaViewHolder(@NonNull View itemView) {
+        public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView = itemView;
             categoryImage = itemView.findViewById(R.id.category_image_view);
