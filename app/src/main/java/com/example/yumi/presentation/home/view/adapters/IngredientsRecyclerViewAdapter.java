@@ -52,7 +52,7 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter<Ingredi
             );
         }
 
-        view.setPadding(0, 0, paddingEnd, 0);
+        view.setPaddingRelative(0, 0, paddingEnd, 0);
 
         holder.getIngredientName().setText(ingredient.getName());
         GlideUtil.getImageWithGeneratedBackground(

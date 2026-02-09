@@ -50,7 +50,7 @@ public class AreasRecyclerViewAdapter extends RecyclerView.Adapter<AreasRecycler
             );
         }
 
-        view.setPadding(0, 0, paddingEnd, 0);
+        view.setPaddingRelative(0, 0, paddingEnd, 0);
 
         holder.getAreaName().setText(area.getName());
         holder.getAreaLogo().setText(area.getName().substring(0, 2).toLowerCase());

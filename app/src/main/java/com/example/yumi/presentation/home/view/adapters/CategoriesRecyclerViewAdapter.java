@@ -49,7 +49,7 @@ public class CategoriesRecyclerViewAdapter extends RecyclerView.Adapter<Category
             );
         }
 
-        view.setPadding(0, 0, paddingEnd, 0);
+        view.setPaddingRelative(0, 0, paddingEnd, 0);
 
         holder.getCategoryTxtView().setText(category.getName());
         GlideUtil.getImageWithGeneratedBackground(
