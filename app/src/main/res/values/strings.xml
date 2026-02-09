@@ -107,6 +107,7 @@
     <string name="favorite_description">Favorite Description</string>
     <string name="no_favorites_yet">No favorites yet</string>
     <string name="start_adding_your_favorite_recipes_to_see_them_here">Start adding your favorite recipes to see them here</string>
+    <string name="recipe_saved">%1$d recipe saved</string>
 
     <string-array name="languages_array">
         <item>English</item>

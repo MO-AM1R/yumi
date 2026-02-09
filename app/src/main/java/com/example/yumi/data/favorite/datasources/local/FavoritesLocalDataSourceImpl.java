@@ -1,4 +1,6 @@
 package com.example.yumi.data.favorite.datasources.local;
+import android.content.Context;
+
 import com.example.yumi.data.database.AppDatabase;
 import com.example.yumi.data.database.doa.IngredientDao;
 import com.example.yumi.data.database.doa.MealDao;
@@ -12,9 +14,9 @@ public class FavoritesLocalDataSourceImpl implements FavoritesLocalDataSource {
     private final MealDao mealDao;
     private final IngredientDao ingredientDao;
 
-    public FavoritesLocalDataSourceImpl() {
-        mealDao = AppDatabase.getInstance().getMealDoa();
-        ingredientDao = AppDatabase.getInstance().getIngredientDoa();
+    public FavoritesLocalDataSourceImpl(Context context) {
+        mealDao = AppDatabase.getInstance(context).mealDao();
+        ingredientDao = AppDatabase.getInstance(context).ingredientDao();
     }
 
     @Override
