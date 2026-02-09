@@ -38,11 +38,12 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidyoutubeplayer.core);
     implementation(platform(libs.firebase.bom))
+    implementation(libs.androidyoutubeplayer.core)
     implementation(libs.credentials.play.services)
     implementation(libs.retrofit.adapter.rxjava3)
     implementation(libs.navigation.fragment.ktx)
+    implementation(libs.androidx.room.rxjava3)
     implementation(libs.animated.bottom.bar)
     annotationProcessor(libs.glide.compiler)
     implementation(libs.logging.interceptor)
