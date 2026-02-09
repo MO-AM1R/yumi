@@ -1,5 +1,5 @@
 package com.example.yumi.data.firebase;
-import com.example.yumi.domain.user.model.MealPlan;
+import com.example.yumi.domain.favorites.models.MealPlan;
 import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.domain.user.model.User;
 import com.example.yumi.domain.user.model.UserSettings;

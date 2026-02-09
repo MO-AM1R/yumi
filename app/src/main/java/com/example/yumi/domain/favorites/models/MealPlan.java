@@ -1,4 +1,6 @@
-package com.example.yumi.domain.user.model;
+package com.example.yumi.domain.favorites.models;
+
+import com.example.yumi.domain.user.model.MealType;
 
 import java.util.HashMap;
 import java.util.Map;

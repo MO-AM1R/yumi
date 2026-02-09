@@ -1,7 +1,7 @@
 package com.example.yumi.data.user.datasources.remote;
 import android.content.Context;
-import com.example.yumi.domain.user.model.DayMeals;
-import com.example.yumi.domain.user.model.MealPlan;
+import com.example.yumi.domain.favorites.models.DayMeals;
+import com.example.yumi.domain.favorites.models.MealPlan;
 import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.domain.user.model.User;
 import com.example.yumi.domain.user.model.UserSettings;

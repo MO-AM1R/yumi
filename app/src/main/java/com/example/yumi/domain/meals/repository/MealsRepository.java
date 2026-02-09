@@ -3,7 +3,7 @@ import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.domain.meals.model.Meal;
-import com.example.yumi.domain.user.model.MealPlan;
+import com.example.yumi.domain.favorites.models.MealPlan;
 
 import java.util.List;
 
