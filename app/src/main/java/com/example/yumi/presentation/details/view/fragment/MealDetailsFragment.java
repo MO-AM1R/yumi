@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
-import com.example.yumi.databinding.FragmentMealDatailsBinding;
+import com.example.yumi.databinding.FragmentMealDetailsBinding;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.presentation.custom.AddToPlanBottomSheet;
 import com.example.yumi.presentation.details.presenter.MealDetailsPresenter;
@@ -27,7 +27,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 public class MealDetailsFragment extends Fragment implements MealDetailsContract.View {
     private static final String ARG_MEAL = "arg_meal";
     private static final String KEY_MEAL = "key_meal";
-    private FragmentMealDatailsBinding binding;
+    private FragmentMealDetailsBinding binding;
     private MealDetailsPresenter presenter;
     private NavigationCallback navigationCallback;
     private Meal meal;
@@ -69,10 +69,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         if (view == null) {
-            binding = FragmentMealDatailsBinding.inflate(inflater);
+            binding = FragmentMealDetailsBinding.inflate(inflater);
             view = binding.getRoot();
         } else {
-            binding = FragmentMealDatailsBinding.bind(view);
+            binding = FragmentMealDetailsBinding.bind(view);
         }
 
         getLifecycle().addObserver(binding.youtubePlayerView);

@@ -54,6 +54,7 @@
     <string name="add_sign">+ Add</string>
     <string name="random_meals">Random Meals</string>
     <string name="ingredients">Ingredients</string>
+    <string name="meals">Meals</string>
     <string name="video">Video</string>
     <string name="instructions">Instructions</string>
     <string name="ingredient_description">Ingredient description</string>

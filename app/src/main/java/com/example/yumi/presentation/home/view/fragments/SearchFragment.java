@@ -11,6 +11,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentSearchBinding;
 import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
@@ -126,10 +128,18 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     }
 
     private void setupTabs() {
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Categories"));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Countries"));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Ingredients"));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Meals"));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(
+                requireContext().getString(R.string.categories)
+        ));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(
+                requireContext().getString(R.string.countries)
+        ));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(
+                requireContext().getString(R.string.ingredients)
+        ));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(
+                requireContext().getString(R.string.meals)
+        ));
 
         binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
