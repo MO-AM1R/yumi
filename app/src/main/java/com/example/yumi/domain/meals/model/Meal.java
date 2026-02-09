@@ -14,7 +14,7 @@ public class Meal implements Serializable {
     private final List<String> tags;
     private final String youtubeUrl;
     private final String sourceUrl;
-    private final List<MealIngredient> ingredients;
+    private List<MealIngredient> ingredients;
 
     public Meal(String id, String name, String alternateName, String category,
                 String area, String instructions, String thumbnailUrl,
@@ -75,5 +75,9 @@ public class Meal implements Serializable {
 
     public List<MealIngredient> getIngredients() {
         return ingredients;
+    }
+
+    public void setIngredients(List<MealIngredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
