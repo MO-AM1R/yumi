@@ -1,7 +1,5 @@
 package com.example.yumi.presentation.home.presenter;
 import android.content.Context;
-
-import com.example.yumi.data.database.pojo.MealWithIngredients;
 import com.example.yumi.data.favorite.repository.FavoriteRepositoryImpl;
 import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
 import com.example.yumi.domain.favorites.repository.FavoriteRepository;
@@ -15,9 +13,12 @@ import com.example.yumi.domain.meals.repository.MealsRepository;
 import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.home.contract.HomeContract;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -27,7 +28,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
 
     private final MealsRepository repository;
     private final FavoriteRepository favoriteRepository;
-
+    private Set<String> favoriteIds = new HashSet<>();
 
     public HomePresenter(Context context) {
         this.repository = new MealsRepositoryImpl();
@@ -82,23 +83,10 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
         });
     }
 
-    private void onRandomMealsLoaded(List<Meal> meals) {
-        withView(v -> {
-            v.hideLoading();
-            v.showRandomMeals(meals);
-        });
-    }
-
     private void onIngredientsLoaded(List<Ingredient> ingredients) {
         withView(v -> {
             v.hideLoading();
             v.showIngredients(ingredients);
-        });
-    }
-
-    private void onToggleFav(boolean newState){
-        withView(v -> {
-
         });
     }
 
@@ -117,6 +105,16 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
         compositeDisposable.add(disposable);
     }
 
+    private static class MealsWithFavorites {
+        final List<Meal> meals;
+        final Set<String> favoriteIds;
+
+        MealsWithFavorites(List<Meal> meals, Set<String> favoriteIds) {
+            this.meals = meals;
+            this.favoriteIds = favoriteIds;
+        }
+    }
+
     @Override
     public void loadRandomMeals() {
         if (isViewDetached()) return;
@@ -125,13 +123,22 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
         int index;
         do {
             index = random.nextInt(26) + 97;
-        }while (index == 120);
+        } while (index == 120);
 
-        Disposable disposable = repository.getRandomMeals((char) index + "")
+        String letter = String.valueOf((char) index);
+
+        Disposable disposable = Single.zip(
+                        repository.getRandomMeals(letter),
+                        favoriteRepository.getAllFavoriteIds(),
+                        (meals, favIds) -> {
+                            this.favoriteIds = favIds;
+                            return new MealsWithFavorites(meals, favIds);
+                        }
+                )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        this::onRandomMealsLoaded,
+                        result -> withView(v -> v.showRandomMeals(result.meals, result.favoriteIds)),
                         this::onError
                 );
 
@@ -194,7 +201,14 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        isFavorite -> withView(v -> v.updateFavoriteIcon(position, isFavorite)),
+                        isFavorite -> {
+                            if (isFavorite) {
+                                favoriteIds.add(meal.getId());
+                            } else {
+                                favoriteIds.remove(meal.getId());
+                            }
+                            withView(v -> v.updateFavoriteIcon(position, isFavorite));
+                        },
                         throwable -> withView(v -> v.showError(throwable.getMessage()))
                 );
 
@@ -207,7 +221,14 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        isFavorite -> withView(v -> v.updateFavoriteIcon(isFavorite)),
+                        isFavorite -> {
+                            if (isFavorite) {
+                                favoriteIds.add(meal.getId());
+                            } else {
+                                favoriteIds.remove(meal.getId());
+                            }
+                            withView(v -> v.updateFavoriteIcon(isFavorite));
+                        },
                         throwable -> withView(v -> v.showError(throwable.getMessage()))
                 );
 
@@ -227,5 +248,9 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
     @Override
     public void onAreaClicked(Area area) {
         view.navigateToFilteredMeals(new MealsFilter(MealsFilterType.AREA, area.getName()));
+    }
+
+    public boolean isFavoriteMeal(Meal meal) {
+        return favoriteIds.contains(meal.getId());
     }
 }

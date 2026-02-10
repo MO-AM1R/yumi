@@ -8,13 +8,12 @@ import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.presentation.base.BaseView;
 
 import java.util.List;
+import java.util.Set;
 
 public interface HomeContract {
 
     interface View extends BaseView {
         void showDayMeal(Meal meal);
-
-        void showRandomMeals(List<Meal> meals);
 
         void showCategories(List<Category> categories);
 
@@ -28,6 +27,8 @@ public interface HomeContract {
 
         void updateFavoriteIcon(int position, boolean isFavorite);
         void updateFavoriteIcon(boolean isFavorite);
+
+        void showRandomMeals(List<Meal> meals, Set<String> favoriteIds);
     }
 
     interface Presenter {

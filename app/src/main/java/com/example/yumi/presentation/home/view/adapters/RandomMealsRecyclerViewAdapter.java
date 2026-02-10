@@ -12,28 +12,50 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yumi.R;
 import com.example.yumi.domain.meals.model.Meal;
+import com.example.yumi.presentation.home.view.callbacks.IsFavorite;
 import com.example.yumi.presentation.home.view.callbacks.OnMealClick;
 import com.example.yumi.presentation.shared.callbacks.OnFavButtonClick;
 import com.example.yumi.utils.GlideUtil;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import eightbitlab.com.blurview.BlurView;
 
 public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomMealsRecyclerViewAdapter.RandomMealsViewHolder> {
     private final OnMealClick onMealClick;
     private final OnFavButtonClick onFavButtonClick;
+    private final IsFavorite isFavorite;
     private List<Meal> meals;
+    private Set<String> favoriteIds;
 
-    public RandomMealsRecyclerViewAdapter(OnMealClick onMealClick, OnFavButtonClick onFavButtonClick, List<Meal> meals) {
+    public RandomMealsRecyclerViewAdapter(
+            OnMealClick onMealClick, OnFavButtonClick onFavButtonClick,
+            IsFavorite isFavorite, List<Meal> meals) {
         this.onFavButtonClick = onFavButtonClick;
         this.onMealClick = onMealClick;
         this.meals = meals;
+        this.isFavorite = isFavorite;
+        this.favoriteIds = new HashSet<>();
+    }
+
+    public void updateFavoriteIcon(int position, boolean isFavorite) {
+        if (position >= 0 && position < meals.size()) {
+            String mealId = meals.get(position).getId();
+            if (isFavorite) {
+                favoriteIds.add(mealId);
+            } else {
+                favoriteIds.remove(mealId);
+            }
+        }
+        notifyItemChanged(position, isFavorite);
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setMeals(List<Meal> meals) {
+    public void setMeals(List<Meal> meals, Set<String> favoriteIds) {
         this.meals = meals;
+        this.favoriteIds = favoriteIds;
         notifyDataSetChanged();
     }
 
@@ -50,10 +72,6 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
         return meals.size();
     }
 
-    public void updateFavoriteIcon(int position, boolean isFavorite) {
-        notifyItemChanged(position, isFavorite);
-    }
-
     @Override
     public void onBindViewHolder(@NonNull RandomMealsViewHolder holder, int position) {
         Meal meal = meals.get(position);
@@ -63,6 +81,11 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
         holder.getMealIngredientsCount()
                 .setText(holder.itemView.getContext()
                         .getString(R.string.ingredients_count_message, meal.getIngredients().size()));
+
+        boolean isFav = favoriteIds.contains(meal.getId());
+        holder.getFavIcon().setImageResource(
+                isFav ? R.drawable.favorite_filled : R.drawable.favorite
+        );
 
         GlideUtil.getImage(
                 holder.getMealImage().getContext(),

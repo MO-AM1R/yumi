@@ -33,6 +33,7 @@ import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
 import com.example.yumi.utils.GlideUtil;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 public class HomeFragment extends Fragment implements HomeContract.View {
@@ -106,6 +107,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         mealsAdapter = new RandomMealsRecyclerViewAdapter(
                 meal -> presenter.onMealClicked(meal),
                 (meal, position) -> presenter.onFavClicked(meal, position),
+                meal -> presenter.isFavoriteMeal(meal),
                 new ArrayList<>());
 
         categoriesAdapter = new CategoriesRecyclerViewAdapter(new ArrayList<>(),
@@ -166,18 +168,15 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         binding.mealCategory.setText(meal.getCategory());
         binding.dayMealIngredientsCount.setText(getString(R.string.ingredients_count_message, meal.getIngredients().size()));
         binding.dayMealName.setText(meal.getName());
+        binding.mealDayFavIcon.setImageResource(
+                presenter.isFavoriteMeal(meal) ? R.drawable.favorite_filled : R.drawable.favorite
+        );
 
         GlideUtil.getImage(getContext(), binding.mealDayImage, meal.getThumbnailUrl());
         binding.mealDayCard.setVisibility(VISIBLE);
         binding.mealDayCard.setOnClickListener(v -> navigateToMealDetail(meal));
         binding.mealDayFavBtn.setOnClickListener(v -> presenter.onFavClicked(meal));
         binding.mealDayCard.setOnClickListener(v -> navigateToMealDetail(meal));
-    }
-
-    @Override
-    public void showRandomMeals(List<Meal> meals) {
-        if (!isAdded() || binding == null) return;
-        mealsAdapter.setMeals(meals);
     }
 
     @Override
@@ -228,6 +227,12 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         binding.mealDayFavIcon.setImageResource(
                 isFavorite ? R.drawable.favorite_filled : R.drawable.favorite
         );
+    }
+
+    @Override
+    public void showRandomMeals(List<Meal> meals, Set<String> favoriteIds) {
+        if (!isAdded() || binding == null) return;
+        mealsAdapter.setMeals(meals, favoriteIds);
     }
 
     @Override

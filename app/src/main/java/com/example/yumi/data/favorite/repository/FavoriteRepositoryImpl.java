@@ -12,7 +12,9 @@ import com.example.yumi.domain.meals.model.Meal;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
@@ -83,5 +85,18 @@ public class FavoriteRepositoryImpl implements FavoriteRepository {
     @Override
     public Flowable<Boolean> isFav(String mealId) {
         return localDataSource.isFav(mealId);
+    }
+
+    @Override
+    public Single<Set<String>> getAllFavoriteIds() {
+        return localDataSource.getAllFavoriteMeals()
+                .firstOrError()
+                .map(meals -> {
+                    Set<String> ids = new HashSet<>();
+                    for (MealWithIngredients meal : meals) {
+                        ids.add(meal.getMeal().getMealId());
+                    }
+                    return ids;
+                });
     }
 }
