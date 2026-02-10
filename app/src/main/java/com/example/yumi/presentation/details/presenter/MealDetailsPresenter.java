@@ -1,29 +1,30 @@
 package com.example.yumi.presentation.details.presenter;
-
 import android.content.Context;
-
 import com.example.yumi.data.favorite.repository.FavoriteRepositoryImpl;
+import com.example.yumi.data.plan.repository.MealPlanRepositoryImpl;
 import com.example.yumi.domain.favorites.repository.FavoriteRepository;
 import com.example.yumi.domain.meals.model.Meal;
+import com.example.yumi.domain.plan.repository.MealPlanRepository;
 import com.example.yumi.domain.user.model.MealType;
+import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.details.view.MealDetailsContract;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
-public class MealDetailsPresenter implements MealDetailsContract.Presenter {
+public class MealDetailsPresenter  extends BasePresenter<MealDetailsContract.View>
+        implements MealDetailsContract.Presenter {
 
     private MealDetailsContract.View view;
     private final FavoriteRepository favoriteRepository;
-    private final CompositeDisposable disposables = new CompositeDisposable();
+    private final MealPlanRepository mealPlanRepository;
     private boolean isFavorite = false;
 
     public MealDetailsPresenter(Context context, MealDetailsContract.View view) {
         this.view = view;
         this.favoriteRepository = new FavoriteRepositoryImpl(context);
+        this.mealPlanRepository = new MealPlanRepositoryImpl(context);
     }
 
     @Override
@@ -62,12 +63,17 @@ public class MealDetailsPresenter implements MealDetailsContract.Presenter {
                         }
                 );
 
-        disposables.add(disposable);
+        compositeDisposable.add(disposable);
     }
 
     @Override
     public void addToMealPlan(Meal meal, String date, MealType mealType) {
-        // TODO: Implement add to meal plan
+        Disposable disposable = mealPlanRepository.addMealToPlan(date, mealType, meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+
+        compositeDisposable.add(disposable);
     }
 
     @Override
@@ -75,7 +81,7 @@ public class MealDetailsPresenter implements MealDetailsContract.Presenter {
         if (view == null || mealId == null) return;
 
         Disposable disposable = favoriteRepository.isFav(mealId)
-                .firstOrError()  // Convert Flowable to Single
+                .firstOrError()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -86,7 +92,6 @@ public class MealDetailsPresenter implements MealDetailsContract.Presenter {
                             }
                         },
                         throwable -> {
-                            // Default to not favorite on error
                             this.isFavorite = false;
                             if (view != null) {
                                 view.updateFavoriteStatus(false);
@@ -94,7 +99,7 @@ public class MealDetailsPresenter implements MealDetailsContract.Presenter {
                         }
                 );
 
-        disposables.add(disposable);
+        compositeDisposable.add(disposable);
     }
 
     public boolean isFavorite() {
@@ -103,7 +108,7 @@ public class MealDetailsPresenter implements MealDetailsContract.Presenter {
 
     @Override
     public void onDestroy() {
-        disposables.clear();
+        compositeDisposable.clear();
         view = null;
     }
 }
