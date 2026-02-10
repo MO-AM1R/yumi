@@ -1,10 +1,11 @@
 package com.example.yumi.presentation.details.view;
+
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.user.model.MealType;
-
+import com.example.yumi.presentation.base.BaseView;
 
 public interface MealDetailsContract {
-    interface View {
+    interface View extends BaseView {
         void showMealDetails(Meal meal);
         void showIngredients(Meal meal);
         void showInstructions(Meal meal);
@@ -12,11 +13,6 @@ public interface MealDetailsContract {
         void updateFavoriteStatus(boolean isFavorite);
         void showAddToPlanSuccess();
         void showAddToPlanError(String message);
-        void showAddToFavoriteSuccess();
-        void showRemoveFromFavoriteSuccess();
-        void showError(String message);
-        void showLoading();
-        void hideLoading();
     }
 
     interface Presenter {

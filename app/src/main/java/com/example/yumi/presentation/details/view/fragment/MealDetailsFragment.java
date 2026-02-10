@@ -1,16 +1,16 @@
 package com.example.yumi.presentation.details.view.fragment;
+import android.content.Context;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.yumi.R;
-import android.content.Context;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
+import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentMealDetailsBinding;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.presentation.custom.AddToPlanBottomSheet;
@@ -59,36 +59,35 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
             meal = (Meal) getArguments().getSerializable(ARG_MEAL);
         }
 
-        presenter = new MealDetailsPresenter(this);
+        presenter = new MealDetailsPresenter(
+                requireContext().getApplicationContext(),
+                this
+        );
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-
-        if (view == null) {
-            binding = FragmentMealDetailsBinding.inflate(inflater);
-            view = binding.getRoot();
-        } else {
-            binding = FragmentMealDetailsBinding.bind(view);
-        }
+        binding = FragmentMealDetailsBinding.inflate(inflater, container, false);
 
         getLifecycle().addObserver(binding.youtubePlayerView);
-        binding.youtubePlayerView.addYouTubePlayerListener(
-                new AbstractYouTubePlayerListener() {
-                    @Override
-                    public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                        String id = meal.getYoutubeUrl().
-                                substring(meal.getYoutubeUrl().indexOf("=") + 1);
-                        youTubePlayer.loadVideo(id, 0);
-                        youTubePlayer.pause();
-                    }
-                }
-        );
 
-        return view;
+        if (meal != null && meal.getYoutubeUrl() != null && !meal.getYoutubeUrl().isEmpty()) {
+            binding.youtubePlayerView.addYouTubePlayerListener(
+                    new AbstractYouTubePlayerListener() {
+                        @Override
+                        public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                            String id = meal.getYoutubeUrl()
+                                    .substring(meal.getYoutubeUrl().indexOf("=") + 1);
+                            youTubePlayer.loadVideo(id, 0);
+                            youTubePlayer.pause();
+                        }
+                    }
+            );
+        }
+
+        return binding.getRoot();
     }
 
     @Override
@@ -149,12 +148,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
+            public void onTabUnselected(TabLayout.Tab tab) {}
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
     }
 
@@ -201,7 +198,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     private void playYouTubeVideo() {
         binding.videoCard.setVisibility(View.GONE);
         binding.youtubePlayerView.setVisibility(View.VISIBLE);
-
         binding.youtubePlayerView.getYouTubePlayerWhenReady(YouTubePlayer::play);
     }
 
@@ -217,6 +213,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
 
     @Override
     public void showMealDetails(Meal meal) {
+        if (!isAdded() || binding == null) return;
+
         binding.mealName.setText(meal.getName());
         binding.mealCategory.setText(meal.getCategory());
         binding.mealArea.setText(meal.getArea());
@@ -230,11 +228,14 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
 
     @Override
     public void showIngredients(Meal meal) {
+        if (!isAdded() || binding == null) return;
         ingredientsAdapter.setIngredients(meal.getIngredients());
     }
 
     @Override
     public void showInstructions(Meal meal) {
+        if (!isAdded() || binding == null) return;
+
         String instructions = meal.getInstructions();
         if (instructions != null && !instructions.isEmpty()) {
             String[] steps = instructions.split("\\r?\\n");
@@ -244,6 +245,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
 
     @Override
     public void showVideoSection(String videoUrl) {
+        if (!isAdded() || binding == null) return;
+
         binding.videoTitle.setText(
                 getString(R.string.how_to_make_meal, meal.getName())
         );
@@ -251,40 +254,50 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
 
     @Override
     public void updateFavoriteStatus(boolean isFavorite) {
+        if (!isAdded() || binding == null) return;
 
+        binding.favoriteIcon.setImageResource(
+                isFavorite ? R.drawable.favorite_filled : R.drawable.favorite
+        );
+
+        binding.favoriteIcon.animate()
+                .scaleX(1.2f)
+                .scaleY(1.2f)
+                .setDuration(100)
+                .withEndAction(() ->
+                        binding.favoriteIcon.animate()
+                                .scaleX(1f)
+                                .scaleY(1f)
+                                .setDuration(100)
+                                .start()
+                )
+                .start();
     }
 
     @Override
     public void showAddToPlanSuccess() {
-        Toast.makeText(requireContext(), "Added to meal plan!", Toast.LENGTH_SHORT).show();
+        if (!isAdded()) return;
     }
 
     @Override
     public void showAddToPlanError(String message) {
-        Toast.makeText(requireContext(), "Failed to add: " + message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showAddToFavoriteSuccess() {
-        Toast.makeText(requireContext(), "Added to favorites!", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showRemoveFromFavoriteSuccess() {
-        Toast.makeText(requireContext(), "Removed from favorites", Toast.LENGTH_SHORT).show();
+        if (!isAdded()) return;
     }
 
     @Override
     public void showError(String message) {
+        if (!isAdded()) return;
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showLoading() {
+        // TODO: Show loading indicator
     }
 
     @Override
     public void hideLoading() {
+        // TODO: Hide loading indicator
     }
 
     @Override

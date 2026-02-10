@@ -88,8 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/favorite"
-                android:src="@drawable/favorite"
-                app:tint="@android:color/white" />
+                android:src="@drawable/favorite" />
 
         </eightbitlab.com.blurview.BlurView>
 
