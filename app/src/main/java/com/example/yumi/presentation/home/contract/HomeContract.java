@@ -27,6 +27,7 @@ public interface HomeContract {
         void navigateToFilteredMeals(MealsFilter filter);
 
         void updateFavoriteIcon(int position, boolean isFavorite);
+        void updateFavoriteIcon(boolean isFavorite);
     }
 
     interface Presenter {
@@ -42,6 +43,7 @@ public interface HomeContract {
 
         void onMealClicked(Meal meal);
         void onFavClicked(Meal meal, int position);
+        void onFavClicked(Meal meal);
 
         void onCategoryClicked(Category category);
 

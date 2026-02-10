@@ -1,6 +1,7 @@
 package com.example.yumi.presentation.home.presenter;
 import android.content.Context;
 
+import com.example.yumi.data.database.pojo.MealWithIngredients;
 import com.example.yumi.data.favorite.repository.FavoriteRepositoryImpl;
 import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
 import com.example.yumi.domain.favorites.repository.FavoriteRepository;
@@ -194,6 +195,19 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         isFavorite -> withView(v -> v.updateFavoriteIcon(position, isFavorite)),
+                        throwable -> withView(v -> v.showError(throwable.getMessage()))
+                );
+
+        compositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void onFavClicked(Meal meal) {
+        Disposable disposable = favoriteRepository.onFavMeal(meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        isFavorite -> withView(v -> v.updateFavoriteIcon(isFavorite)),
                         throwable -> withView(v -> v.showError(throwable.getMessage()))
                 );
 

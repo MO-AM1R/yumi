@@ -170,6 +170,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         GlideUtil.getImage(getContext(), binding.mealDayImage, meal.getThumbnailUrl());
         binding.mealDayCard.setVisibility(VISIBLE);
         binding.mealDayCard.setOnClickListener(v -> navigateToMealDetail(meal));
+        binding.mealDayFavBtn.setOnClickListener(v -> presenter.onFavClicked(meal));
+        binding.mealDayCard.setOnClickListener(v -> navigateToMealDetail(meal));
     }
 
     @Override
@@ -219,6 +221,13 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public void updateFavoriteIcon(int position, boolean isFavorite) {
         mealsAdapter.updateFavoriteIcon(position, isFavorite);
+    }
+
+    @Override
+    public void updateFavoriteIcon(boolean isFavorite) {
+        binding.mealDayFavIcon.setImageResource(
+                isFavorite ? R.drawable.favorite_filled : R.drawable.favorite
+        );
     }
 
     @Override

@@ -128,18 +128,20 @@
                                     android:layout_weight="1" />
 
                                 <eightbitlab.com.blurview.BlurView
-                                    android:id="@+id/fav_btn"
+                                    android:id="@+id/meal_day_fav_btn"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/fav_btn_glass_background"
                                     android:padding="8dp"
+                                    android:focusable="true"
+                                    android:clickable="true"
                                     app:blurOverlayColor="@color/glass_overlay_color">
 
-                                    <View
+                                    <ImageView
+                                        android:id="@+id/meal_day_fav_icon"
                                         android:layout_width="24dp"
                                         android:layout_height="24dp"
-                                        android:background="@drawable/favorite"
-                                        android:backgroundTint="@android:color/white" />
+                                        android:src="@drawable/favorite"/>
 
                                 </eightbitlab.com.blurview.BlurView>
 
@@ -184,6 +186,8 @@
                                     android:layout_weight="1" />
 
                                 <include
+                                    android:focusable="true"
+                                    android:clickable="true"
                                     android:id="@+id/add_to_plan_btn"
                                     layout="@layout/add_to_plan_button"
                                     android:layout_width="wrap_content"
