@@ -1,4 +1,4 @@
-package com.example.yumi.data.favorite.model.mapper;
+package com.example.yumi.data.database.mapper;
 import com.example.yumi.data.database.entity.MealIngredientEntity;
 import com.example.yumi.domain.meals.model.MealIngredient;
 import java.util.ArrayList;

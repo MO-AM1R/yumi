@@ -1,4 +1,4 @@
-package com.example.yumi.data.favorite.model.mapper;
+package com.example.yumi.data.database.mapper;
 import com.example.yumi.data.database.pojo.MealWithIngredients;
 import com.example.yumi.domain.meals.model.Meal;
 
