@@ -1,6 +1,4 @@
 package com.example.yumi.presentation.browse.presenter;
-import android.util.Log;
-
 import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.model.MealsFilter;
@@ -96,16 +94,6 @@ public class MealsListPresenter extends BasePresenter<MealsListContract.View>
 
     @Override
     public void onMealClicked(Meal meal) {
-
-    }
-
-    @Override
-    public void onAddToPlanClicked(Meal meal) {
-
-    }
-
-    @Override
-    public void onAddToFavClicked(Meal meal) {
 
     }
 }

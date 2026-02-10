@@ -12,7 +12,5 @@ public interface MealsListContract {
     interface Presenter{
         void loadMeals();
         void onMealClicked(Meal meal);
-        void onAddToPlanClicked(Meal meal);
-        void onAddToFavClicked(Meal meal);
     }
 }

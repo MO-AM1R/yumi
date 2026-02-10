@@ -1,5 +1,4 @@
 package com.example.yumi.presentation.browse.adapters;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,24 +11,17 @@ import androidx.cardview.widget.CardView;
 import com.example.yumi.R;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.presentation.home.view.callbacks.OnMealClick;
-import com.example.yumi.presentation.shared.callbacks.OnAddToPlanButtonClick;
-import com.example.yumi.presentation.shared.callbacks.OnFavButtonClick;
 import com.example.yumi.utils.GlideUtil;
 import java.util.ArrayList;
 import java.util.List;
-import eightbitlab.com.blurview.BlurView;
 
 
 public class MealsGridAdapter extends BaseAdapter {
     private List<Meal> meals = new ArrayList<>();
     private final OnMealClick onMealClick;
-    private final OnFavButtonClick onFavButtonClick;
-    private final OnAddToPlanButtonClick addToPlanButtonClick;
 
-    public MealsGridAdapter(OnMealClick onMealClick, OnFavButtonClick onFavButtonClick, OnAddToPlanButtonClick addToPlanButtonClick) {
+    public MealsGridAdapter(OnMealClick onMealClick) {
         this.onMealClick = onMealClick;
-        this.onFavButtonClick = onFavButtonClick;
-        this.addToPlanButtonClick = addToPlanButtonClick;
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -73,25 +65,18 @@ public class MealsGridAdapter extends BaseAdapter {
         GlideUtil.getImage(context, holder.mealImage, meal.getThumbnailUrl());
 
         holder.mealCard.setOnClickListener(v -> onMealClick.onClick(meal));
-        holder.favBtn.setOnClickListener(v -> onFavButtonClick.onClick(meal, position));
-        holder.addToPlanBtn.setOnClickListener(v -> addToPlanButtonClick.onClick(meal));
-
         return convertView;
     }
 
     private static class MealViewHolder {
         private final CardView mealCard;
         private final ImageView mealImage;
-        private final BlurView favBtn;
         private final TextView mealName;
-        private final View addToPlanBtn;
 
         MealViewHolder(View itemView) {
             mealCard = itemView.findViewById(R.id.meal_card);
             mealImage = itemView.findViewById(R.id.meal_image);
-            favBtn = itemView.findViewById(R.id.fav_btn);
             mealName = itemView.findViewById(R.id.meal_name);
-            addToPlanBtn = itemView.findViewById(R.id.add_to_plan_btn);
         }
     }
 }

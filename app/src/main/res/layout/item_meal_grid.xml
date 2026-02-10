@@ -32,72 +32,20 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_foreground" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <eightbitlab.com.blurview.BlurView
-                    android:id="@+id/fav_btn"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@drawable/fav_btn_glass_background"
-                    android:padding="6dp"
-                    app:blurOverlayColor="@color/glass_overlay_color">
-
-                    <ImageView
-                        android:id="@+id/bookmark_icon"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/meal_description"
-                        android:src="@drawable/favorite"
-                        app:tint="@android:color/white" />
-
-                </eightbitlab.com.blurview.BlurView>
-
-            </LinearLayout>
-
         </FrameLayout>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/meal_name"
+            style="@style/TextAppearance.Yumi.BodyMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="12dp">
-
-            <TextView
-                android:id="@+id/meal_name"
-                style="@style/TextAppearance.Yumi.BodyMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:minLines="2"
-                android:textStyle="bold"
-                tools:text="Grilled Salmon with Asparagus" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="12dp" />
-
-            <include
-                android:id="@+id/add_to_plan_btn"
-                android:layout_gravity="center_horizontal"
-                layout="@layout/add_to_plan_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
+            android:layout_marginTop="6dp"
+            android:ellipsize="end"
+            android:padding="12dp"
+            android:maxLines="2"
+            android:minLines="2"
+            android:textStyle="bold"
+            tools:text="Grilled Salmon with Asparagus" />
 
     </LinearLayout>
 
