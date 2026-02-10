@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Single;
 
 
 public class FavoritesLocalDataSourceImpl implements FavoritesLocalDataSource {
@@ -64,9 +63,10 @@ public class FavoritesLocalDataSourceImpl implements FavoritesLocalDataSource {
     }
 
     @Override
-    public Single<Set<String>> getAllFavoriteIds() {
-        return favoriteDao.getAllFavoriteIds()
-                .map(HashSet::new);
+    public Flowable<Set<String>> getAllFavoriteIds() {
+        return favoriteDao.getAllFavoriteIds().map(strings -> new HashSet<>() {{
+            addAll(strings);
+        }});
     }
 
     @Override

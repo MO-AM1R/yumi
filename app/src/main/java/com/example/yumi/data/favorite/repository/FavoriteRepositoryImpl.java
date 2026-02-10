@@ -82,7 +82,7 @@ public class FavoriteRepositoryImpl implements FavoriteRepository {
     }
 
     @Override
-    public Single<Set<String>> getAllFavoriteIds() {
+    public Flowable<Set<String>> getAllFavoriteIds() {
         return localDataSource.getAllFavoriteIds();
     }
 }

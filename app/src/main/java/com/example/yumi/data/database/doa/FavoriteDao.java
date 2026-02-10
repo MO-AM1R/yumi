@@ -31,7 +31,7 @@ public interface FavoriteDao {
     Flowable<List<MealWithIngredients>> getAllFavorites();
 
     @Query("SELECT mealId FROM favorites")
-    Single<List<String>> getAllFavoriteIds();
+    Flowable<List<String>> getAllFavoriteIds();
 
     @Query("DELETE FROM favorites")
     Completable clearAllFavorites();

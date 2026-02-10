@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Single;
 
 
 public interface FavoritesLocalDataSource {
@@ -12,6 +11,6 @@ public interface FavoritesLocalDataSource {
     Completable removeFavorite(String mealId);
     Flowable<List<MealWithIngredients>> getAllFavorites();
     Flowable<Boolean> isFavorite(String mealId);
-    Single<Set<String>> getAllFavoriteIds();
+    Flowable<Set<String>> getAllFavoriteIds();
     Completable clearAllFavorites();
 }

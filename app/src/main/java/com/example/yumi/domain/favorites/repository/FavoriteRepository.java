@@ -20,5 +20,5 @@ public interface FavoriteRepository {
 
     Flowable<Boolean> isFav(String mealId);
 
-    Single<Set<String>> getAllFavoriteIds();
+    Flowable<Set<String>> getAllFavoriteIds();
 }
