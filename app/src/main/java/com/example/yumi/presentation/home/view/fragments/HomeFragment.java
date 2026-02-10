@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new HomePresenter();
+        presenter = new HomePresenter(requireContext().getApplicationContext());
 
         initAdapters();
         initRecyclerViews();
@@ -103,8 +103,10 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     private void initAdapters() {
-        mealsAdapter = new RandomMealsRecyclerViewAdapter(meal ->
-                presenter.onMealClicked(meal), new ArrayList<>());
+        mealsAdapter = new RandomMealsRecyclerViewAdapter(
+                meal -> presenter.onMealClicked(meal),
+                (meal, position) -> presenter.onFavClicked(meal, position),
+                new ArrayList<>());
 
         categoriesAdapter = new CategoriesRecyclerViewAdapter(new ArrayList<>(),
                 category -> presenter.onCategoryClicked(category));
@@ -212,6 +214,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
                     "meals"
             );
         }
+    }
+
+    @Override
+    public void updateFavoriteIcon(int position, boolean isFavorite) {
+        mealsAdapter.updateFavoriteIcon(position, isFavorite);
     }
 
     @Override

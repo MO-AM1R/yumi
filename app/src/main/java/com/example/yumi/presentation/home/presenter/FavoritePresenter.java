@@ -1,5 +1,7 @@
 package com.example.yumi.presentation.home.presenter;
 import android.content.Context;
+import android.util.Log;
+
 import com.example.yumi.data.favorite.repository.FavoriteRepositoryImpl;
 import com.example.yumi.domain.favorites.repository.FavoriteRepository;
 import com.example.yumi.domain.meals.model.Meal;

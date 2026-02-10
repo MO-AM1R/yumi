@@ -81,7 +81,7 @@ public class MealsListFragment extends Fragment implements MealsListContract.Vie
 
         adapter = new MealsGridAdapter(
                 meal -> presenter.onMealClicked(meal),
-                meal -> presenter.onAddToFavClicked(meal),
+                (meal, position) -> presenter.onAddToFavClicked(meal),
                 meal -> presenter.onAddToPlanClicked(meal)
         );
 

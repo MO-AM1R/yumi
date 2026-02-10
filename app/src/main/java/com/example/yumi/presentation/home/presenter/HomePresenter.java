@@ -1,5 +1,9 @@
 package com.example.yumi.presentation.home.presenter;
+import android.content.Context;
+
+import com.example.yumi.data.favorite.repository.FavoriteRepositoryImpl;
 import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
+import com.example.yumi.domain.favorites.repository.FavoriteRepository;
 import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
@@ -21,10 +25,12 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
         implements HomeContract.Presenter {
 
     private final MealsRepository repository;
+    private final FavoriteRepository favoriteRepository;
 
 
-    public HomePresenter() {
+    public HomePresenter(Context context) {
         this.repository = new MealsRepositoryImpl();
+        this.favoriteRepository = new FavoriteRepositoryImpl(context);
     }
 
     public void refreshData(){
@@ -89,6 +95,11 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
         });
     }
 
+    private void onToggleFav(boolean newState){
+        withView(v -> {
+
+        });
+    }
 
     @Override
     public void loadDayMeal() {
@@ -174,6 +185,19 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
     @Override
     public void onMealClicked(Meal meal) {
         view.navigateToMealDetail(meal);
+    }
+
+    @Override
+    public void onFavClicked(Meal meal, int position) {
+        Disposable disposable = favoriteRepository.onFavMeal(meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        isFavorite -> withView(v -> v.updateFavoriteIcon(position, isFavorite)),
+                        throwable -> withView(v -> v.showError(throwable.getMessage()))
+                );
+
+        compositeDisposable.add(disposable);
     }
 
     @Override

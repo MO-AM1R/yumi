@@ -1,16 +1,22 @@
 package com.example.yumi.data.favorite.repository;
+
 import android.content.Context;
+import android.util.Log;
+
 import com.example.yumi.data.database.pojo.MealWithIngredients;
 import com.example.yumi.data.favorite.datasources.local.FavoritesLocalDataSource;
 import com.example.yumi.data.favorite.datasources.local.FavoritesLocalDataSourceImpl;
 import com.example.yumi.data.favorite.model.mapper.MealWithIngredientsMapper;
 import com.example.yumi.domain.favorites.repository.FavoriteRepository;
 import com.example.yumi.domain.meals.model.Meal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 
 
 public class FavoriteRepositoryImpl implements FavoriteRepository {
@@ -30,6 +36,21 @@ public class FavoriteRepositoryImpl implements FavoriteRepository {
     @Override
     public Completable deleteMeal(String mealId) {
         return localDataSource.deleteMeal(mealId);
+    }
+
+    public Single<Boolean> onFavMeal(Meal meal) {
+        return isFav(meal.getId())
+                .firstOrError()
+                .flatMap(isFavorite -> {
+                            if (isFavorite) {
+                                return deleteMeal(meal.getId())
+                                        .toSingleDefault(false);
+                            } else {
+                                return insertMeal(meal)
+                                        .toSingleDefault(true);
+                            }
+                        }
+                );
     }
 
     @Override

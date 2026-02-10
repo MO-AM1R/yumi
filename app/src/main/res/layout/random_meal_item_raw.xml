@@ -61,13 +61,15 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/fav_btn_glass_background"
                     android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:blurOverlayColor="@color/glass_overlay_color">
 
-                    <View
+                    <ImageView
+                        android:id="@+id/fav_icon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:background="@drawable/favorite"
-                        android:backgroundTint="@android:color/white" />
+                        android:src="@drawable/favorite" />
 
                 </eightbitlab.com.blurview.BlurView>
 
@@ -114,6 +116,8 @@
                 <include
                     android:id="@+id/random_add_to_plan_btn"
                     android:layout_width="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:layout_height="wrap_content"
                     layout="@layout/add_to_plan_button" />
 

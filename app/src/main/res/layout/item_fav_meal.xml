@@ -35,12 +35,14 @@
                 android:id="@+id/fav_meal_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 style="@style/TextAppearance.Yumi.TitleMedium"
                 tools:text="Grilled Salmon with"
                 />
 
             <TextView
                 android:id="@+id/fav_meal_category"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.Yumi.BodyMedium"

@@ -69,7 +69,7 @@ public class FavoritesFragment extends Fragment implements FavoriteContract.View
 
         binding.favoriteRecyclerView.setLayoutManager(
                 new LinearLayoutManager(requireContext(),
-                        LinearLayoutManager.HORIZONTAL, false)
+                        LinearLayoutManager.VERTICAL, false)
         );
         binding.favoriteRecyclerView.setAdapter(adapter);
     }

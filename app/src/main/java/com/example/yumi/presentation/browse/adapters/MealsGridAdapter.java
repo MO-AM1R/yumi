@@ -73,7 +73,7 @@ public class MealsGridAdapter extends BaseAdapter {
         GlideUtil.getImage(context, holder.mealImage, meal.getThumbnailUrl());
 
         holder.mealCard.setOnClickListener(v -> onMealClick.onClick(meal));
-        holder.favBtn.setOnClickListener(v -> onFavButtonClick.onClick(meal));
+        holder.favBtn.setOnClickListener(v -> onFavButtonClick.onClick(meal, position));
         holder.addToPlanBtn.setOnClickListener(v -> addToPlanButtonClick.onClick(meal));
 
         return convertView;

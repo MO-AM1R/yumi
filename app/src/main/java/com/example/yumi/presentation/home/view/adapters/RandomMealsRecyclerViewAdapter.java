@@ -13,15 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.yumi.R;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.presentation.home.view.callbacks.OnMealClick;
+import com.example.yumi.presentation.shared.callbacks.OnFavButtonClick;
 import com.example.yumi.utils.GlideUtil;
 
 import java.util.List;
 
+import eightbitlab.com.blurview.BlurView;
+
 public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomMealsRecyclerViewAdapter.RandomMealsViewHolder> {
     private final OnMealClick onMealClick;
+    private final OnFavButtonClick onFavButtonClick;
     private List<Meal> meals;
 
-    public RandomMealsRecyclerViewAdapter(OnMealClick onMealClick, List<Meal> meals) {
+    public RandomMealsRecyclerViewAdapter(OnMealClick onMealClick, OnFavButtonClick onFavButtonClick, List<Meal> meals) {
+        this.onFavButtonClick = onFavButtonClick;
         this.onMealClick = onMealClick;
         this.meals = meals;
     }
@@ -37,7 +42,6 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
     public RandomMealsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.random_meal_item_raw, parent, false);
-
         return new RandomMealsViewHolder(view);
     }
 
@@ -46,16 +50,19 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
         return meals.size();
     }
 
+    public void updateFavoriteIcon(int position, boolean isFavorite) {
+        notifyItemChanged(position, isFavorite);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull RandomMealsViewHolder holder, int position) {
         Meal meal = meals.get(position);
-        View view = holder.getMealImage().getRootView();
 
         holder.getMealName().setText(meal.getName());
         holder.getMealCategory().setText(meal.getCategory());
-        holder.getMealIngredientsCount().
-                setText(view.getContext().
-                        getString(R.string.ingredients_count_message, meal.getIngredients().size()));
+        holder.getMealIngredientsCount()
+                .setText(holder.itemView.getContext()
+                        .getString(R.string.ingredients_count_message, meal.getIngredients().size()));
 
         GlideUtil.getImage(
                 holder.getMealImage().getContext(),
@@ -64,14 +71,37 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
         );
 
         holder.getCardView().setOnClickListener(v -> onMealClick.onClick(meal));
+
+        holder.getFavoriteButton().setOnClickListener(v -> {
+            int adapterPosition = holder.getBindingAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                onFavButtonClick.onClick(meal, adapterPosition);
+            }
+        });
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RandomMealsViewHolder holder, int position, @NonNull List<Object> payloads) {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position);
+        } else {
+            for (Object payload : payloads) {
+                if (payload instanceof Boolean) {
+                    boolean isFavorite = (Boolean) payload;
+                    holder.getFavIcon().setImageResource(
+                            isFavorite ? R.drawable.favorite_filled : R.drawable.favorite
+                    );
+                }
+            }
+        }
     }
 
     public static class RandomMealsViewHolder extends RecyclerView.ViewHolder {
-        private final TextView mealName, mealIngredientsCount,
-                mealCategory;
+        private final TextView mealName, mealIngredientsCount, mealCategory;
         private final ImageView mealImage;
+        private final ImageView favIcon;
         private final CardView cardView;
-
+        private final BlurView favoriteButton;
 
         public RandomMealsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +110,16 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
             mealImage = itemView.findViewById(R.id.random_meal_image);
             mealName = itemView.findViewById(R.id.random_meal_name);
             cardView = itemView.findViewById(R.id.random_meal_card);
+            favoriteButton = itemView.findViewById(R.id.random_fav_btn);
+            favIcon = itemView.findViewById(R.id.fav_icon);
+        }
+
+        public ImageView getFavIcon() {
+            return favIcon;
+        }
+
+        public BlurView getFavoriteButton() {
+            return favoriteButton;
         }
 
         public TextView getMealName() {
