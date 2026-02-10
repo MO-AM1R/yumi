@@ -2,6 +2,7 @@ package com.example.yumi.presentation.home.presenter;
 import android.content.Context;
 import com.example.yumi.data.favorite.repository.FavoriteRepositoryImpl;
 import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
+import com.example.yumi.data.user.repository.UserRepositoryImpl;
 import com.example.yumi.domain.favorites.repository.FavoriteRepository;
 import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
@@ -10,6 +11,8 @@ import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.domain.meals.model.MealsFilterType;
 import com.example.yumi.domain.meals.repository.MealsRepository;
+import com.example.yumi.domain.user.model.User;
+import com.example.yumi.domain.user.repository.UserRepository;
 import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.home.contract.HomeContract;
@@ -28,10 +31,12 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
 
     private final MealsRepository repository;
     private final FavoriteRepository favoriteRepository;
+    private final UserRepository userRepository;
     private Set<String> favoriteIds = new HashSet<>();
 
     public HomePresenter(Context context) {
         this.repository = new MealsRepositoryImpl();
+        this.userRepository = new UserRepositoryImpl(context);
         this.favoriteRepository = new FavoriteRepositoryImpl(context);
     }
 
@@ -88,6 +93,19 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
             v.hideLoading();
             v.showIngredients(ingredients);
         });
+    }
+
+    private void onUserDetailsLoaded(String displayName) {
+        withView(v -> v.showUserName(displayName));
+    }
+
+    @Override
+    public void loadUserName() {
+        String displayName = userRepository
+                .getCurrentUser().getDisplayName()
+                .substring(0, 2).toUpperCase();
+
+        onUserDetailsLoaded(displayName);
     }
 
     @Override

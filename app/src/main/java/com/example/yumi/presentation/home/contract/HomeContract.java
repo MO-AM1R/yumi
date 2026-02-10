@@ -27,12 +27,13 @@ public interface HomeContract {
 
         void updateFavoriteIcon(int position, boolean isFavorite);
         void updateFavoriteIcon(boolean isFavorite);
-
+        void showUserName(String displayName);
         void showRandomMeals(List<Meal> meals, Set<String> favoriteIds);
     }
 
     interface Presenter {
         void loadDayMeal();
+        void loadUserName();
 
         void loadRandomMeals();
 

@@ -58,7 +58,7 @@
                     app:cav_backgroundColor="@color/primary"
                     app:cav_foregroundColor="@color/primary_foreground"
                     app:cav_radius="32dp"
-                    app:cav_text="JD"
+                    tools:cav_text="JD"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

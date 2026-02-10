@@ -158,6 +158,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     private void loadData() {
+        presenter.loadUserName();
         presenter.loadHomeData();
     }
 
@@ -227,6 +228,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         binding.mealDayFavIcon.setImageResource(
                 isFavorite ? R.drawable.favorite_filled : R.drawable.favorite
         );
+    }
+
+    @Override
+    public void showUserName(String displayName) {
+        binding.avatar.setText(displayName);
     }
 
     @Override
