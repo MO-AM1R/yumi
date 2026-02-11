@@ -1,6 +1,7 @@
 package com.example.yumi.presentation.home.presenter;
 import android.content.Context;
 import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
+import com.example.yumi.data.plan.repository.MealPlanRepositoryImpl;
 import com.example.yumi.data.user.repository.UserRepositoryImpl;
 import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
@@ -9,6 +10,8 @@ import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.domain.meals.model.MealsFilterType;
 import com.example.yumi.domain.meals.repository.MealsRepository;
+import com.example.yumi.domain.plan.repository.MealPlanRepository;
+import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.domain.user.repository.UserRepository;
 import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.base.BaseView;
@@ -25,10 +28,12 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
 
     private final MealsRepository repository;
     private final UserRepository userRepository;
+    private final MealPlanRepository mealPlanRepository;
 
     public HomePresenter(Context context) {
         this.repository = new MealsRepositoryImpl();
         this.userRepository = new UserRepositoryImpl(context);
+        this.mealPlanRepository = new MealPlanRepositoryImpl(context);
     }
 
     public void refreshData(){
@@ -179,6 +184,16 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
                         this::onIngredientsLoaded,
                         this::onError
                 );
+
+        compositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void addToMealPlan(Meal meal, String date, MealType mealType) {
+        Disposable disposable = mealPlanRepository.addMealToPlan(date, mealType, meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
 
         compositeDisposable.add(disposable);
     }

@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:paddingHorizontal="0dp"
-        android:text="@string/add_sign"
-        android:textAllCaps="true"
-        android:textColor="@color/primary_foreground"
-        android:backgroundTint="@color/primary"
-        android:textStyle="bold"
-        />
-
-</FrameLayout>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="80dp"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/primary"
+    android:paddingHorizontal="0dp"
+    android:text="@string/add_sign"
+    android:textAllCaps="true"
+    android:textColor="@color/primary_foreground"
+    android:textStyle="bold" />

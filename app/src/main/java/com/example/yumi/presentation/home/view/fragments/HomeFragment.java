@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import com.example.yumi.presentation.browse.fragments.CategoriesFragment;
 import com.example.yumi.presentation.browse.fragments.CountriesFragment;
 import com.example.yumi.presentation.browse.fragments.IngredientsFragment;
 import com.example.yumi.presentation.browse.fragments.MealsListFragment;
+import com.example.yumi.presentation.custom.AddToPlanBottomSheet;
 import com.example.yumi.presentation.details.view.fragment.MealDetailsFragment;
 import com.example.yumi.presentation.home.contract.HomeContract;
 import com.example.yumi.presentation.home.presenter.HomePresenter;
@@ -102,9 +105,20 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         });
     }
 
+    private void showAddToPlanBottomSheet(Meal meal) {
+        AddToPlanBottomSheet bottomSheet = AddToPlanBottomSheet.newInstance();
+        bottomSheet.setOnConfirmListener((date, mealType) -> {
+            if (meal != null) {
+                presenter.addToMealPlan(meal, date, mealType);
+            }
+        });
+        bottomSheet.show(getChildFragmentManager(), "addToPlan");
+    }
+
     private void initAdapters() {
         mealsAdapter = new RandomMealsRecyclerViewAdapter(
                 meal -> presenter.onMealClicked(meal),
+                this::showAddToPlanBottomSheet,
                 new ArrayList<>());
 
         categoriesAdapter = new CategoriesRecyclerViewAdapter(new ArrayList<>(),
@@ -166,6 +180,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         binding.mealCategory.setText(meal.getCategory());
         binding.dayMealIngredientsCount.setText(getString(R.string.ingredients_count_message, meal.getIngredients().size()));
         binding.dayMealName.setText(meal.getName());
+        binding.addToPlanBtn.getRoot()
+                .setOnClickListener(v -> showAddToPlanBottomSheet(meal));
 
         GlideUtil.getImage(getContext(), binding.mealDayImage, meal.getThumbnailUrl());
         binding.mealDayCard.setVisibility(VISIBLE);

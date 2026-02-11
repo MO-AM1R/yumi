@@ -5,6 +5,7 @@ import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.model.MealsFilter;
+import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.presentation.base.BaseView;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public interface HomeContract {
         void loadCategories();
 
         void loadAreas();
-
+        void addToMealPlan(Meal meal, String date, MealType mealType);
         void loadIngredients();
 
         void onMealClicked(Meal meal);

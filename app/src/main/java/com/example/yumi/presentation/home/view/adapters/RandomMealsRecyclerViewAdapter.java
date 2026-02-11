@@ -3,33 +3,29 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.yumi.R;
 import com.example.yumi.domain.meals.model.Meal;
-import com.example.yumi.presentation.home.view.callbacks.IsFavorite;
 import com.example.yumi.presentation.home.view.callbacks.OnMealClick;
-import com.example.yumi.presentation.shared.callbacks.OnFavButtonClick;
+import com.example.yumi.presentation.shared.callbacks.OnAddToPlanButtonClick;
 import com.example.yumi.utils.GlideUtil;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import eightbitlab.com.blurview.BlurView;
 
 public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomMealsRecyclerViewAdapter.RandomMealsViewHolder> {
+    private final OnAddToPlanButtonClick addToPlanButtonClick;
     private final OnMealClick onMealClick;
     private List<Meal> meals;
 
     public RandomMealsRecyclerViewAdapter(
-            OnMealClick onMealClick, List<Meal> meals) {
+            OnMealClick onMealClick, OnAddToPlanButtonClick onAddToPlanButtonClick, List<Meal> meals) {
         this.onMealClick = onMealClick;
+        this.addToPlanButtonClick = onAddToPlanButtonClick;
         this.meals = meals;
     }
 
@@ -68,6 +64,7 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
                 meal.getThumbnailUrl()
         );
 
+        holder.getAddToPlanButton().setOnClickListener(v -> addToPlanButtonClick.onClick(meal));
         holder.getCardView().setOnClickListener(v -> onMealClick.onClick(meal));
     }
 
@@ -75,6 +72,7 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
         private final TextView mealName, mealIngredientsCount, mealCategory;
         private final ImageView mealImage;
         private final CardView cardView;
+        private final Button addToPlanButton;
 
         public RandomMealsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,10 +81,15 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
             mealImage = itemView.findViewById(R.id.random_meal_image);
             mealName = itemView.findViewById(R.id.random_meal_name);
             cardView = itemView.findViewById(R.id.random_meal_card);
+            addToPlanButton = itemView.findViewById(R.id.random_add_to_plan_btn);
         }
 
         public TextView getMealName() {
             return mealName;
+        }
+
+        public Button getAddToPlanButton() {
+            return addToPlanButton;
         }
 
         public TextView getMealIngredientsCount() {

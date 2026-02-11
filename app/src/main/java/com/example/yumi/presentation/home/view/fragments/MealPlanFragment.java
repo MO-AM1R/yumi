@@ -1,6 +1,8 @@
 package com.example.yumi.presentation.home.view.fragments;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -247,6 +249,7 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.View,
 
     @Override
     public void onDestroyView() {
+        Log.d("TAG", "On Destroy");
         super.onDestroyView();
         if (presenter != null) {
             presenter.onDestroy();
