@@ -1,5 +1,8 @@
 package com.example.yumi.presentation.home.presenter;
+import android.content.Context;
+
 import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
+import com.example.yumi.data.plan.repository.MealPlanRepositoryImpl;
 import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
@@ -7,6 +10,8 @@ import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.domain.meals.model.MealsFilterType;
 import com.example.yumi.domain.meals.repository.MealsRepository;
+import com.example.yumi.domain.plan.repository.MealPlanRepository;
+import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.home.contract.SearchContract;
@@ -21,10 +26,12 @@ public class SearchPresenter extends BasePresenter<SearchContract.View>
 
     private final MealsRepository repository;
     private final SearchContract.View view;
+    private final MealPlanRepository mealPlanRepository;
 
-    public SearchPresenter(SearchContract.View view){
+    public SearchPresenter(Context context, SearchContract.View view){
         this.view = view;
         repository = new MealsRepositoryImpl();
+        mealPlanRepository = new MealPlanRepositoryImpl(context);
     }
 
     private void onMealsLoaded(List<Meal> meals){
@@ -136,6 +143,16 @@ public class SearchPresenter extends BasePresenter<SearchContract.View>
     @Override
     public void onIngredientClicked(Ingredient ingredient) {
         view.navigateToFilteredMeals(new MealsFilter(MealsFilterType.INGREDIENT, ingredient.getName()));
+    }
+
+    @Override
+    public void addToMealPlan(Meal meal, String date, MealType mealType) {
+        Disposable disposable = mealPlanRepository.addMealToPlan(date, mealType, meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+
+        compositeDisposable.add(disposable);
     }
 
     @Override
