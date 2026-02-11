@@ -7,6 +7,7 @@ public interface ProfileContract {
     interface View extends BaseView {
         void showUserDetails(User user);
         void showUserPlannedMealsCounter(int plannedMeals);
+        void showUserFavoriteMealsCounter(int favoriteMeals);
         void resetLanguage();
         void onLogout();
     }

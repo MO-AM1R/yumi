@@ -20,6 +20,7 @@ import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.presentation.browse.fragments.MealsListFragment;
+import com.example.yumi.presentation.custom.AddToPlanBottomSheet;
 import com.example.yumi.presentation.details.view.fragment.MealDetailsFragment;
 import com.example.yumi.presentation.home.contract.SearchContract;
 import com.example.yumi.presentation.home.presenter.SearchPresenter;
@@ -86,7 +87,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new SearchPresenter(this);
+        presenter = new SearchPresenter(requireContext().getApplicationContext(), this);
         presenter.attachView(this);
 
         setupAdapters();
@@ -108,6 +109,16 @@ public class SearchFragment extends Fragment implements SearchContract.View {
         outState.putInt(CURRENT_TAB_KEY, currentTabIndex);
     }
 
+    private void showAddToPlanBottomSheet(Meal meal) {
+        AddToPlanBottomSheet bottomSheet = AddToPlanBottomSheet.newInstance();
+        bottomSheet.setOnConfirmListener((date, mealType) -> {
+            if (meal != null) {
+                presenter.addToMealPlan(meal, date, mealType);
+            }
+        });
+        bottomSheet.show(getChildFragmentManager(), "addToPlan");
+    }
+
     private void setupAdapters() {
         categoryAdapter = new CategorySearchGridViewAdapter(category ->
                 presenter.onCategoryClicked(category));
@@ -122,7 +133,7 @@ public class SearchFragment extends Fragment implements SearchContract.View {
 
         mealAdapter = new MealSearchGridView(
                 meal -> presenter.onMealClicked(meal),
-                this::onMealAddClick);
+                this::showAddToPlanBottomSheet);
 
         binding.gridView.setAdapter(categoryAdapter);
     }
@@ -347,10 +358,6 @@ public class SearchFragment extends Fragment implements SearchContract.View {
                 presenter.loadMeals(Objects.requireNonNull(binding.etSearch.getText()).toString());
                 break;
         }
-    }
-
-    private void onMealAddClick(Meal meal) {
-        // TODO: Add meal to plan/favorites
     }
 
     public void showCategories(List<Category> categories) {

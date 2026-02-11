@@ -3,59 +3,35 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.yumi.R;
 import com.example.yumi.domain.meals.model.Meal;
-import com.example.yumi.presentation.home.view.callbacks.IsFavorite;
 import com.example.yumi.presentation.home.view.callbacks.OnMealClick;
-import com.example.yumi.presentation.shared.callbacks.OnFavButtonClick;
+import com.example.yumi.presentation.shared.callbacks.OnAddToPlanButtonClick;
 import com.example.yumi.utils.GlideUtil;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import eightbitlab.com.blurview.BlurView;
 
 public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomMealsRecyclerViewAdapter.RandomMealsViewHolder> {
+    private final OnAddToPlanButtonClick addToPlanButtonClick;
     private final OnMealClick onMealClick;
-    private final OnFavButtonClick onFavButtonClick;
-    private final IsFavorite isFavorite;
     private List<Meal> meals;
-    private Set<String> favoriteIds;
 
     public RandomMealsRecyclerViewAdapter(
-            OnMealClick onMealClick, OnFavButtonClick onFavButtonClick,
-            IsFavorite isFavorite, List<Meal> meals) {
-        this.onFavButtonClick = onFavButtonClick;
+            OnMealClick onMealClick, OnAddToPlanButtonClick onAddToPlanButtonClick, List<Meal> meals) {
         this.onMealClick = onMealClick;
+        this.addToPlanButtonClick = onAddToPlanButtonClick;
         this.meals = meals;
-        this.isFavorite = isFavorite;
-        this.favoriteIds = new HashSet<>();
-    }
-
-    public void updateFavoriteIcon(int position, boolean isFavorite) {
-        if (position >= 0 && position < meals.size()) {
-            String mealId = meals.get(position).getId();
-            if (isFavorite) {
-                favoriteIds.add(mealId);
-            } else {
-                favoriteIds.remove(mealId);
-            }
-        }
-        notifyItemChanged(position, isFavorite);
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setMeals(List<Meal> meals, Set<String> favoriteIds) {
+    public void setMeals(List<Meal> meals) {
         this.meals = meals;
-        this.favoriteIds = favoriteIds;
         notifyDataSetChanged();
     }
 
@@ -82,49 +58,21 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
                 .setText(holder.itemView.getContext()
                         .getString(R.string.ingredients_count_message, meal.getIngredients().size()));
 
-        boolean isFav = favoriteIds.contains(meal.getId());
-        holder.getFavIcon().setImageResource(
-                isFav ? R.drawable.favorite_filled : R.drawable.favorite
-        );
-
         GlideUtil.getImage(
                 holder.getMealImage().getContext(),
                 holder.getMealImage(),
                 meal.getThumbnailUrl()
         );
 
+        holder.getAddToPlanButton().setOnClickListener(v -> addToPlanButtonClick.onClick(meal));
         holder.getCardView().setOnClickListener(v -> onMealClick.onClick(meal));
-
-        holder.getFavoriteButton().setOnClickListener(v -> {
-            int adapterPosition = holder.getBindingAdapterPosition();
-            if (adapterPosition != RecyclerView.NO_POSITION) {
-                onFavButtonClick.onClick(meal, adapterPosition);
-            }
-        });
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RandomMealsViewHolder holder, int position, @NonNull List<Object> payloads) {
-        if (payloads.isEmpty()) {
-            onBindViewHolder(holder, position);
-        } else {
-            for (Object payload : payloads) {
-                if (payload instanceof Boolean) {
-                    boolean isFavorite = (Boolean) payload;
-                    holder.getFavIcon().setImageResource(
-                            isFavorite ? R.drawable.favorite_filled : R.drawable.favorite
-                    );
-                }
-            }
-        }
     }
 
     public static class RandomMealsViewHolder extends RecyclerView.ViewHolder {
         private final TextView mealName, mealIngredientsCount, mealCategory;
         private final ImageView mealImage;
-        private final ImageView favIcon;
         private final CardView cardView;
-        private final BlurView favoriteButton;
+        private final Button addToPlanButton;
 
         public RandomMealsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -133,20 +81,15 @@ public class RandomMealsRecyclerViewAdapter extends RecyclerView.Adapter<RandomM
             mealImage = itemView.findViewById(R.id.random_meal_image);
             mealName = itemView.findViewById(R.id.random_meal_name);
             cardView = itemView.findViewById(R.id.random_meal_card);
-            favoriteButton = itemView.findViewById(R.id.random_fav_btn);
-            favIcon = itemView.findViewById(R.id.fav_icon);
-        }
-
-        public ImageView getFavIcon() {
-            return favIcon;
-        }
-
-        public BlurView getFavoriteButton() {
-            return favoriteButton;
+            addToPlanButton = itemView.findViewById(R.id.random_add_to_plan_btn);
         }
 
         public TextView getMealName() {
             return mealName;
+        }
+
+        public Button getAddToPlanButton() {
+            return addToPlanButton;
         }
 
         public TextView getMealIngredientsCount() {

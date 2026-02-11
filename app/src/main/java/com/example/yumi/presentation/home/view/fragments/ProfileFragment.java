@@ -136,6 +136,11 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     }
 
     @Override
+    public void showUserFavoriteMealsCounter(int favoriteMeals) {
+        binding.favoriteCountText.setText(String.valueOf(favoriteMeals));
+    }
+
+    @Override
     public void resetLanguage() {
         requireActivity().recreate();
     }

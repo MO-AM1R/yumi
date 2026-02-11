@@ -118,4 +118,34 @@
         <item>الإنجليزية</item>
         <item>العربية</item>
     </string-array>
+
+    <!-- Meal Plan -->
+    <string name="meal_planner">Meal Planner</string>
+    <string name="add_meal">Add Meal</string>
+    <string name="remove_meal">Remove meal</string>
+    <string name="previous_week">Previous week</string>
+    <string name="next_week">Next week</string>
+    <string name="no_meal_assigned">No meal assigned yet</string>
+
+    <!-- Meal Types -->
+    <string name="breakfast">Breakfast</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
+    <string name="snack">Snack</string>
+
+    <!-- Default Times -->
+    <string name="breakfast_time">8:00 AM</string>
+    <string name="lunch_time">12:30 PM</string>
+    <string name="dinner_time">7:00 PM</string>
+    <string name="snack_time">3:00 PM</string>
+
+    <!-- Messages -->
+    <string name="meal_added_to_plan">Meal added to plan!</string>
+    <string name="meal_removed_from_plan">Meal removed from plan</string>
+    <string name="select_meal_for_type">Select a meal for %1$s</string>
+    <string name="select_date">Select date</string>
+
+    <!-- Favorites -->
+    <string name="added_to_favorites">Added to favorites!</string>
+    <string name="removed_from_favorites">Removed from favorites</string>
 </resources>

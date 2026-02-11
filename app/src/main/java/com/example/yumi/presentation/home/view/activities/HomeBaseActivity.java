@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.yumi.R;
 import com.example.yumi.app.BaseActivity;
 import com.example.yumi.databinding.ActivityHomeBaseBinding;
-import com.example.yumi.presentation.home.view.fragments.CalendarFragment;
+import com.example.yumi.presentation.home.view.fragments.MealPlanFragment;
 import com.example.yumi.presentation.home.view.fragments.FavoritesFragment;
 import com.example.yumi.presentation.home.view.fragments.HomeFragment;
 import com.example.yumi.presentation.home.view.fragments.ProfileFragment;
@@ -268,7 +268,7 @@ public class HomeBaseActivity  extends BaseActivity implements NavigationCallbac
             case 1:
                 return new SearchFragment();
             case 2:
-                return new CalendarFragment();
+                return new MealPlanFragment();
             case 3:
                 return new FavoritesFragment();
             default:

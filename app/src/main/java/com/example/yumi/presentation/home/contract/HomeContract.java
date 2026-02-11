@@ -5,10 +5,10 @@ import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.model.MealsFilter;
+import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.presentation.base.BaseView;
 
 import java.util.List;
-import java.util.Set;
 
 public interface HomeContract {
 
@@ -25,10 +25,8 @@ public interface HomeContract {
 
         void navigateToFilteredMeals(MealsFilter filter);
 
-        void updateFavoriteIcon(int position, boolean isFavorite);
-        void updateFavoriteIcon(boolean isFavorite);
         void showUserName(String displayName);
-        void showRandomMeals(List<Meal> meals, Set<String> favoriteIds);
+        void showRandomMeals(List<Meal> meals);
     }
 
     interface Presenter {
@@ -40,13 +38,10 @@ public interface HomeContract {
         void loadCategories();
 
         void loadAreas();
-
+        void addToMealPlan(Meal meal, String date, MealType mealType);
         void loadIngredients();
 
         void onMealClicked(Meal meal);
-        void onFavClicked(Meal meal, int position);
-        void onFavClicked(Meal meal);
-
         void onCategoryClicked(Category category);
 
         void onIngredientClicked(Ingredient ingredient);

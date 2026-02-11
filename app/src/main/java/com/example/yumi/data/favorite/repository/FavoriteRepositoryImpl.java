@@ -1,21 +1,15 @@
 package com.example.yumi.data.favorite.repository;
-
 import android.content.Context;
-import android.util.Log;
-
+import com.example.yumi.data.database.mapper.MealWithIngredientsMapper;
 import com.example.yumi.data.database.pojo.MealWithIngredients;
 import com.example.yumi.data.favorite.datasources.local.FavoritesLocalDataSource;
 import com.example.yumi.data.favorite.datasources.local.FavoritesLocalDataSourceImpl;
-import com.example.yumi.data.favorite.model.mapper.MealWithIngredientsMapper;
 import com.example.yumi.domain.favorites.repository.FavoriteRepository;
 import com.example.yumi.domain.meals.model.Meal;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
@@ -30,14 +24,14 @@ public class FavoriteRepositoryImpl implements FavoriteRepository {
 
     @Override
     public Completable insertMeal(Meal meal) {
-        return localDataSource.insertMeal(
+        return localDataSource.addFavorite(
                 MealWithIngredientsMapper.toPojo(meal)
         );
     }
 
     @Override
     public Completable deleteMeal(String mealId) {
-        return localDataSource.deleteMeal(mealId);
+        return localDataSource.removeFavorite(mealId);
     }
 
     public Single<Boolean> onFavMeal(Meal meal) {
@@ -56,8 +50,8 @@ public class FavoriteRepositoryImpl implements FavoriteRepository {
     }
 
     @Override
-    public Completable clearAllMeals() {
-        return localDataSource.clearAllMeals();
+    public Completable clearAllFavorites() {
+        return localDataSource.clearAllFavorites();
     }
 
     private List<Meal> mapToDomainList(List<MealWithIngredients> pojoList) {
@@ -78,25 +72,17 @@ public class FavoriteRepositoryImpl implements FavoriteRepository {
 
     @Override
     public Flowable<List<Meal>> getAllFavoriteMeals() {
-        return localDataSource.getAllFavoriteMeals()
+        return localDataSource.getAllFavorites()
                 .map(this::mapToDomainList);
     }
 
     @Override
     public Flowable<Boolean> isFav(String mealId) {
-        return localDataSource.isFav(mealId);
+        return localDataSource.isFavorite(mealId);
     }
 
     @Override
-    public Single<Set<String>> getAllFavoriteIds() {
-        return localDataSource.getAllFavoriteMeals()
-                .firstOrError()
-                .map(meals -> {
-                    Set<String> ids = new HashSet<>();
-                    for (MealWithIngredients meal : meals) {
-                        ids.add(meal.getMeal().getMealId());
-                    }
-                    return ids;
-                });
+    public Flowable<Set<String>> getAllFavoriteIds() {
+        return localDataSource.getAllFavoriteIds();
     }
 }

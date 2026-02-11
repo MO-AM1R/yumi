@@ -259,19 +259,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         binding.favoriteIcon.setImageResource(
                 isFavorite ? R.drawable.favorite_filled : R.drawable.favorite
         );
-
-        binding.favoriteIcon.animate()
-                .scaleX(1.2f)
-                .scaleY(1.2f)
-                .setDuration(100)
-                .withEndAction(() ->
-                        binding.favoriteIcon.animate()
-                                .scaleX(1f)
-                                .scaleY(1f)
-                                .setDuration(100)
-                                .start()
-                )
-                .start();
     }
 
     @Override

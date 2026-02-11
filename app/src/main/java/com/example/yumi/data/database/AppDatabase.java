@@ -6,8 +6,11 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import com.example.yumi.data.database.doa.FavoriteDao;
 import com.example.yumi.data.database.doa.IngredientDao;
 import com.example.yumi.data.database.doa.MealDao;
+import com.example.yumi.data.database.doa.MealPlanDao;
 import com.example.yumi.data.database.entity.FavoriteEntity;
 import com.example.yumi.data.database.entity.MealEntity;
 import com.example.yumi.data.database.entity.MealIngredientEntity;
@@ -27,6 +30,8 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract MealDao mealDao();
     public abstract IngredientDao ingredientDao();
+    public abstract FavoriteDao favoriteDao();
+    public abstract MealPlanDao mealPlanDao();
 
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
