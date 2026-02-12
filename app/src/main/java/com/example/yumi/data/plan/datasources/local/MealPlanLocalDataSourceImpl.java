@@ -93,8 +93,8 @@ public class MealPlanLocalDataSourceImpl implements MealPlanLocalDataSource {
     }
 
     @Override
-    public Completable deletePlanEntriesNotInDates(List<String> validDates) {
-        return mealPlanDao.deletePlanEntriesNotInDates(validDates);
+    public Completable deletePlanEntriesNotInDates(String todayDate) {
+        return mealPlanDao.deleteOldMeals(todayDate);
     }
 
     @Override

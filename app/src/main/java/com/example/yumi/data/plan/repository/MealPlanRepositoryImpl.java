@@ -48,8 +48,8 @@ public class MealPlanRepositoryImpl implements MealPlanRepository {
     }
 
     @Override
-    public Completable cleanupOldDays(List<String> validDates) {
-        return localDataSource.deletePlanEntriesNotInDates(validDates);
+    public Completable cleanupOldDays(String todayDate) {
+        return localDataSource.deletePlanEntriesNotInDates(todayDate);
     }
 
     @Override

@@ -19,7 +19,7 @@ public interface MealPlanLocalDataSource {
 
     Flowable<Boolean> hasMealForDateAndType(String date, MealType mealType);
 
-    Completable deletePlanEntriesNotInDates(List<String> validDates);
+    Completable deletePlanEntriesNotInDates(String todayDate);
 
     Completable clearAllPlanEntries();
 }
