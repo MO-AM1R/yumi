@@ -2,6 +2,8 @@ package com.example.yumi.presentation.home.view.fragments;
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
+import static com.example.yumi.utils.NetworkMonitor.INSTANCE;
+
 import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -297,13 +299,10 @@ public class HomeFragment extends Fragment implements HomeContract.View, Network
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
-
-        if (presenter != null) {
-            presenter.detachView();
-        }
-
+        INSTANCE.removeListener(this);
+        presenter.detachView();
         binding = null;
+        super.onDestroyView();
     }
 
     @Override
