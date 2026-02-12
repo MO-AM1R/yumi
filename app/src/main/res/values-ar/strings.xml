@@ -154,4 +154,5 @@
     <string name="no_internet_description">No Internet Description</string>
     <string name="no_internet_to_watch_the_video">No internet to watch the video</string>
     <string name="you_should_login_to_use_meal_planner">You should login to use meal planner</string>
+    <string name="you_are_in_guest_mode">You are in guest mode</string>
 </resources>

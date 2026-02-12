@@ -3,7 +3,6 @@ import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static com.example.yumi.utils.NetworkMonitor.INSTANCE;
-
 import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -35,6 +34,8 @@ import com.example.yumi.presentation.home.view.adapters.RandomMealsRecyclerViewA
 import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
 import com.example.yumi.utils.GlideUtil;
 import com.example.yumi.utils.NetworkMonitor;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,6 +133,10 @@ public class HomeFragment extends Fragment implements HomeContract.View, Network
     }
 
     private void showAddToPlanBottomSheet(Meal meal) {
+        if (presenter.isGuestMode()){
+            showError(getString(R.string.you_are_in_guest_mode));
+            return;
+        }
         AddToPlanBottomSheet bottomSheet = AddToPlanBottomSheet.newInstance();
         bottomSheet.setOnConfirmListener((date, mealType) -> {
             if (meal != null) {
@@ -286,6 +291,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Network
     @Override
     public void showError(String message) {
         if (!isAdded() || binding == null) return;
+        Snackbar.make(requireView(), message, BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
     private void toggleAllViewsVisibility(int visibility) {

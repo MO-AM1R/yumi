@@ -36,5 +36,7 @@ public interface SearchContract {
         void onAreaClicked(Area area);
         void addToMealPlan(Meal meal, String date, MealType mealType);
         void onError(String error);
+
+        boolean isGuestMode();
     }
 }

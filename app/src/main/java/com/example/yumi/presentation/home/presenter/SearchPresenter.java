@@ -3,6 +3,7 @@ import android.content.Context;
 
 import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
 import com.example.yumi.data.plan.repository.MealPlanRepositoryImpl;
+import com.example.yumi.data.user.repository.UserRepositoryImpl;
 import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
@@ -12,6 +13,7 @@ import com.example.yumi.domain.meals.model.MealsFilterType;
 import com.example.yumi.domain.meals.repository.MealsRepository;
 import com.example.yumi.domain.plan.repository.MealPlanRepository;
 import com.example.yumi.domain.user.model.MealType;
+import com.example.yumi.domain.user.repository.UserRepository;
 import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.home.contract.SearchContract;
@@ -29,11 +31,13 @@ public class SearchPresenter extends BasePresenter<SearchContract.View>
     private final MealsRepository repository;
     private final SearchContract.View view;
     private final MealPlanRepository mealPlanRepository;
+    private final UserRepository userRepository;
 
     public SearchPresenter(Context context, SearchContract.View view){
         this.view = view;
         repository = new MealsRepositoryImpl();
         mealPlanRepository = new MealPlanRepositoryImpl(context);
+        userRepository = new UserRepositoryImpl(context);
     }
 
     private void onMealsLoaded(List<Meal> meals){
@@ -70,6 +74,11 @@ public class SearchPresenter extends BasePresenter<SearchContract.View>
             v.hideLoading();
             v.showError(error);
         });
+    }
+
+    @Override
+    public boolean isGuestMode() {
+        return userRepository.getCurrentUser().getUid().equalsIgnoreCase("Guest");
     }
 
     @Override

@@ -3,11 +3,14 @@ import android.content.Context;
 import com.example.yumi.data.favorite.repository.FavoriteRepositoryImpl;
 import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
 import com.example.yumi.data.plan.repository.MealPlanRepositoryImpl;
+import com.example.yumi.data.user.repository.UserRepositoryImpl;
 import com.example.yumi.domain.favorites.repository.FavoriteRepository;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.meals.repository.MealsRepository;
 import com.example.yumi.domain.plan.repository.MealPlanRepository;
 import com.example.yumi.domain.user.model.MealType;
+import com.example.yumi.domain.user.model.User;
+import com.example.yumi.domain.user.repository.UserRepository;
 import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.details.view.MealDetailsContract;
@@ -22,6 +25,7 @@ public class MealDetailsPresenter  extends BasePresenter<MealDetailsContract.Vie
     private MealDetailsContract.View view;
     private final FavoriteRepository favoriteRepository;
     private final MealPlanRepository mealPlanRepository;
+    private final UserRepository userRepository;
     private final MealsRepository mealsRepository;
     private boolean isFavorite = false;
 
@@ -30,6 +34,7 @@ public class MealDetailsPresenter  extends BasePresenter<MealDetailsContract.Vie
         this.favoriteRepository = new FavoriteRepositoryImpl(context);
         this.mealPlanRepository = new MealPlanRepositoryImpl(context);
         this.mealsRepository = new MealsRepositoryImpl(context);
+        this.userRepository = new UserRepositoryImpl(context);
     }
 
     @Override
@@ -88,6 +93,10 @@ public class MealDetailsPresenter  extends BasePresenter<MealDetailsContract.Vie
     @Override
     public void toggleFavorite(Meal meal) {
         if (view == null || meal == null) return;
+        if (isGuestMode()){
+            view.showError("You are in guest mode");
+            return;
+        }
 
         Disposable disposable = favoriteRepository.onFavMeal(meal)
                 .subscribeOn(Schedulers.io())
@@ -153,5 +162,10 @@ public class MealDetailsPresenter  extends BasePresenter<MealDetailsContract.Vie
     public void onDestroy() {
         compositeDisposable.clear();
         view = null;
+    }
+
+    @Override
+    public boolean isGuestMode(){
+        return userRepository.getCurrentUser().getUid().equalsIgnoreCase("Guest");
     }
 }
