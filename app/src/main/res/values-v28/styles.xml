@@ -10,7 +10,6 @@
         <item name="android:textColor">@color/foreground</item>
     </style>
 
-    <!-- Display Medium -->
     <style name="TextAppearance.Yumi.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium">
         <item name="fontFamily">@font/poppins_bold</item>
         <item name="android:fontFamily">@font/poppins_bold</item>
@@ -20,7 +19,6 @@
         <item name="android:textColor">@color/foreground</item>
     </style>
 
-    <!-- Display Small -->
     <style name="TextAppearance.Yumi.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
         <item name="fontFamily">@font/poppins_bold</item>
         <item name="android:fontFamily">@font/poppins_bold</item>
@@ -30,9 +28,6 @@
         <item name="android:textColor">@color/foreground</item>
     </style>
 
-    <!-- ============ HEADLINE ============ -->
-
-    <!-- Headline Large -->
     <style name="TextAppearance.Yumi.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
         <item name="fontFamily">@font/poppins_bold</item>
         <item name="android:fontFamily">@font/poppins_bold</item>
@@ -42,7 +37,6 @@
         <item name="android:textColor">@color/foreground</item>
     </style>
 
-    <!-- Headline Medium -->
     <style name="TextAppearance.Yumi.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
         <item name="fontFamily">@font/poppins_semi_bold</item>
         <item name="android:fontFamily">@font/poppins_semi_bold</item>
@@ -52,7 +46,6 @@
         <item name="android:textColor">@color/foreground</item>
     </style>
 
-    <!-- Headline Small -->
     <style name="TextAppearance.Yumi.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
         <item name="fontFamily">@font/poppins_semi_bold</item>
         <item name="android:fontFamily">@font/poppins_semi_bold</item>
@@ -62,9 +55,6 @@
         <item name="android:textColor">@color/foreground</item>
     </style>
 
-    <!-- ============ TITLE ============ -->
-
-    <!-- Title Large -->
     <style name="TextAppearance.Yumi.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
         <item name="fontFamily">@font/poppins_semi_bold</item>
         <item name="android:fontFamily">@font/poppins_semi_bold</item>
@@ -74,7 +64,6 @@
         <item name="android:textColor">@color/foreground</item>
     </style>
 
-    <!-- Title Medium -->
     <style name="TextAppearance.Yumi.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
         <item name="fontFamily">@font/poppins_medium</item>
         <item name="android:fontFamily">@font/poppins_medium</item>
@@ -84,7 +73,6 @@
         <item name="android:textColor">@color/foreground</item>
     </style>
 
-    <!-- Title Small -->
     <style name="TextAppearance.Yumi.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
         <item name="fontFamily">@font/poppins_medium</item>
         <item name="android:fontFamily">@font/poppins_medium</item>
@@ -94,9 +82,6 @@
         <item name="android:textColor">@color/foreground</item>
     </style>
 
-    <!-- ============ BODY ============ -->
-
-    <!-- Body Large -->
     <style name="TextAppearance.Yumi.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
@@ -106,7 +91,6 @@
         <item name="android:textColor">@color/foreground</item>
     </style>
 
-    <!-- Body Medium -->
     <style name="TextAppearance.Yumi.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
@@ -116,7 +100,6 @@
         <item name="android:textColor">@color/foreground</item>
     </style>
 
-    <!-- Body Small -->
     <style name="TextAppearance.Yumi.BodySmall" parent="TextAppearance.Material3.BodySmall">
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
@@ -126,9 +109,6 @@
         <item name="android:textColor">@color/muted_foreground</item>
     </style>
 
-    <!-- ============ LABEL ============ -->
-
-    <!-- Label Large -->
     <style name="TextAppearance.Yumi.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
         <item name="fontFamily">@font/poppins_medium</item>
         <item name="android:fontFamily">@font/poppins_medium</item>
@@ -138,7 +118,6 @@
         <item name="android:textColor">@color/foreground</item>
     </style>
 
-    <!-- Label Medium -->
     <style name="TextAppearance.Yumi.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
         <item name="fontFamily">@font/poppins_medium</item>
         <item name="android:fontFamily">@font/poppins_medium</item>
@@ -147,7 +126,6 @@
         <item name="android:textColor">@color/foreground</item>
     </style>
 
-    <!-- Label Small -->
     <style name="TextAppearance.Yumi.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
         <item name="fontFamily">@font/poppins_medium</item>
         <item name="android:fontFamily">@font/poppins_medium</item>

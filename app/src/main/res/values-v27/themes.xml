@@ -1,65 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Light Theme for API 27+ -->
     <style name="Theme.Yumi" parent="Theme.Material3.Light.NoActionBar">
-        <!-- Primary Colors -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/primary_foreground</item>
         <item name="colorPrimaryContainer">@color/card</item>
         <item name="colorOnPrimaryContainer">@color/card_foreground</item>
 
-        <!-- Secondary Colors -->
         <item name="colorSecondary">@color/secondary</item>
         <item name="colorOnSecondary">@color/secondary_foreground</item>
         <item name="colorSecondaryContainer">@color/muted</item>
         <item name="colorOnSecondaryContainer">@color/muted_foreground</item>
 
-        <!-- Tertiary / Accent Colors -->
         <item name="colorTertiary">@color/accent</item>
         <item name="colorOnTertiary">@color/accent_foreground</item>
 
-        <!-- Background Colors -->
         <item name="android:colorBackground">@color/background</item>
         <item name="colorOnBackground">@color/foreground</item>
 
-        <!-- Surface Colors -->
         <item name="colorSurface">@color/card</item>
         <item name="colorOnSurface">@color/card_foreground</item>
         <item name="colorSurfaceVariant">@color/muted</item>
         <item name="colorOnSurfaceVariant">@color/muted_foreground</item>
 
-        <!-- Error Colors -->
         <item name="colorError">@color/destructive</item>
         <item name="colorOnError">@color/destructive_foreground</item>
 
-        <!-- Outline -->
         <item name="colorOutline">@color/border</item>
 
-        <!-- Status Bar -->
         <item name="android:statusBarColor">@color/status_bar</item>
         <item name="android:windowLightStatusBar">true</item>
 
-        <!-- Navigation Bar (API 27+) -->
         <item name="android:navigationBarColor">@color/navigation_bar</item>
         <item name="android:windowLightNavigationBar">true</item>
 
-        <!-- Window -->
         <item name="android:windowBackground">@color/background</item>
 
-        <!-- Ripple -->
         <item name="colorControlHighlight">@color/ripple</item>
 
-        <!-- Font -->
         <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="fontFamily">@font/poppins_regular</item>
 
-        <!-- Shape -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Yumi.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Yumi.MediumComponent</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Yumi.LargeComponent</item>
     </style>
 
-    <!-- Splash Screen Theme -->
     <style name="Theme.Yumi.Splash" parent="Theme.Yumi">
         <item name="android:windowBackground">@color/primary</item>
         <item name="android:statusBarColor">@color/primary</item>

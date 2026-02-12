@@ -64,12 +64,7 @@ public class SearchFragment extends Fragment implements SearchContract.View, Net
     private final int TAB_MEALS = 3;
     private final String CURRENT_TAB_KEY = "current_tab";
 
-    private final String[] SEARCH_HINTS = {
-            "Search categories...",
-            "Search countries...",
-            "Search ingredients...",
-            "Search meals..."
-    };
+    private String[] searchHints;
 
     private SearchPresenter presenter;
     private NavigationCallback navigationCallback;
@@ -108,6 +103,12 @@ public class SearchFragment extends Fragment implements SearchContract.View, Net
 
         Objects.requireNonNull(binding.tabLayout.getTabAt(currentTabIndex)).select();
         setupViewForTab(currentTabIndex);
+        searchHints = new String[]{
+                getString(R.string.hint_search_categories),
+                getString(R.string.hint_search_countries),
+                getString(R.string.hint_search_ingredients),
+                getString(R.string.hint_search_meals)
+        };
 
         if (INSTANCE.isConnected()) {
             loadDataForTab(currentTabIndex);
@@ -272,7 +273,7 @@ public class SearchFragment extends Fragment implements SearchContract.View, Net
 
     private void updateSearchHint() {
         if (!isAdded() || binding == null) return;
-        binding.etSearch.setHint(SEARCH_HINTS[currentTabIndex]);
+        binding.etSearch.setHint(searchHints[currentTabIndex]);
     }
 
     private void clearSearch() {

@@ -75,7 +75,8 @@ public class UserLocalDataSourceImpl implements UserLocalDataSource {
         boolean onboardingCompleted = isOnboardingCompleted();
 
         preferences.edit()
-                .clear()
+                .remove(SharedPreferencesKeysConfig.KEY_LOGGED_IN)
+                .remove(SharedPreferencesKeysConfig.KEY_USER_ID)
                 .putBoolean(SharedPreferencesKeysConfig.KEY_ONBOARDING_COMPLETED, onboardingCompleted)
                 .apply();
     }

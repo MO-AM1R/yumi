@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">يومي</string>
-    <string name="app_tagline">خطط وجباتك اللذيذة</string>
+    <string name="app_tagline">خطط لذيذ</string>
     <string name="splash_screen_description">وصف شاشة البداية</string>
-    <string name="logo_image_description">وصف صورة الشعار</string>
-    <string name="deliciously_planned">مخطط بلذة</string>
+    <string name="logo_image_description">وصف شعار التطبيق</string>
+    <string name="deliciously_planned">مخطط لذيذ</string>
     <string name="fruit">🥑</string>
     <string name="salt">🧂</string>
     <string name="lemon">🍋</string>
@@ -12,147 +12,143 @@
     <string name="plant">🌿</string>
     <string name="tomato">🍅</string>
 
-    <string name="hello_blank_fragment">مرحباً بالواجهة الفارغة</string>
+    <string name="hello_blank_fragment">مرحبا، فراغ القطعة</string>
 
-    <string name="on_boarding_title_1">اكتشف أشهى</string>
-    <string name="on_boarding_sub_title_1">الوجبات</string>
+    <string name="on_boarding_title_1">اكتشف اللذيذ</string>
+    <string name="on_boarding_sub_title_1">وجبات</string>
     <string name="on_boarding_button_1">التالي</string>
-    <string name="on_boarding_image_description">وصف صورة شاشة الترحيب</string>
+    <string name="on_boarding_image_description">وصف صورة التعريف</string>
     <string name="on_boarding_details_1">استكشف أكثر من 1000 وصفة من أفضل الطهاة حول العالم.</string>
 
-    <string name="on_boarding_title_2">خطط أسبوعك</string>
+    <string name="on_boarding_title_2">خطط لأسبوعك</string>
     <string name="on_boarding_sub_title_2">بسهولة</string>
     <string name="on_boarding_button_2">التالي</string>
-    <string name="on_boarding_details_2">أنشئ خطط وجبات أسبوعية وقوائم تسوق تلقائياً.</string>
+    <string name="on_boarding_details_2">قم بإنشاء خطط وجبات للأسبوع وأنشئ قوائم التسوق تلقائياً.</string>
 
     <string name="on_boarding_title_3">احفظ واطبخ</string>
     <string name="on_boarding_sub_title_3">بدون إنترنت</string>
-    <string name="on_boarding_button_3">ابدأ الآن</string>
-    <string name="on_boarding_details_3">احفظ وصفاتك المفضلة وتصفحها بدون اتصال بالإنترنت.</string>
+    <string name="on_boarding_button_3">ابدأ</string>
+    <string name="on_boarding_details_3">احفظ وصفاتك المفضلة واطلع عليها حتى بدون اتصال بالإنترنت.</string>
 
     <string name="email">البريد الإلكتروني</string>
     <string name="enter_your_email">أدخل بريدك الإلكتروني</string>
     <string name="password">كلمة المرور</string>
     <string name="enter_your_password">أدخل كلمة المرور</string>
     <string name="login">تسجيل الدخول</string>
-    <string name="sign_in_with_google_description">تسجيل الدخول باستخدام جوجل</string>
-    <string name="already_have_an_account">لديك حساب بالفعل؟</string>
+    <string name="sign_in_with_google_description">الوصف لتسجيل الدخول عبر جوجل</string>
+    <string name="already_have_an_account">هل لديك حساب بالفعل؟</string>
     <string name="you_don_t_have_an_account">ليس لديك حساب؟</string>
-    <string name="register">إنشاء حساب</string>
-    <string name="continue_as_guest"><u>المتابعة كزائر</u></string>
-    <string name="or_continue_with">أو المتابعة باستخدام</string>
+    <string name="register">تسجيل</string>
+    <string name="continue_as_guest"><u>متابعة كزائر</u></string>
+    <string name="or_continue_with">أو تابع باستخدام</string>
     <string name="username">اسم المستخدم</string>
     <string name="enter_your_username">أدخل اسم المستخدم</string>
-
     <string name="home">الرئيسية</string>
     <string name="search">بحث</string>
     <string name="plans">الخطط</string>
     <string name="favorites">المفضلة</string>
     <string name="profile">الملف الشخصي</string>
-
     <string name="what_would_you_like_to_cook_today">ماذا تحب أن تطبخ اليوم؟</string>
-    <string name="hello_food_lover">مرحباً يا محب الطعام! 👋</string>
+    <string name="hello_food_lover">مرحباً، محب الطعام! 👋</string>
     <string name="meal_of_the_day">وجبة اليوم</string>
     <string name="meal_description">وصف الوجبة</string>
-    <string name="add_sign">+ إضافة</string>
+    <string name="add_sign">+ أضف</string>
     <string name="random_meals">وجبات عشوائية</string>
-
     <string name="ingredients">المكونات</string>
     <string name="meals">الوجبات</string>
-    <string name="instructions">الخطوات</string>
     <string name="video">فيديو</string>
+    <string name="instructions">طريقة التحضير</string>
     <string name="ingredient_description">وصف المكون</string>
     <string name="see_all"><![CDATA[عرض الكل >]]></string>
     <string name="countries">الدول</string>
-    <string name="categories">التصنيفات</string>
-    <string name="category_description">وصف التصنيف</string>
+    <string name="categories">الفئات</string>
+    <string name="category_description">وصف الفئة</string>
 
     <string name="ingredients_count_message">%1$d مكونات</string>
     <string name="browse_by_ingredient">تصفح حسب المكون</string>
-    <string name="arrow_back_description">زر الرجوع</string>
-    <string name="browse_by_category">تصفح حسب التصنيف</string>
+    <string name="arrow_back_description">وصف زر العودة</string>
+    <string name="browse_by_category">تصفح حسب الفئة</string>
     <string name="browse_by_country">تصفح حسب الدولة</string>
 
-    <string name="register_success">تم إنشاء الحساب بنجاح</string>
+    <string name="register_success">تم التسجيل بنجاح</string>
     <string name="login_success">تم تسجيل الدخول بنجاح</string>
 
-    <string name="meals_list_count">%1$d وصفة تم العثور عليها</string>
-    <string name="add_to_meal_plan">إضافة إلى خطة الوجبات</string>
+    <string name="meals_list_count">تم العثور على %1$d وصفة</string>
+    <string name="add_to_meal_plan">أضف إلى خطة الوجبات</string>
     <string name="play_video">تشغيل الفيديو</string>
-    <string name="favorite">مفضلة</string>
-    <string name="back_arrow">سهم الرجوع</string>
+    <string name="favorite">مفضل</string>
+    <string name="back_arrow">سهم العودة</string>
 
-    <string name="how_to_make_meal">طريقة تحضير %1$s</string>
+    <string name="how_to_make_meal">طريقة إعداد %1$s</string>
     <string name="watch_the_full_video_tutorial_for_this_recipe">شاهد الفيديو الكامل لهذه الوصفة</string>
     <string name="confirm">تأكيد</string>
     <string name="cancel">إلغاء</string>
-
     <string name="meal_type">نوع الوجبة</string>
     <string name="date">التاريخ</string>
-    <string name="ingredient">مكون</string>
-    <string name="search_hint">بحث…</string>
-    <string name="no_results_found">لا توجد نتائج</string>
+    <string name="ingredient">المكون</string>
+    <string name="search_hint">ابحث…</string>
+    <string name="no_results_found">لم يتم العثور على نتائج</string>
     <string name="add_icon">+</string>
     <string name="meals_planned">الوجبات المخططة</string>
     <string name="settings">الإعدادات</string>
-    <string name="yumi_v1_1_0">يومي الإصدار 1.1.0</string>
+    <string name="yumi_v1_1_0">يومي v1.1.0</string>
 
     <string name="en">الإنجليزية</string>
     <string name="ar">العربية</string>
 
     <string name="language_prompt">اختر اللغة</string>
-    <string name="dark_mode">الوضع الليلي</string>
-    <string name="off">غير مفعل</string>
-    <string name="on">مفعل</string>
+    <string name="dark_mode">الوضع الداكن</string>
+    <string name="off">إيقاف</string>
     <string name="language">اللغة</string>
     <string name="logout">تسجيل الخروج</string>
-    <string name="my_favorites">My Favorites</string>
-    <string name="fav_image_description">Fav Image Description</string>
-    <string name="add_to_plan">+ Add to Plan</string>
-    <string name="favorite_description">Favorite Description</string>
-    <string name="no_favorites_yet">No favorites yet</string>
-    <string name="start_adding_your_favorite_recipes_to_see_them_here">Start adding your favorite recipes to see them here</string>
-    <string name="recipe_saved">%1$d recipe saved</string>
+    <string name="on">تشغيل</string>
+    <string name="my_favorites">مفضلتي</string>
+    <string name="fav_image_description">وصف صورة المفضلة</string>
+    <string name="add_to_plan">+ أضف للخطة</string>
+    <string name="favorite_description">وصف المفضلة</string>
+    <string name="no_favorites_yet">لا توجد مفضلات بعد</string>
+    <string name="start_adding_your_favorite_recipes_to_see_them_here">ابدأ بإضافة وصفاتك المفضلة لتراها هنا</string>
+    <string name="recipe_saved">تم حفظ %1$d وصفة</string>
 
     <string-array name="languages_array">
         <item>الإنجليزية</item>
         <item>العربية</item>
     </string-array>
 
-    <!-- Meal Plan -->
-    <string name="meal_planner">Meal Planner</string>
-    <string name="add_meal">Add Meal</string>
-    <string name="remove_meal">Remove meal</string>
-    <string name="previous_week">Previous week</string>
-    <string name="next_week">Next week</string>
-    <string name="no_meal_assigned">No meal assigned yet</string>
+    <string name="meal_planner">منظم الوجبات</string>
+    <string name="add_meal">أضف وجبة</string>
+    <string name="remove_meal">إزالة وجبة</string>
+    <string name="previous_week">الأسبوع السابق</string>
+    <string name="next_week">الأسبوع التالي</string>
+    <string name="no_meal_assigned">لم يتم تعيين وجبة بعد</string>
 
-    <!-- Meal Types -->
-    <string name="breakfast">Breakfast</string>
-    <string name="lunch">Lunch</string>
-    <string name="dinner">Dinner</string>
-    <string name="snack">Snack</string>
+    <string name="breakfast">إفطار</string>
+    <string name="lunch">غداء</string>
+    <string name="dinner">عشاء</string>
+    <string name="snack">وجبة خفيفة</string>
 
-    <!-- Default Times -->
-    <string name="breakfast_time">8:00 AM</string>
-    <string name="lunch_time">12:30 PM</string>
-    <string name="dinner_time">7:00 PM</string>
-    <string name="snack_time">3:00 PM</string>
+    <string name="breakfast_time">8:00 ص</string>
+    <string name="lunch_time">12:30 م</string>
+    <string name="dinner_time">7:00 م</string>
+    <string name="snack_time">3:00 م</string>
 
-    <!-- Messages -->
-    <string name="meal_added_to_plan">Meal added to plan!</string>
-    <string name="meal_removed_from_plan">Meal removed from plan</string>
-    <string name="select_meal_for_type">Select a meal for %1$s</string>
-    <string name="select_date">Select date</string>
+    <string name="meal_added_to_plan">تمت إضافة الوجبة للخطة!</string>
+    <string name="meal_removed_from_plan">تمت إزالة الوجبة من الخطة</string>
+    <string name="select_meal_for_type">اختر وجبة لـ %1$s</string>
+    <string name="select_date">اختر التاريخ</string>
 
-    <!-- Favorites -->
-    <string name="added_to_favorites">Added to favorites!</string>
-    <string name="removed_from_favorites">Removed from favorites</string>
-    <string name="sync_data">Sync Data</string>
-    <string name="retrieve_data">Retrieve Data</string>
-    <string name="no_internet_connection">No Internet Connection</string>
-    <string name="no_internet_description">No Internet Description</string>
-    <string name="no_internet_to_watch_the_video">No internet to watch the video</string>
-    <string name="you_should_login_to_use_meal_planner">You should login to use meal planner</string>
-    <string name="you_are_in_guest_mode">You are in guest mode</string>
+    <string name="added_to_favorites">تمت الإضافة للمفضلة!</string>
+    <string name="removed_from_favorites">تمت الإزالة من المفضلة</string>
+    <string name="sync_data">مزامنة البيانات</string>
+    <string name="retrieve_data">استرجاع البيانات</string>
+    <string name="no_internet_connection">لا يوجد اتصال بالإنترنت</string>
+    <string name="no_internet_description">وصف عدم وجود الإنترنت</string>
+    <string name="no_internet_to_watch_the_video">لا يوجد إنترنت لمشاهدة الفيديو</string>
+    <string name="you_should_login_to_use_meal_planner">يجب تسجيل الدخول لاستخدام منظم الوجبات</string>
+    <string name="you_are_in_guest_mode">أنت في وضع الضيف</string>
+
+    <string name="hint_search_categories">ابحث في الفئات…</string>
+    <string name="hint_search_countries">ابحث في الدول…</string>
+    <string name="hint_search_ingredients">ابحث في المكونات…</string>
+    <string name="hint_search_meals">ابحث في الوجبات…</string>
 </resources>
