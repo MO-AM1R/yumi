@@ -44,7 +44,7 @@ public class GoogleSignInHelper {
                 request,
                 cancellationSignal,
                 Executors.newSingleThreadExecutor(),
-                new CredentialManagerCallback<GetCredentialResponse, GetCredentialException>() {
+                new CredentialManagerCallback<>() {
                     @Override
                     public void onResult(GetCredentialResponse result) {
                         handleSignInResult(result, callback);
@@ -73,11 +73,8 @@ public class GoogleSignInHelper {
 
                     GoogleSignInResult result = new GoogleSignInResult(
                             idToken,
-                            googleIdTokenCredential.getId(),
-                            googleIdTokenCredential.getDisplayName(),
-                            googleIdTokenCredential.getProfilePictureUri() != null
-                                    ? googleIdTokenCredential.getProfilePictureUri().toString()
-                                    : null
+                            googleIdTokenCredential.getUniqueId(),
+                            googleIdTokenCredential.getDisplayName()
                     );
 
                     callback.onSuccess(result);
@@ -116,19 +113,16 @@ public class GoogleSignInHelper {
         private final String idToken;
         private final String email;
         private final String displayName;
-        private final String photoUrl;
 
-        public GoogleSignInResult(String idToken, String email, String displayName, String photoUrl) {
+        public GoogleSignInResult(String idToken, String email, String displayName) {
             this.idToken = idToken;
             this.email = email;
             this.displayName = displayName;
-            this.photoUrl = photoUrl;
         }
 
         public String getIdToken() { return idToken; }
         public String getEmail() { return email; }
         public String getDisplayName() { return displayName; }
-        public String getPhotoUrl() { return photoUrl; }
     }
 
     public static class GoogleSignInException extends Exception {

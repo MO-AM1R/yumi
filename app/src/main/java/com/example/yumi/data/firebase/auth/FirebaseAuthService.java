@@ -20,6 +20,4 @@ public interface FirebaseAuthService {
     User getCurrentUser();
 
     boolean isUserLoggedIn();
-
-    String getCurrentUserId();
 }

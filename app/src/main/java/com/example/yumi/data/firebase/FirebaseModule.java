@@ -14,8 +14,6 @@ public class FirebaseModule {
     private static volatile FirebaseModule instance;
     private final FirebaseAuthService authService;
     private final FirestoreService firestoreService;
-    private final GoogleSignInHelper googleSignInHelper;
-    private final UserSessionManager userSessionManager;
 
     private FirebaseModule(Context context) {
         FirebaseApp.initializeApp(context);
@@ -23,8 +21,9 @@ public class FirebaseModule {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-        googleSignInHelper = new GoogleSignInHelper(context);
-        userSessionManager = new UserSessionManager();
+        GoogleSignInHelper googleSignInHelper = new GoogleSignInHelper(context);
+
+        new UserSessionManager();
         firestoreService = new FirestoreServiceImpl(firestore);
         authService = new FirebaseAuthServiceImpl(firebaseAuth, googleSignInHelper);
     }
@@ -52,13 +51,5 @@ public class FirebaseModule {
 
     public FirestoreService getFirestoreService() {
         return firestoreService;
-    }
-
-    public GoogleSignInHelper getGoogleSignInHelper() {
-        return googleSignInHelper;
-    }
-
-    public UserSessionManager getUserSessionManager() {
-        return userSessionManager;
     }
 }
