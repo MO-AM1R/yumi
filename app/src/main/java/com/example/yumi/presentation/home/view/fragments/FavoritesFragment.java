@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentFavoritesBinding;
 import com.example.yumi.domain.meals.model.Meal;
+import com.example.yumi.presentation.custom.AddToPlanBottomSheet;
 import com.example.yumi.presentation.details.view.fragment.MealDetailsFragment;
 import com.example.yumi.presentation.home.contract.FavoriteContract;
 import com.example.yumi.presentation.home.presenter.FavoritePresenter;
@@ -62,8 +63,8 @@ public class FavoritesFragment extends Fragment implements FavoriteContract.View
     private void setupRecyclerView() {
         adapter = new FavoriteMealsRecyclerViewAdapter(
                 new ArrayList<>(),
-                meal -> favoritePresenter.onMealClicked(meal),
-                meal -> favoritePresenter.onAddMealToPlan(meal),
+                this::navigateToMealDetail,
+                this::showAddToPlanBottomSheet,
                 meal -> favoritePresenter.onMealRemoved(meal)
         );
 
@@ -72,6 +73,16 @@ public class FavoritesFragment extends Fragment implements FavoriteContract.View
                         LinearLayoutManager.VERTICAL, false)
         );
         binding.favoriteRecyclerView.setAdapter(adapter);
+    }
+
+    private void showAddToPlanBottomSheet(Meal meal) {
+        AddToPlanBottomSheet bottomSheet = AddToPlanBottomSheet.newInstance();
+        bottomSheet.setOnConfirmListener((date, mealType) -> {
+            if (meal != null) {
+                favoritePresenter.addToMealPlan(meal, date, mealType);
+            }
+        });
+        bottomSheet.show(getChildFragmentManager(), "addToPlan");
     }
 
     @Override

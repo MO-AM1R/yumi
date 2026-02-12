@@ -1,8 +1,11 @@
 package com.example.yumi.presentation.home.presenter;
 import android.content.Context;
 import com.example.yumi.data.favorite.repository.FavoriteRepositoryImpl;
+import com.example.yumi.data.plan.repository.MealPlanRepositoryImpl;
 import com.example.yumi.domain.favorites.repository.FavoriteRepository;
 import com.example.yumi.domain.meals.model.Meal;
+import com.example.yumi.domain.plan.repository.MealPlanRepository;
+import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.home.contract.FavoriteContract;
@@ -15,9 +18,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class FavoritePresenter extends BasePresenter<FavoriteContract.View>
         implements FavoriteContract.Presenter {
     private final FavoriteRepository repository;
+    private final MealPlanRepository mealPlanRepository;
 
     public FavoritePresenter(Context context, FavoriteContract.View view) {
         repository = new FavoriteRepositoryImpl(context);
+        mealPlanRepository = new MealPlanRepositoryImpl(context);
         attachView(view);
     }
 
@@ -45,11 +50,6 @@ public class FavoritePresenter extends BasePresenter<FavoriteContract.View>
     }
 
     @Override
-    public void onMealClicked(Meal meal) {
-
-    }
-
-    @Override
     public void onMealRemoved(Meal meal) {
         Disposable disposable = repository.deleteMeal(meal.getId())
                 .subscribeOn(Schedulers.io())
@@ -60,7 +60,12 @@ public class FavoritePresenter extends BasePresenter<FavoriteContract.View>
     }
 
     @Override
-    public void onAddMealToPlan(Meal meal) {
+    public void addToMealPlan(Meal meal, String date, MealType mealType) {
+        Disposable disposable = mealPlanRepository.addMealToPlan(date, mealType, meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
 
+        compositeDisposable.add(disposable);
     }
 }
