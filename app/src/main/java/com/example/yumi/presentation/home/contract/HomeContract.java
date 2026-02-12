@@ -47,5 +47,7 @@ public interface HomeContract {
         void onIngredientClicked(Ingredient ingredient);
 
         void onAreaClicked(Area area);
+
+        boolean isGuestMode();
     }
 }

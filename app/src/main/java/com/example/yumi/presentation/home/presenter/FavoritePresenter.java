@@ -2,10 +2,12 @@ package com.example.yumi.presentation.home.presenter;
 import android.content.Context;
 import com.example.yumi.data.favorite.repository.FavoriteRepositoryImpl;
 import com.example.yumi.data.plan.repository.MealPlanRepositoryImpl;
+import com.example.yumi.data.user.repository.UserRepositoryImpl;
 import com.example.yumi.domain.favorites.repository.FavoriteRepository;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.plan.repository.MealPlanRepository;
 import com.example.yumi.domain.user.model.MealType;
+import com.example.yumi.domain.user.repository.UserRepository;
 import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.home.contract.FavoriteContract;
@@ -19,10 +21,12 @@ public class FavoritePresenter extends BasePresenter<FavoriteContract.View>
         implements FavoriteContract.Presenter {
     private final FavoriteRepository repository;
     private final MealPlanRepository mealPlanRepository;
+    private final UserRepository userRepository;
 
     public FavoritePresenter(Context context, FavoriteContract.View view) {
         repository = new FavoriteRepositoryImpl(context);
         mealPlanRepository = new MealPlanRepositoryImpl(context);
+        userRepository = new UserRepositoryImpl(context);
         attachView(view);
     }
 
@@ -67,5 +71,10 @@ public class FavoritePresenter extends BasePresenter<FavoriteContract.View>
                 .subscribe();
 
         compositeDisposable.add(disposable);
+    }
+
+    @Override
+    public boolean isGuestMode(){
+        return userRepository.getCurrentUser().getUid().equalsIgnoreCase("Guest");
     }
 }

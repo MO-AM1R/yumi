@@ -223,4 +223,9 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
     public void onAreaClicked(Area area) {
         view.navigateToFilteredMeals(new MealsFilter(MealsFilterType.AREA, area.getName()));
     }
+
+    @Override
+    public boolean isGuestMode() {
+        return userRepository.getCurrentUser().getUid().equalsIgnoreCase("Guest");
+    }
 }

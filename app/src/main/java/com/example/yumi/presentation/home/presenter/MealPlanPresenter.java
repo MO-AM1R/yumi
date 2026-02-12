@@ -2,10 +2,12 @@ package com.example.yumi.presentation.home.presenter;
 import android.content.Context;
 import com.example.yumi.data.config.AppConfigurations;
 import com.example.yumi.data.plan.repository.MealPlanRepositoryImpl;
+import com.example.yumi.data.user.repository.UserRepositoryImpl;
 import com.example.yumi.domain.plan.models.PlanDay;
 import com.example.yumi.domain.plan.repository.MealPlanRepository;
 import com.example.yumi.domain.meals.model.Meal;
 import com.example.yumi.domain.user.model.MealType;
+import com.example.yumi.domain.user.repository.UserRepository;
 import com.example.yumi.presentation.home.contract.MealPlanContract;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class MealPlanPresenter implements MealPlanContract.Presenter {
     private MealPlanContract.View view;
     private final MealPlanRepository repository;
+    private final UserRepository userRepository;
     private final CompositeDisposable disposables = new CompositeDisposable();
     private List<PlanDay> days = new ArrayList<>();
     private int selectedDayPosition = 0;
@@ -42,6 +45,7 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
     public MealPlanPresenter(Context context, MealPlanContract.View view) {
         this.view = view;
         this.repository = new MealPlanRepositoryImpl(context);
+        this.userRepository = new UserRepositoryImpl(context);
     }
 
     @Override
@@ -308,5 +312,10 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
     public void onDestroy() {
         disposables.clear();
         view = null;
+    }
+
+    @Override
+    public boolean isGuestMode(){
+        return userRepository.getCurrentUser().getUid().equalsIgnoreCase("Guest");
     }
 }

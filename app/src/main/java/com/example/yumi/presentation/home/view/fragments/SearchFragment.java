@@ -35,6 +35,8 @@ import com.example.yumi.presentation.home.view.adapters.IngredientSearchGridView
 import com.example.yumi.presentation.home.view.adapters.MealSearchGridView;
 import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
 import com.example.yumi.utils.NetworkMonitor;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -137,6 +139,10 @@ public class SearchFragment extends Fragment implements SearchContract.View, Net
     }
 
     private void showAddToPlanBottomSheet(Meal meal) {
+        if (presenter.isGuestMode()){
+            showError(getString(R.string.you_are_in_guest_mode));
+            return;
+        }
         AddToPlanBottomSheet bottomSheet = AddToPlanBottomSheet.newInstance();
         bottomSheet.setOnConfirmListener((date, mealType) -> {
             if (meal != null) {
@@ -501,7 +507,7 @@ public class SearchFragment extends Fragment implements SearchContract.View, Net
     @Override
     public void showError(String message) {
         if (!isAdded() || binding == null) return;
-        showEmptyState(message);
+        Snackbar.make(requireView(), message, BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
     private void hideKeyboard() {

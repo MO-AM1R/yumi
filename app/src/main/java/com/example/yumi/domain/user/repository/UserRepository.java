@@ -20,4 +20,6 @@ public interface UserRepository {
 
     Completable syncData(User user);
     Single<User> retrieveData();
+
+    void continueAsGuest();
 }

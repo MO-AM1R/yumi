@@ -27,5 +27,6 @@ public interface MealPlanContract {
         void addMealToPlan(String dateKey, MealType mealType, Meal meal);
         void cleanupOldDays();
         void onDestroy();
+        boolean isGuestMode();
     }
 }

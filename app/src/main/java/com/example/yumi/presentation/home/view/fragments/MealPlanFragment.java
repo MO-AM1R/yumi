@@ -1,7 +1,8 @@
 package com.example.yumi.presentation.home.view.fragments;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +23,8 @@ import com.example.yumi.presentation.home.contract.MealPlanContract;
 import com.example.yumi.presentation.home.presenter.MealPlanPresenter;
 import com.example.yumi.presentation.home.view.helper.MealTypeCardViewHolder;
 import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
-
 import java.util.List;
+
 
 public class MealPlanFragment extends Fragment implements MealPlanContract.View,
         MealTypeCardViewHolder.OnMealTypeActionListener {
@@ -61,11 +62,20 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.View,
         super.onViewCreated(view, savedInstanceState);
 
         presenter = new MealPlanPresenter(requireContext().getApplicationContext(), this);
+        if (presenter.isGuestMode()){
+            showGuestMode();
+        }
+        else{
+            setupDaysRecyclerView();
+            setupMealTypeCards();
 
-        setupDaysRecyclerView();
-        setupMealTypeCards();
+            presenter.loadMealPlan();
+        }
+    }
 
-        presenter.loadMealPlan();
+    private void showGuestMode() {
+        binding.guestMode.setVisibility(VISIBLE);
+        binding.nestedScrollView.setVisibility(GONE);
     }
 
     private void setupDaysRecyclerView() {
@@ -183,7 +193,6 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.View,
 
     @Override
     public void navigateToAddMeal(String date, MealType mealType) {
-        // TODO: Navigate to meal selection screen or show favorites selection bottom sheet
         Toast.makeText(
                 requireContext(),
                 getString(R.string.select_meal_for_type, mealType.name()),
@@ -204,13 +213,13 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.View,
     @Override
     public void showLoading() {
         if (!isAdded() || binding == null) return;
-        binding.loading.setVisibility(View.VISIBLE);
+        binding.loading.setVisibility(VISIBLE);
     }
 
     @Override
     public void hideLoading() {
         if (!isAdded() || binding == null) return;
-        binding.loading.setVisibility(View.GONE);
+        binding.loading.setVisibility(GONE);
     }
 
     @Override

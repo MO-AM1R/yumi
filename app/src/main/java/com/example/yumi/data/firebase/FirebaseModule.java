@@ -23,7 +23,8 @@ public class FirebaseModule {
 
         GoogleSignInHelper googleSignInHelper = new GoogleSignInHelper(context);
 
-        new UserSessionManager();
+        UserSessionManager.getInstance();
+
         firestoreService = new FirestoreServiceImpl(firestore);
         authService = new FirebaseAuthServiceImpl(firebaseAuth, googleSignInHelper);
     }

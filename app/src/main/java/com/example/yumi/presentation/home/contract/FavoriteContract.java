@@ -15,5 +15,6 @@ public interface FavoriteContract {
         void loadFavoriteMeals();
         void onMealRemoved(Meal meal);
         void addToMealPlan(Meal meal, String date, MealType mealType);
+        boolean isGuestMode();
     }
 }

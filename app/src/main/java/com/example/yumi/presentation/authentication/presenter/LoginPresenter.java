@@ -114,6 +114,15 @@ public class LoginPresenter extends BasePresenter<AuthContract.LoginView>
         );
     }
 
+    @Override
+    public void continueAsGuest() {
+        if (isViewDetached()) return;
+        view.showLoading();
+
+        userRepository.continueAsGuest();
+        view.onLoginSuccess();
+    }
+
     private Completable syncUserData(User user) {
         return mealsRepository.clearAllLocalMeals()
                 .andThen(syncFavorites(user.getFavoriteMealIds()))

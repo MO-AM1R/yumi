@@ -24,6 +24,8 @@ import com.example.yumi.presentation.details.view.adapter.IngredientsAdapter;
 import com.example.yumi.presentation.details.view.adapter.InstructionsAdapter;
 import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
 import com.example.yumi.utils.NetworkMonitor;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -237,6 +239,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     }
 
     private void showAddToPlanBottomSheet() {
+        if (presenter.isGuestMode()){
+            showError(getString(R.string.you_are_in_guest_mode));
+            return;
+        }
         AddToPlanBottomSheet bottomSheet = AddToPlanBottomSheet.newInstance();
         bottomSheet.setOnConfirmListener((date, mealType) -> {
             if (meal != null) {
@@ -321,7 +327,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     @Override
     public void showError(String message) {
         if (!isAdded()) return;
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+        Snackbar.make(requireView(), message, BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
     @Override

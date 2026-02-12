@@ -21,5 +21,6 @@ public interface MealDetailsContract {
         void addToMealPlan(Meal meal, String date, MealType mealType);
         void checkFavoriteStatus(String mealId);
         void onDestroy();
+        boolean isGuestMode();
     }
 }

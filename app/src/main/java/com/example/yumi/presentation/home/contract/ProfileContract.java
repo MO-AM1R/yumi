@@ -21,5 +21,6 @@ public interface ProfileContract {
         void syncData();
         void retrieveData();
         void logout();
+        boolean isGuestMode();
     }
 }
