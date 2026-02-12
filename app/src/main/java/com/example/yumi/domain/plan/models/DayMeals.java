@@ -1,5 +1,4 @@
-package com.example.yumi.domain.favorites.models;
-
+package com.example.yumi.domain.plan.models;
 import com.example.yumi.domain.user.model.MealType;
 
 public class DayMeals {

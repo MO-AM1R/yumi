@@ -1,9 +1,8 @@
-package com.example.yumi.domain.favorites.models;
-
+package com.example.yumi.domain.plan.models;
 import com.example.yumi.domain.user.model.MealType;
-
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class MealPlan {
     private Map<String, DayMeals> days;
