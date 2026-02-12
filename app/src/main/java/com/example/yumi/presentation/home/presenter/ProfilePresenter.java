@@ -80,9 +80,6 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View>
 
     @Override
     public void loadUserDetails() {
-        if (!NetworkMonitor.INSTANCE.isConnected())
-            return;
-
         withView(BaseView::showLoading);
 
         User user = userRepository.getCurrentUser();
