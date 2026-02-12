@@ -16,6 +16,8 @@ import com.example.yumi.domain.user.repository.UserRepository;
 import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.home.contract.HomeContract;
+import com.example.yumi.utils.NetworkMonitor;
+
 import java.util.List;
 import java.util.Random;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -37,6 +39,8 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
     }
 
     public void refreshData(){
+        if (!NetworkMonitor.INSTANCE.isConnected())
+            return;
         withView(BaseView::showLoading);
 
         loadDayMeal();
@@ -44,6 +48,8 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
     }
 
     public void loadHomeData() {
+        if (!NetworkMonitor.INSTANCE.isConnected())
+            return;
         view.showLoading();
 
         loadDayMeal();
