@@ -52,7 +52,7 @@ public class MealPlanLocalDataSourceImpl implements MealPlanLocalDataSource {
         }
         MealPlanEntity planEntity = new MealPlanEntity(date, mealType.name(), meal.getId());
 
-        return mealDao.insertMeal(mealEntity)
+        return mealDao.insertMealIgnore(mealEntity)
                 .andThen(ingredientDao.insertIngredients(ingredientEntities))
                 .andThen(mealPlanDao.insertPlanEntry(planEntity));
     }
