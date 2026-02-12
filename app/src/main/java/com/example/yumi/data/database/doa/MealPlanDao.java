@@ -23,8 +23,8 @@ public interface MealPlanDao {
     @Query("DELETE FROM meal_plan WHERE date = :date")
     Completable deletePlanEntriesForDate(String date);
 
-    @Query("DELETE FROM meal_plan WHERE date NOT IN (:validDates)")
-    Completable deletePlanEntriesNotInDates(List<String> validDates);
+    @Query("DELETE FROM meal_plan WHERE date < :todayDate")
+    Completable deleteOldMeals(String todayDate);
 
     @Query("DELETE FROM meal_plan")
     Completable clearAllPlanEntries();

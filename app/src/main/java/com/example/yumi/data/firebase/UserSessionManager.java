@@ -1,9 +1,7 @@
 package com.example.yumi.data.firebase;
-import com.example.yumi.domain.favorites.models.MealPlan;
+import com.example.yumi.domain.plan.models.MealPlan;
 import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.domain.user.model.User;
-import com.example.yumi.domain.user.model.UserSettings;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,21 +31,6 @@ public class UserSessionManager {
     public synchronized String getCurrentUserId() {
         return currentUser != null ? currentUser.getUid() : null;
     }
-
-
-    public synchronized UserSettings getSettings() {
-        if (currentUser != null && currentUser.getSettings() != null) {
-            return currentUser.getSettings();
-        }
-        return new UserSettings();
-    }
-
-    public synchronized void updateSettings(UserSettings settings) {
-        if (currentUser != null) {
-            currentUser.setSettings(settings);
-        }
-    }
-
 
     public synchronized List<String> getFavoriteMealIds() {
         if (currentUser != null && currentUser.getFavoriteMealIds() != null) {

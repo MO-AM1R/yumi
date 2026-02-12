@@ -1,17 +1,22 @@
 package com.example.yumi.data.firebase.firestore;
-import com.example.yumi.domain.favorites.models.DayMeals;
-import com.example.yumi.domain.favorites.models.MealPlan;
+
+import android.util.Log;
+
+import com.example.yumi.domain.plan.models.DayMeals;
+import com.example.yumi.domain.plan.models.MealPlan;
 import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.domain.user.model.User;
-import com.example.yumi.domain.user.model.UserSettings;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
@@ -24,9 +29,6 @@ public class FirestoreServiceImpl implements FirestoreService {
     private static final String FIELD_UID = "uid";
     private static final String FIELD_EMAIL = "email";
     private static final String FIELD_DISPLAY_NAME = "displayName";
-    private static final String FIELD_SETTINGS = "settings";
-    private static final String FIELD_DARK_MODE = "darkMode";
-    private static final String FIELD_LANGUAGE = "language";
     private static final String FIELD_FAVORITE_MEALS = "favoriteMeals";
     private static final String FIELD_BREAKFAST = "breakfast";
     private static final String FIELD_LUNCH = "lunch";
@@ -42,29 +44,31 @@ public class FirestoreServiceImpl implements FirestoreService {
     @Override
     public Completable createUser(User user) {
         return Completable.create(emitter -> {
-            Map<String, Object> userData = new HashMap<>();
-            userData.put(FIELD_UID, user.getUid());
-            userData.put(FIELD_EMAIL, user.getEmail());
-            userData.put(FIELD_DISPLAY_NAME, user.getDisplayName());
+            DocumentReference userDoc = firestore.collection(COLLECTION_USERS).document(user.getUid());
 
-            Map<String, Object> settings = new HashMap<>();
-            settings.put(FIELD_DARK_MODE, false);
-            settings.put(FIELD_LANGUAGE, "en");
-            userData.put(FIELD_SETTINGS, settings);
+            userDoc.get().addOnSuccessListener(snapshot -> {
+                Map<String, Object> userData = new HashMap<>();
+                userData.put(FIELD_UID, user.getUid());
+                userData.put(FIELD_EMAIL, user.getEmail());
+                userData.put(FIELD_DISPLAY_NAME, user.getDisplayName());
 
-            userData.put(FIELD_FAVORITE_MEALS, new ArrayList<String>());
-
-            firestore.collection(COLLECTION_USERS)
-                    .document(user.getUid())
-                    .set(userData)
-                    .addOnSuccessListener(unused -> emitter.onComplete())
-                    .addOnFailureListener(emitter::onError);
+                if (snapshot.exists()) {
+                    userDoc.set(userData, SetOptions.merge())
+                            .addOnSuccessListener(unused -> emitter.onComplete())
+                            .addOnFailureListener(emitter::onError);
+                } else {
+                    userData.put(FIELD_FAVORITE_MEALS, new ArrayList<String>());
+                    userDoc.set(userData)
+                            .addOnSuccessListener(unused -> emitter.onComplete())
+                            .addOnFailureListener(emitter::onError);
+                }
+            }).addOnFailureListener(emitter::onError);
         });
     }
 
     @Override
     public Single<User> getUser(String userId) {
-        return Single.create(emitter -> {
+        Single<User> userObservable = Single.create(emitter -> {
             firestore.collection(COLLECTION_USERS)
                     .document(userId)
                     .get()
@@ -77,6 +81,57 @@ public class FirestoreServiceImpl implements FirestoreService {
                     })
                     .addOnFailureListener(emitter::onError);
         });
+
+        Single<MealPlan> plannedMealsObservable = Single.create(emitter -> {
+            firestore.collection(COLLECTION_USERS)
+                    .document(userId)
+                    .collection(SUBCOLLECTION_MEAL_PLANS)
+                    .get()
+                    .addOnSuccessListener(doc -> {
+                        try {
+                            List<DocumentSnapshot> days = doc.getDocuments();
+                            MealPlan mealPlan = new MealPlan();
+
+                            for (DocumentSnapshot day : days) {
+                                mealPlan.setDayMeals(
+                                        day.getId(),
+                                        documentToDayMeals(day)
+                                );
+                            }
+                            emitter.onSuccess(mealPlan);
+                        } catch (Exception e) {
+                            emitter.onError(new Exception("User not found"));
+                        }
+                    })
+                    .addOnFailureListener(emitter::onError);
+        });
+
+        return Single.zip(userObservable, plannedMealsObservable,
+                (user, mealPlan) -> new User.Builder()
+                .fromUser(user)
+                .mealPlan(mealPlan)
+                .build());
+    }
+
+    @Override
+    public Completable syncUserData(User user) {
+        String userId = user.getUid();
+        Completable updateFavorites = setFavoriteMeals(userId, user.getFavoriteMealIds());
+
+        List<Completable> mealPlanUpdates = new ArrayList<>();
+        MealPlan mealPlan = user.getMealPlan();
+
+        if (mealPlan != null && mealPlan.getDays() != null) {
+            for (Map.Entry<String, DayMeals> entry : mealPlan.getDays().entrySet()) {
+                String date = entry.getKey();
+                date = date.replace("/", "-");
+
+                DayMeals dayMeals = entry.getValue();
+                mealPlanUpdates.add(setDayMeals(userId, date, dayMeals));
+            }
+        }
+
+        return updateFavorites.andThen(Completable.merge(mealPlanUpdates));
     }
 
     @Override
@@ -90,42 +145,6 @@ public class FirestoreServiceImpl implements FirestoreService {
         });
     }
 
-    @Override
-    public Single<UserSettings> getUserSettings(String userId) {
-        return Single.create(emitter -> {
-            firestore.collection(COLLECTION_USERS)
-                    .document(userId)
-                    .get()
-                    .addOnSuccessListener(doc -> {
-                        if (doc.exists()) {
-                            @SuppressWarnings("unchecked")
-                            Map<String, Object> settingsMap = (Map<String, Object>) doc.get(FIELD_SETTINGS);
-                            emitter.onSuccess(mapToUserSettings(settingsMap));
-                        } else {
-                            emitter.onSuccess(new UserSettings());
-                        }
-                    })
-                    .addOnFailureListener(emitter::onError);
-        });
-    }
-
-    @Override
-    public Completable updateUserSettings(String userId, UserSettings settings) {
-        return Completable.create(emitter -> {
-            Map<String, Object> settingsMap = new HashMap<>();
-            settingsMap.put(FIELD_DARK_MODE, settings.isDarkMode());
-            settingsMap.put(FIELD_LANGUAGE, settings.getLanguage());
-
-            Map<String, Object> updates = new HashMap<>();
-            updates.put(FIELD_SETTINGS, settingsMap);
-
-            firestore.collection(COLLECTION_USERS)
-                    .document(userId)
-                    .update(updates)
-                    .addOnSuccessListener(unused -> emitter.onComplete())
-                    .addOnFailureListener(emitter::onError);
-        });
-    }
 
     @Override
     public Single<List<String>> getFavoriteMeals(String userId) {
@@ -320,28 +339,14 @@ public class FirestoreServiceImpl implements FirestoreService {
 
     private User documentToUser(DocumentSnapshot doc) {
         @SuppressWarnings("unchecked")
-        Map<String, Object> settingsMap = (Map<String, Object>) doc.get(FIELD_SETTINGS);
-        @SuppressWarnings("unchecked")
         List<String> favorites = (List<String>) doc.get(FIELD_FAVORITE_MEALS);
 
         return new User.Builder()
                 .uid(doc.getString(FIELD_UID))
                 .email(doc.getString(FIELD_EMAIL))
                 .displayName(doc.getString(FIELD_DISPLAY_NAME))
-                .settings(mapToUserSettings(settingsMap))
                 .favoriteMealIds(favorites != null ? favorites : new ArrayList<>())
                 .build();
-    }
-
-    private UserSettings mapToUserSettings(Map<String, Object> map) {
-        if (map == null) {
-            return new UserSettings();
-        }
-
-        boolean darkMode = Boolean.TRUE.equals(map.get(FIELD_DARK_MODE));
-        String language = map.get(FIELD_LANGUAGE) != null ? (String) map.get(FIELD_LANGUAGE) : "en";
-
-        return new UserSettings(darkMode, language);
     }
 
     private DayMeals documentToDayMeals(DocumentSnapshot doc) {

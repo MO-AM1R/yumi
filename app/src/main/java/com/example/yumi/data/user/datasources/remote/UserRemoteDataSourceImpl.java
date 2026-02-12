@@ -2,11 +2,11 @@ package com.example.yumi.data.user.datasources.remote;
 import android.content.Context;
 import com.example.yumi.data.firebase.auth.FirebaseAuthService;
 import com.example.yumi.data.firebase.firestore.FirestoreService;
-import com.example.yumi.domain.favorites.models.DayMeals;
-import com.example.yumi.domain.favorites.models.MealPlan;
+import com.example.yumi.domain.plan.models.DayMeals;
+import com.example.yumi.domain.plan.models.MealPlan;
 import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.domain.user.model.User;
-import com.example.yumi.domain.user.model.UserSettings;
+
 import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
@@ -57,8 +57,6 @@ public class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         return authService.getCurrentUserId();
     }
 
-    // ==================== User ====================
-
     @Override
     public Completable createUser(User user) {
         return firestoreService.createUser(user);
@@ -72,16 +70,6 @@ public class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     @Override
     public Completable deleteUser(String userId) {
         return firestoreService.deleteUser(userId);
-    }
-
-    @Override
-    public Single<UserSettings> getUserSettings(String userId) {
-        return firestoreService.getUserSettings(userId);
-    }
-
-    @Override
-    public Completable updateUserSettings(String userId, UserSettings settings) {
-        return firestoreService.updateUserSettings(userId, settings);
     }
 
     @Override
@@ -132,5 +120,10 @@ public class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     @Override
     public Completable removeMealFromDay(String userId, String date, MealType mealType) {
         return firestoreService.removeMealFromDay(userId, date, mealType);
+    }
+
+    @Override
+    public Completable syncUserData(User user) {
+        return firestoreService.syncUserData(user);
     }
 }

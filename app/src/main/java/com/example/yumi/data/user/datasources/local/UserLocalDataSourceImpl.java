@@ -3,8 +3,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import com.example.yumi.data.config.SharedPreferencesKeysConfig;
 import com.example.yumi.data.firebase.UserSessionManager;
-import com.example.yumi.domain.favorites.models.DayMeals;
-import com.example.yumi.domain.favorites.models.MealPlan;
+import com.example.yumi.domain.plan.models.DayMeals;
+import com.example.yumi.domain.plan.models.MealPlan;
 import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.domain.user.model.User;
 import com.example.yumi.domain.user.model.UserSettings;
@@ -88,16 +88,6 @@ public class UserLocalDataSourceImpl implements UserLocalDataSource {
     @Override
     public boolean hasUser() {
         return userSession.hasUser();
-    }
-
-    @Override
-    public void updateUserSettings(UserSettings settings) {
-        userSession.updateSettings(settings);
-    }
-
-    @Override
-    public UserSettings getUserSettings() {
-        return userSession.getSettings();
     }
 
     @Override

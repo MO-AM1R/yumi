@@ -9,7 +9,8 @@ import androidx.room.Index;
         foreignKeys = @ForeignKey(
                 entity = MealEntity.class,
                 parentColumns = "mealId",
-                childColumns = "mealId"
+                childColumns = "mealId",
+                onDelete = ForeignKey.CASCADE
         ),
         indices = {@Index(value = "mealId")}
 )

@@ -52,7 +52,7 @@ public class MealPlanLocalDataSourceImpl implements MealPlanLocalDataSource {
         }
         MealPlanEntity planEntity = new MealPlanEntity(date, mealType.name(), meal.getId());
 
-        return mealDao.insertMeal(mealEntity)
+        return mealDao.insertMealIgnore(mealEntity)
                 .andThen(ingredientDao.insertIngredients(ingredientEntities))
                 .andThen(mealPlanDao.insertPlanEntry(planEntity));
     }
@@ -93,8 +93,8 @@ public class MealPlanLocalDataSourceImpl implements MealPlanLocalDataSource {
     }
 
     @Override
-    public Completable deletePlanEntriesNotInDates(List<String> validDates) {
-        return mealPlanDao.deletePlanEntriesNotInDates(validDates);
+    public Completable deletePlanEntriesNotInDates(String todayDate) {
+        return mealPlanDao.deleteOldMeals(todayDate);
     }
 
     @Override

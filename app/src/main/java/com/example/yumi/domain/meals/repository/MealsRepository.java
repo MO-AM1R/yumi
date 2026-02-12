@@ -3,11 +3,12 @@ import com.example.yumi.domain.meals.model.Area;
 import com.example.yumi.domain.meals.model.Category;
 import com.example.yumi.domain.meals.model.Ingredient;
 import com.example.yumi.domain.meals.model.Meal;
-import com.example.yumi.domain.favorites.models.MealPlan;
+import com.example.yumi.domain.plan.models.MealPlan;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
 
 
@@ -19,6 +20,7 @@ public interface MealsRepository {
     Single<Meal> getMealById(String mealId);
 
     Single<List<Meal>> searchMealsByName(String mealName);
+
     Single<List<Meal>> searchMealsByFirstLetter(String firstLetter);
 
     Single<List<Meal>> filterMealsByCategory(String category);
@@ -32,6 +34,12 @@ public interface MealsRepository {
     Single<List<Area>> getAllAreas();
 
     Single<List<Ingredient>> getAllIngredients();
+
+    Maybe<Meal> getLocalMealById(String mealId);
+
+    Single<Boolean> mealExistsLocally(String mealId);
+
+    Completable clearAllLocalMeals();
 
     Completable addToMealPlan(MealPlan mealPlan);
 }

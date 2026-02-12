@@ -31,7 +31,7 @@ public class FavoritesLocalDataSourceImpl implements FavoritesLocalDataSource {
         FavoriteEntity favoriteEntity = new FavoriteEntity(meal.getMeal().getMealId(),
                 System.currentTimeMillis());
 
-        return mealDao.insertMeal(meal.getMeal())
+        return mealDao.insertMealIgnore(meal.getMeal())
                 .andThen(ingredientDao.insertIngredients(meal.getIngredients()))
                 .andThen(favoriteDao.insertFavorite(favoriteEntity));
     }
@@ -71,9 +71,6 @@ public class FavoritesLocalDataSourceImpl implements FavoritesLocalDataSource {
 
     @Override
     public Completable clearAllFavorites() {
-        return favoriteDao.getAllFavoriteIds()
-                .flatMapCompletable(mealIds ->
-                        favoriteDao.clearAllFavorites()
-                );
+        return favoriteDao.clearAllFavorites();
     }
 }
