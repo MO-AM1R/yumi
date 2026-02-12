@@ -230,6 +230,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     public void showMealDetails(Meal meal) {
         if (!isAdded() || binding == null) return;
 
+        this.meal = meal;
         binding.mealName.setText(meal.getName());
         binding.mealCategory.setText(meal.getCategory());
         binding.mealArea.setText(meal.getArea());
