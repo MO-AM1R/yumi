@@ -14,6 +14,8 @@ import io.reactivex.rxjava3.core.Single;
 public interface MealDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insertMeal(MealEntity meal);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    Completable insertMealIgnore(MealEntity meal);
 
     @Transaction
     @Query("SELECT * FROM meals WHERE mealId = :mealId")

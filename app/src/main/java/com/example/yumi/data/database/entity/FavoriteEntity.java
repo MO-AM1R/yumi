@@ -1,4 +1,5 @@
 package com.example.yumi.data.database.entity;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -8,7 +9,8 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "favorites", foreignKeys = @ForeignKey(
         entity = MealEntity.class,
         parentColumns = "mealId",
-        childColumns = "mealId"),
+        childColumns = "mealId",
+        onDelete = ForeignKey.CASCADE),
         indices = {@Index(value = "mealId")}
 )
 public class FavoriteEntity {
