@@ -256,6 +256,7 @@
                                 android:focusable="true">
 
                                 <ImageView
+                                    android:id="@+id/play_video_icon"
                                     android:layout_width="32dp"
                                     android:layout_height="32dp"
                                     android:layout_gravity="center"
