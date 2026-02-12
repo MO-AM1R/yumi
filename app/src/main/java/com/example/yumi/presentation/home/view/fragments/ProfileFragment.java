@@ -52,9 +52,15 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
 
         setupLanguageSpinner();
         setupDarkModeSwitch();
+        setupSyncDataButtons();
         presenter.loadUserDetails();
 
         binding.cardLogout.setOnClickListener(v -> presenter.logout());
+    }
+
+    private void setupSyncDataButtons() {
+        binding.cardSync.setOnClickListener(v -> {});
+        binding.cardRetrieveData.setOnClickListener(v -> presenter.retrieveData());
     }
 
     private void setupLanguageSpinner() {
@@ -154,6 +160,11 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
 
         intent.putExtra("SPLASH", false);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDataRetrievedSuccess() {
+
     }
 
     @Override

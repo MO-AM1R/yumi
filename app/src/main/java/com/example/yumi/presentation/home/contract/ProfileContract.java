@@ -10,12 +10,16 @@ public interface ProfileContract {
         void showUserFavoriteMealsCounter(int favoriteMeals);
         void resetLanguage();
         void onLogout();
+
+        void onDataRetrievedSuccess();
     }
 
     interface Presenter {
         void loadUserDetails();
         void onLanguageChanged(String lang);
         void onModeChanged(boolean isDark);
+        void syncData();
+        void retrieveData();
         void logout();
     }
 }
