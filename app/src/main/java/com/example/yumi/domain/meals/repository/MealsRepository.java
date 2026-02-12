@@ -21,8 +21,6 @@ public interface MealsRepository {
 
     Single<List<Meal>> searchMealsByName(String mealName);
 
-    Single<List<Meal>> searchMealsByFirstLetter(String firstLetter);
-
     Single<List<Meal>> filterMealsByCategory(String category);
 
     Single<List<Meal>> filterMealsByArea(String area);
@@ -35,11 +33,5 @@ public interface MealsRepository {
 
     Single<List<Ingredient>> getAllIngredients();
 
-    Maybe<Meal> getLocalMealById(String mealId);
-
-    Single<Boolean> mealExistsLocally(String mealId);
-
     Completable clearAllLocalMeals();
-
-    Completable addToMealPlan(MealPlan mealPlan);
 }

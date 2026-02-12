@@ -58,7 +58,6 @@ public class WormDotIndicator extends LinearLayout {
         activeWidthPx = (int) (24 * metrics.density);
         animationDuration = 300;
 
-        //TODO: set my colors from colors
         inactiveColor = Color.parseColor("#80CA2E55");
         activeColor = Color.parseColor("#CA2E55");
 
@@ -138,10 +137,5 @@ public class WormDotIndicator extends LinearLayout {
 
     public int getIndex(){
         return index;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-        createDots();
     }
 }

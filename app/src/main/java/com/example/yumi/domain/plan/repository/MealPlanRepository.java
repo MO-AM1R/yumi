@@ -16,8 +16,6 @@ public interface MealPlanRepository {
 
     Flowable<Map<String, Map<MealType, Meal>>> getAllPlannedMeals();
 
-    Flowable<Boolean> hasMealForDateAndType(String date, MealType mealType);
-
     Completable cleanupOldDays(String todayDate);
 
     Completable clearAllPlannedMeals();

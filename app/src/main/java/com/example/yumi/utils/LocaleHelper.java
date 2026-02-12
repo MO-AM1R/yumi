@@ -1,15 +1,11 @@
 package com.example.yumi.utils;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-
 import androidx.annotation.Nullable;
-
 import static com.example.yumi.data.config.SharedPreferencesKeysConfig.KEY_LANGUAGE;
 import static com.example.yumi.data.config.SharedPreferencesKeysConfig.PREF_NAME;
-
 import java.util.Locale;
 import java.util.Objects;
 
@@ -41,11 +37,6 @@ public abstract class LocaleHelper {
         return updateLocale(context, new Locale(savedLang));
     }
 
-    public static Context setLocale(Context context, String language) {
-        saveLanguage(context, language);
-        return updateLocale(context, new Locale(language));
-    }
-
     private static Context updateLocale(Context context, Locale locale) {
         Locale.setDefault(locale);
 
@@ -72,9 +63,5 @@ public abstract class LocaleHelper {
     public static String getCurrentLanguage(Context context) {
         String savedLang = getSavedLanguage(context);
         return savedLang != null ? savedLang : Locale.getDefault().getLanguage();
-    }
-
-    public static boolean isArabic(Context context) {
-        return LANG_ARABIC.equals(getCurrentLanguage(context));
     }
 }

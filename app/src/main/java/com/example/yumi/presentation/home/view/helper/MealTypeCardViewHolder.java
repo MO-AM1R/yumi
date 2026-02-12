@@ -95,12 +95,4 @@ public class MealTypeCardViewHolder {
     public MealType getMealType() {
         return mealType;
     }
-
-    public Meal getCurrentMeal() {
-        return currentMeal;
-    }
-
-    public boolean hasMeal() {
-        return currentMeal != null;
-    }
 }

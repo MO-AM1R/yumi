@@ -11,6 +11,5 @@ public interface MealsListContract {
 
     interface Presenter{
         void loadMeals();
-        void onMealClicked(Meal meal);
     }
 }

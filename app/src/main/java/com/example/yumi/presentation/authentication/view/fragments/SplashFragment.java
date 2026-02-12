@@ -35,7 +35,6 @@ public class SplashFragment extends Fragment implements AuthContract.SplashView 
     private TextView[] foods;
     private final List<ObjectAnimator> foodAnimators = new ArrayList<>();
     private Random random = new Random();
-    private boolean animationsCompleted = false;
 
 
     @Nullable
@@ -77,7 +76,6 @@ public class SplashFragment extends Fragment implements AuthContract.SplashView 
         sequentialAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                animationsCompleted = true;
                 presenter.onAnimationsComplete();
             }
         });
@@ -126,7 +124,6 @@ public class SplashFragment extends Fragment implements AuthContract.SplashView 
 
     @Override
     public void showError(String message) {
-        // Splash typically doesn't show errors, but implement if needed
     }
 
     private void markSplashSeen() {
@@ -244,13 +241,5 @@ public class SplashFragment extends Fragment implements AuthContract.SplashView 
         foods = null;
         random = null;
         binding = null;
-    }
-
-    public boolean isAnimationsCompleted() {
-        return animationsCompleted;
-    }
-
-    public void setAnimationsCompleted(boolean animationsCompleted) {
-        this.animationsCompleted = animationsCompleted;
     }
 }

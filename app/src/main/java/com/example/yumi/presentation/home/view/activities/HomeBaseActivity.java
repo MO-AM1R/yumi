@@ -366,25 +366,6 @@ public class HomeBaseActivity  extends BaseActivity implements NavigationCallbac
     }
 
     @Override
-    public void clearStackAndNavigate(Fragment fragment, String tag) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        if (activeFragment != null) {
-            transaction.remove(activeFragment);
-        }
-
-        while (!fragmentStack.isEmpty()) {
-            Fragment f = fragmentStack.pop();
-            transaction.remove(f);
-        }
-
-        transaction.add(R.id.fragment_container, fragment, tag);
-        transaction.commit();
-
-        activeFragment = fragment;
-    }
-
-    @Override
     public void showBottomBar() {
         isBottomBarVisible = true;
         binding.bottomBar.setVisibility(VISIBLE);

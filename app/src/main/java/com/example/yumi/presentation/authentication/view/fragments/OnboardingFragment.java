@@ -105,28 +105,20 @@ public class OnboardingFragment extends Fragment implements AuthContract.Onboard
     }
 
     @Override
-    public int getCurrentPageIndex() {
-        return indicator.getIndex();
-    }
-
-    @Override
     public int getTotalPages() {
         return 3;
     }
 
     @Override
     public void showLoading() {
-        // Onboarding doesn't typically need loading
     }
 
     @Override
     public void hideLoading() {
-        // Onboarding doesn't typically need loading
     }
 
     @Override
     public void showError(String message) {
-        // Onboarding doesn't typically show errors
     }
 
 
