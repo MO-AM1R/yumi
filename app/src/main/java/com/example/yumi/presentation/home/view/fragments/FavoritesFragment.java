@@ -47,11 +47,19 @@ public class FavoritesFragment extends Fragment implements FavoriteContract.View
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setupPresenter();
-        setupRecyclerView();
 
-        favoritePresenter.loadFavoriteMeals();
+        if (favoritePresenter.isGuestMode()){
+            showGuestMode();
+        }else{
+            setupRecyclerView();
+            favoritePresenter.loadFavoriteMeals();
+        }
+    }
+
+    private void showGuestMode() {
+        binding.guestMode.setVisibility(VISIBLE);
+        binding.favoritesContent.setVisibility(GONE);
     }
 
     private void setupPresenter() {
