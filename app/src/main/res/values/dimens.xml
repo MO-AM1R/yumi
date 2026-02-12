@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Radius Values (base radius = 10dp / 0.625rem) -->
-    <dimen name="radius_sm">6dp</dimen>   <!-- radius - 4px -->
-    <dimen name="radius_md">8dp</dimen>   <!-- radius - 2px -->
-    <dimen name="radius_lg">10dp</dimen>  <!-- base radius -->
-    <dimen name="radius_xl">14dp</dimen>  <!-- radius + 4px -->
+    <dimen name="radius_sm">6dp</dimen>
+    <dimen name="radius_md">8dp</dimen>
+    <dimen name="radius_lg">10dp</dimen>
+    <dimen name="radius_xl">14dp</dimen>
     <dimen name="radius_2xl">20dp</dimen>
     <dimen name="radius_full">9999dp</dimen>
 
-    <!-- Spacing -->
     <dimen name="spacing_xs">4dp</dimen>
     <dimen name="spacing_sm">8dp</dimen>
     <dimen name="spacing_md">12dp</dimen>
@@ -17,12 +15,10 @@
     <dimen name="spacing_2xl">24dp</dimen>
     <dimen name="spacing_3xl">32dp</dimen>
 
-    <!-- Padding -->
     <dimen name="padding_screen">16dp</dimen>
     <dimen name="padding_card">16dp</dimen>
     <dimen name="padding_button">12dp</dimen>
 
-    <!-- Text Sizes -->
     <dimen name="text_xs">12sp</dimen>
     <dimen name="text_sm">14sp</dimen>
     <dimen name="text_base">16sp</dimen>
@@ -31,19 +27,16 @@
     <dimen name="text_2xl">24sp</dimen>
     <dimen name="text_3xl">30sp</dimen>
 
-    <!-- Icon Sizes -->
     <dimen name="icon_sm">16dp</dimen>
     <dimen name="icon_md">24dp</dimen>
     <dimen name="icon_lg">32dp</dimen>
     <dimen name="icon_xl">48dp</dimen>
 
-    <!-- Component Heights -->
     <dimen name="button_height">48dp</dimen>
     <dimen name="input_height">52dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="bottom_nav_height">64dp</dimen>
 
-    <!-- Card Elevation -->
     <dimen name="elevation_sm">2dp</dimen>
     <dimen name="elevation_md">4dp</dimen>
     <dimen name="elevation_lg">8dp</dimen>

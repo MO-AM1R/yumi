@@ -2,70 +2,55 @@
 <resources>
     <color name="ic_launcher_background">#e9883a</color>
 
-    <!-- Primary Colors -->
     <color name="primary">#1A1A1A</color>
     <color name="primary_foreground">#FFFFFF</color>
 
-    <!-- Secondary Colors -->
     <color name="secondary">#E85D04</color>
     <color name="secondary_foreground">#FFFFFF</color>
 
-    <!-- Accent Colors -->
     <color name="accent">#E85D04</color>
     <color name="accent_foreground">#FFFFFF</color>
 
-    <!-- Background Colors -->
     <color name="background">#FAFAFA</color>
     <color name="foreground">#1A1A1A</color>
 
-    <!-- Card Colors -->
     <color name="card">#FFFFFF</color>
     <color name="card_foreground">#1A1A1A</color>
 
-    <!-- Popover Colors -->
     <color name="popover">#FFFFFF</color>
     <color name="popover_foreground">#1A1A1A</color>
 
-    <!-- Muted Colors -->
     <color name="muted">#ECECF0</color>
     <color name="muted_foreground">#717182</color>
 
-    <!-- Destructive Colors -->
     <color name="destructive">#D4183D</color>
     <color name="destructive_foreground">#FFFFFF</color>
 
-    <!-- Input & Border Colors -->
-    <color name="border">#1A000000</color> <!-- 10% black -->
-    <color name="input">#00000000</color> <!-- transparent -->
+    <color name="border">#1A000000</color>
+    <color name="input">#00000000</color>
     <color name="input_background">#F3F3F5</color>
     <color name="switch_background">#CBCED4</color>
     <color name="ring">#E85D04</color>
 
-    <!-- Status Bar Colors -->
     <color name="status_bar">#FAFAFA</color>
     <color name="navigation_bar">#FFFFFF</color>
 
-    <!-- Text Colors -->
     <color name="text_primary">#1A1A1A</color>
     <color name="text_secondary">#717182</color>
     <color name="text_hint">#A1A1AA</color>
     <color name="text_label">#A0A0A4</color>
     <color name="text_disabled">#CBCED4</color>
 
-    <!-- Divider -->
     <color name="divider">#1A000000</color>
 
-    <!-- Ripple -->
     <color name="ripple">#1AE85D04</color>
 
-    <!-- Chart Colors -->
     <color name="chart_1">#E85D04</color>
     <color name="chart_2">#F48C06</color>
     <color name="chart_3">#1A1A1A</color>
     <color name="chart_4">#717182</color>
     <color name="chart_5">#CBCED4</color>
 
-    <!-- Blur Colors -->
     <color name="glass_background_color">#2CFFFFFF</color>
     <color name="login_form_glass_color">#EE1A1A1A</color>
     <color name="glass_border_color">#40FFFFFF</color>

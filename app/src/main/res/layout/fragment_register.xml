@@ -134,6 +134,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/enter_your_username"
                     android:inputType="text"
+                    android:drawableStart="@drawable/person"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/text_hint" />
 
@@ -165,6 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/enter_your_email"
+                android:drawableStart="@drawable/email_icon"
                 android:inputType="textEmailAddress"
                 android:textColor="@android:color/white"
                 android:textColorHint="@color/text_hint" />
@@ -198,6 +200,7 @@
                     android:layout_width="match_parent"
                     style="@style/Widget.Yumi.TextInputLayout.Auth"
                     android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/lock_icon"
                     android:hint="@string/enter_your_password"
                     android:inputType="textPassword"
                     android:textColor="@android:color/white"
