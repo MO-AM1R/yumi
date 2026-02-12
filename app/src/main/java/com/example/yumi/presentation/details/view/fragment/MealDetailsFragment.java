@@ -1,6 +1,7 @@
 package com.example.yumi.presentation.details.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     public MealDetailsFragment() {}
 
     public MealDetailsFragment(Meal meal) {
+        Log.d("TAG", "Meal");
         this.meal = meal;
     }
 
@@ -49,9 +51,20 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         }
     }
 
+    public static MealDetailsFragment newInstance(Meal meal) {
+        MealDetailsFragment fragment = new MealDetailsFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_MEAL, meal);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            meal = (Meal) getArguments().getSerializable(ARG_MEAL);
+        }
 
         if (savedInstanceState != null) {
             meal = (Meal) savedInstanceState.getSerializable(KEY_MEAL);
