@@ -13,7 +13,6 @@ public interface FavoriteContract {
 
     interface Presenter {
         void loadFavoriteMeals();
-        void onMealClicked(Meal meal);
         void onMealRemoved(Meal meal);
         void addToMealPlan(Meal meal, String date, MealType mealType);
     }

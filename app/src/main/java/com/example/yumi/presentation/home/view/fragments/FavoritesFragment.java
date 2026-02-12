@@ -63,7 +63,7 @@ public class FavoritesFragment extends Fragment implements FavoriteContract.View
     private void setupRecyclerView() {
         adapter = new FavoriteMealsRecyclerViewAdapter(
                 new ArrayList<>(),
-                meal -> favoritePresenter.onMealClicked(meal),
+                this::navigateToMealDetail,
                 this::showAddToPlanBottomSheet,
                 meal -> favoritePresenter.onMealRemoved(meal)
         );

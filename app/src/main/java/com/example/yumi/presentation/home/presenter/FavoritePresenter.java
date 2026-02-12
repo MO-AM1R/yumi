@@ -50,11 +50,6 @@ public class FavoritePresenter extends BasePresenter<FavoriteContract.View>
     }
 
     @Override
-    public void onMealClicked(Meal meal) {
-
-    }
-
-    @Override
     public void onMealRemoved(Meal meal) {
         Disposable disposable = repository.deleteMeal(meal.getId())
                 .subscribeOn(Schedulers.io())
