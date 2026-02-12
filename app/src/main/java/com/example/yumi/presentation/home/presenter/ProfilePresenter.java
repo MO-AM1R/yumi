@@ -1,9 +1,12 @@
 package com.example.yumi.presentation.home.presenter;
+
 import static com.example.yumi.data.config.AppConfigurations.DATE_FORMAT;
 
 import android.content.Context;
 import android.util.Log;
+
 import androidx.appcompat.app.AppCompatDelegate;
+
 import com.example.yumi.data.favorite.repository.FavoriteRepositoryImpl;
 import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
 import com.example.yumi.data.plan.repository.MealPlanRepositoryImpl;
@@ -22,6 +25,7 @@ import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.home.contract.ProfileContract;
 import com.example.yumi.utils.LocaleHelper;
 import com.example.yumi.utils.ThemeHelper;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
@@ -172,14 +177,25 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View>
 
     @Override
     public void logout() {
-        Disposable disposable = userRepository.signOut()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> withView(ProfileContract.View::onLogout));
+        withView(BaseView::showLoading);
+
+        Disposable disposable =
+                mealsRepository.clearAllLocalMeals()
+                        .andThen(favoriteRepository.clearAllFavorites())
+                        .andThen(mealPlanRepository.clearAllPlannedMeals())
+                        .andThen(userRepository.signOut())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                () -> withView(v -> {
+                                    v.hideLoading();
+                                    v.onLogout();
+                                }),
+                                throwable -> withView(view -> view.showError("Logout failed: " + throwable.getMessage()))
+                        );
 
         compositeDisposable.add(disposable);
     }
-
 
     @Override
     public void retrieveData() {
