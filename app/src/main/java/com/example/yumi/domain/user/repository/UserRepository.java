@@ -37,6 +37,6 @@ public interface UserRepository {
     Completable setMealForDay(String date, MealType mealType, String mealId);
     Completable removeMealFromDay(String date, MealType mealType);
 
-    Completable syncData();
+    Completable syncData(User user);
     Single<User> retrieveData();
 }

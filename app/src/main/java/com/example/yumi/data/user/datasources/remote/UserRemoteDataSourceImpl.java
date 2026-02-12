@@ -57,8 +57,6 @@ public class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         return authService.getCurrentUserId();
     }
 
-    // ==================== User ====================
-
     @Override
     public Completable createUser(User user) {
         return firestoreService.createUser(user);
@@ -122,5 +120,10 @@ public class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     @Override
     public Completable removeMealFromDay(String userId, String date, MealType mealType) {
         return firestoreService.removeMealFromDay(userId, date, mealType);
+    }
+
+    @Override
+    public Completable syncUserData(User user) {
+        return firestoreService.syncUserData(user);
     }
 }

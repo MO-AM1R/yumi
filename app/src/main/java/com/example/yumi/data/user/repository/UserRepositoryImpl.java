@@ -197,8 +197,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Completable syncData() {
-        return null;
+    public Completable syncData(User user) {
+        return remoteDataSource.syncUserData(user);
     }
 
     @Override

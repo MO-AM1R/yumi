@@ -36,4 +36,6 @@ public interface FirestoreService {
     Completable setMealForDay(String userId, String date, MealType mealType, String mealId);
 
     Completable removeMealFromDay(String userId, String date, MealType mealType);
+
+    Completable syncUserData(User user);
 }

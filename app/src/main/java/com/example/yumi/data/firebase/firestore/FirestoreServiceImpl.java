@@ -1,5 +1,7 @@
 package com.example.yumi.data.firebase.firestore;
 
+import android.util.Log;
+
 import com.example.yumi.domain.plan.models.DayMeals;
 import com.example.yumi.domain.plan.models.MealPlan;
 import com.example.yumi.domain.user.model.MealType;
@@ -109,6 +111,27 @@ public class FirestoreServiceImpl implements FirestoreService {
                 .fromUser(user)
                 .mealPlan(mealPlan)
                 .build());
+    }
+
+    @Override
+    public Completable syncUserData(User user) {
+        String userId = user.getUid();
+        Completable updateFavorites = setFavoriteMeals(userId, user.getFavoriteMealIds());
+
+        List<Completable> mealPlanUpdates = new ArrayList<>();
+        MealPlan mealPlan = user.getMealPlan();
+
+        if (mealPlan != null && mealPlan.getDays() != null) {
+            for (Map.Entry<String, DayMeals> entry : mealPlan.getDays().entrySet()) {
+                String date = entry.getKey();
+                date = date.replace("/", "-");
+
+                DayMeals dayMeals = entry.getValue();
+                mealPlanUpdates.add(setDayMeals(userId, date, dayMeals));
+            }
+        }
+
+        return updateFavorites.andThen(Completable.merge(mealPlanUpdates));
     }
 
     @Override

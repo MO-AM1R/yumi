@@ -27,7 +27,7 @@ public class User {
         this.mealPlan = mealPlan != null ? mealPlan : new MealPlan();
     }
 
-    public void setPlannedMealsIds(MealPlan mealPlan) {
+    public void setMealPlan(MealPlan mealPlan) {
         this.mealPlan = mealPlan;
     }
 
