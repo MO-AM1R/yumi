@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.yumi.R;
+import com.example.yumi.data.config.AppConfigurations;
 import com.example.yumi.databinding.BottomSheetAddToPlanBinding;
 import com.example.yumi.domain.user.model.MealType;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -34,8 +35,12 @@ public class AddToPlanBottomSheet extends BottomSheetDialogFragment {
             MealType.SNACK
     };
 
-    private final SimpleDateFormat dateKeyFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    private final SimpleDateFormat dateKeyFormat = new SimpleDateFormat(AppConfigurations.DATE_FORMAT, Locale.getDefault());
     private final SimpleDateFormat displayDateFormat = new SimpleDateFormat("EEE, MMM d", Locale.getDefault());
+
+    {
+        dateKeyFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    }
 
     private long minDateMillis;
     private long maxDateMillis;
@@ -121,15 +126,7 @@ public class AddToPlanBottomSheet extends BottomSheetDialogFragment {
             Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
             calendar.setTimeInMillis(selection);
 
-            Calendar localCalendar = Calendar.getInstance();
-            localCalendar.set(
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH),
-                    0, 0, 0
-            );
-
-            selectedDate = localCalendar.getTime();
+            selectedDate = calendar.getTime();
             updateDateDisplay();
         });
 

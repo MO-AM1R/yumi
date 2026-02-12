@@ -1,4 +1,6 @@
 package com.example.yumi.presentation.home.presenter;
+import static com.example.yumi.data.config.AppConfigurations.DATE_FORMAT;
+
 import android.content.Context;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -122,12 +124,50 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View>
 
     @Override
     public void syncData() {
-        Disposable disposable = userRepository.syncData()
+        withView(ProfileContract.View::showLoading);
+
+        User currentUser = userRepository.getCurrentUser();
+
+        Disposable disposable = getUpdatedUser(currentUser)
                 .subscribeOn(Schedulers.io())
+                .flatMapCompletable(userRepository::syncData)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> withView(ProfileContract.View::onLogout));
+                .subscribe(
+                        () -> withView(BaseView::hideLoading),
+                        throwable -> withView(v -> {
+                            v.hideLoading();
+                            v.showError("Sync failed: " + throwable.getLocalizedMessage());
+                        })
+                );
 
         compositeDisposable.add(disposable);
+    }
+
+    private Single<User> getUpdatedUser(User user) {
+        return Single.zip(
+                favoriteRepository.getAllFavoriteIds().firstOrError(),
+                mealPlanRepository.getAllPlannedMeals().firstOrError(),
+                (favoriteIds, allMealsMap) -> {
+                    user.setFavoriteMealIds(new ArrayList<>(favoriteIds));
+
+                    MealPlan mealPlan = new MealPlan();
+                    for (Map.Entry<String, Map<MealType, Meal>> entry : allMealsMap.entrySet()) {
+                        String date = entry.getKey();
+                        Map<MealType, Meal> mealsForDay = entry.getValue();
+                        if (mealsForDay != null) {
+                            for (Map.Entry<MealType, Meal> mealEntry : mealsForDay.entrySet()) {
+                                mealPlan.setMealForDay(
+                                        date,
+                                        mealEntry.getKey(),
+                                        mealEntry.getValue().getId()
+                                );
+                            }
+                        }
+                    }
+                    user.setMealPlan(mealPlan);
+                    return user;
+                }
+        );
     }
 
     @Override
@@ -195,7 +235,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View>
 
     private Set<String> collectMealIds(MealPlan mealPlan) {
         Set<String> ids = new HashSet<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 0);

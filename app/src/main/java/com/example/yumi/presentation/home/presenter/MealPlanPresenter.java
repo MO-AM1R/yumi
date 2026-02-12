@@ -1,5 +1,6 @@
 package com.example.yumi.presentation.home.presenter;
 import android.content.Context;
+import com.example.yumi.data.config.AppConfigurations;
 import com.example.yumi.data.plan.repository.MealPlanRepositoryImpl;
 import com.example.yumi.domain.plan.models.PlanDay;
 import com.example.yumi.domain.plan.repository.MealPlanRepository;
@@ -15,6 +16,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TimeZone;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -28,10 +31,13 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
     private List<PlanDay> days = new ArrayList<>();
     private int selectedDayPosition = 0;
     private Map<String, Map<MealType, Meal>> cachedMealPlan = new HashMap<>();
-
     private final SimpleDateFormat dayNameFormat = new SimpleDateFormat("EEE", Locale.getDefault());
     private final SimpleDateFormat fullDateFormat = new SimpleDateFormat("EEE, MMMM d, yyyy", Locale.getDefault());
-    private final SimpleDateFormat dateKeyFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    private final SimpleDateFormat dateKeyFormat = new SimpleDateFormat(AppConfigurations.DATE_FORMAT, Locale.getDefault());
+
+    {
+        dateKeyFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    }
 
     public MealPlanPresenter(Context context, MealPlanContract.View view) {
         this.view = view;
@@ -240,16 +246,15 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
 
     @Override
     public void cleanupOldDays() {
-        List<String> validDates = getValidDateKeys();
+        String todayKey = dateKeyFormat.format(new Date());
 
-        Disposable disposable = repository.cleanupOldDays(validDates)
+        Disposable disposable = repository.cleanupOldDays(todayKey)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         this::loadAllMealsFromRepository,
                         throwable -> loadAllMealsFromRepository()
                 );
-
         disposables.add(disposable);
     }
 
@@ -278,8 +283,16 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
 
     public List<String> getValidDateKeys() {
         List<String> dateKeys = new ArrayList<>();
-        for (PlanDay day : days) {
-            dateKeys.add(day.getDateKey());
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        for (int i = 0; i < 7; i++) {
+            dateKeys.add(dateKeyFormat.format(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
         return dateKeys;
     }
