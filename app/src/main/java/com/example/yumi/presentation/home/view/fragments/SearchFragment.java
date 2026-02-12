@@ -1,4 +1,9 @@
 package com.example.yumi.presentation.home.view.fragments;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
+import static com.example.yumi.utils.NetworkMonitor.*;
+
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,6 +34,7 @@ import com.example.yumi.presentation.home.view.adapters.CategorySearchGridViewAd
 import com.example.yumi.presentation.home.view.adapters.IngredientSearchGridViewAdapter;
 import com.example.yumi.presentation.home.view.adapters.MealSearchGridView;
 import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
+import com.example.yumi.utils.NetworkMonitor;
 import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +45,7 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 
-public class SearchFragment extends Fragment implements SearchContract.View {
+public class SearchFragment extends Fragment implements SearchContract.View, NetworkMonitor.NetworkListener {
     private FragmentSearchBinding binding;
     private CategorySearchGridViewAdapter categoryAdapter;
     private AreaSearchGridViewAdapter areaAdapter;
@@ -100,7 +106,28 @@ public class SearchFragment extends Fragment implements SearchContract.View {
 
         Objects.requireNonNull(binding.tabLayout.getTabAt(currentTabIndex)).select();
         setupViewForTab(currentTabIndex);
-        loadDataForTab(currentTabIndex);
+
+        if (INSTANCE.isConnected()) {
+            loadDataForTab(currentTabIndex);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        INSTANCE.addListener(this);
+
+        if (INSTANCE.isConnected()) {
+            onNetworkAvailable();
+        } else {
+            onNetworkLost();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        INSTANCE.removeListener(this);
     }
 
     @Override
@@ -177,25 +204,25 @@ public class SearchFragment extends Fragment implements SearchContract.View {
             case TAB_CATEGORIES:
                 binding.gridView.setNumColumns(3);
                 binding.gridView.setAdapter(categoryAdapter);
-                binding.gridView.setVisibility(View.VISIBLE);
-                binding.listView.setVisibility(View.GONE);
+                binding.gridView.setVisibility(VISIBLE);
+                binding.listView.setVisibility(GONE);
                 break;
             case TAB_COUNTRIES:
                 binding.gridView.setNumColumns(2);
                 binding.gridView.setAdapter(areaAdapter);
-                binding.gridView.setVisibility(View.VISIBLE);
-                binding.listView.setVisibility(View.GONE);
+                binding.gridView.setVisibility(VISIBLE);
+                binding.listView.setVisibility(GONE);
                 break;
             case TAB_INGREDIENTS:
                 binding.gridView.setNumColumns(3);
                 binding.gridView.setAdapter(ingredientAdapter);
-                binding.gridView.setVisibility(View.VISIBLE);
-                binding.listView.setVisibility(View.GONE);
+                binding.gridView.setVisibility(VISIBLE);
+                binding.listView.setVisibility(GONE);
                 break;
             case TAB_MEALS:
                 binding.listView.setAdapter(mealAdapter);
-                binding.gridView.setVisibility(View.GONE);
-                binding.listView.setVisibility(View.VISIBLE);
+                binding.gridView.setVisibility(GONE);
+                binding.listView.setVisibility(VISIBLE);
                 break;
         }
     }
@@ -434,40 +461,40 @@ public class SearchFragment extends Fragment implements SearchContract.View {
     @Override
     public void showLoading() {
         if (!isAdded() || binding == null) return;
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.gridView.setVisibility(View.GONE);
-        binding.listView.setVisibility(View.GONE);
-        binding.emptyState.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(VISIBLE);
+        binding.gridView.setVisibility(GONE);
+        binding.listView.setVisibility(GONE);
+        binding.emptyState.setVisibility(GONE);
     }
 
     @Override
     public void hideLoading() {
         if (!isAdded() || binding == null) return;
-        binding.progressBar.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(GONE);
 
         if (currentTabIndex == TAB_MEALS) {
-            binding.listView.setVisibility(View.VISIBLE);
+            binding.listView.setVisibility(VISIBLE);
         } else {
-            binding.gridView.setVisibility(View.VISIBLE);
+            binding.gridView.setVisibility(VISIBLE);
         }
     }
 
     public void showEmptyState(String message) {
         if (!isAdded() || binding == null) return;
-        binding.emptyState.setVisibility(View.VISIBLE);
+        binding.emptyState.setVisibility(VISIBLE);
         binding.tvEmptyMessage.setText(message);
-        binding.gridView.setVisibility(View.GONE);
-        binding.listView.setVisibility(View.GONE);
+        binding.gridView.setVisibility(GONE);
+        binding.listView.setVisibility(GONE);
     }
 
     public void hideEmptyState() {
         if (!isAdded() || binding == null) return;
-        binding.emptyState.setVisibility(View.GONE);
+        binding.emptyState.setVisibility(GONE);
 
         if (currentTabIndex == TAB_MEALS) {
-            binding.listView.setVisibility(View.VISIBLE);
+            binding.listView.setVisibility(VISIBLE);
         } else {
-            binding.gridView.setVisibility(View.VISIBLE);
+            binding.gridView.setVisibility(VISIBLE);
         }
     }
 
@@ -490,13 +517,46 @@ public class SearchFragment extends Fragment implements SearchContract.View {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
-        if (disposable != null && !disposable.isDisposed())
+        if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
-        if (presenter != null)
-            presenter.detachView();
-
-
+        }
+        INSTANCE.removeListener(this);
+        presenter.detachView();
         binding = null;
+        super.onDestroyView();
+    }
+
+
+    private void disableSearch() {
+        binding.etSearch.setEnabled(false);
+        binding.etSearch.setText("");
+    }
+
+    private void enableSearch() {
+        binding.etSearch.setEnabled(true);
+    }
+
+    private void runIfUiReady(Runnable action) {
+        if (!isAdded() || binding == null || getActivity() == null) return;
+        getActivity().runOnUiThread(action);
+    }
+
+    @Override
+    public void onNetworkAvailable() {
+        runIfUiReady(() -> {
+            binding.noInternetView.setVisibility(GONE);
+            binding.searchBody.setVisibility(VISIBLE);
+            enableSearch();
+            loadDataForTab(currentTabIndex);
+        });
+    }
+
+    @Override
+    public void onNetworkLost() {
+        runIfUiReady(() -> {
+            binding.noInternetView.setVisibility(VISIBLE);
+            binding.searchBody.setVisibility(GONE);
+            disableSearch();
+        });
     }
 }

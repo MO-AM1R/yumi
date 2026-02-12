@@ -2,6 +2,8 @@ package com.example.yumi.presentation.home.view.fragments;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import static com.example.yumi.utils.NetworkMonitor.INSTANCE;
+
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -21,10 +23,11 @@ import com.example.yumi.presentation.authentication.view.activities.Authenticati
 import com.example.yumi.presentation.home.contract.ProfileContract;
 import com.example.yumi.presentation.home.presenter.ProfilePresenter;
 import com.example.yumi.utils.LocaleHelper;
+import com.example.yumi.utils.NetworkMonitor;
 import com.example.yumi.utils.ThemeHelper;
 
 
-public class ProfileFragment extends Fragment implements ProfileContract.View {
+public class ProfileFragment extends Fragment implements ProfileContract.View, NetworkMonitor.NetworkListener {
     private FragmentProfileBinding binding;
     private boolean isSpinnerInitialized = false;
     private ProfilePresenter presenter;
@@ -42,6 +45,24 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         }
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        INSTANCE.addListener(this);
+
+        if (INSTANCE.isConnected()) {
+            onNetworkAvailable();
+        } else {
+            onNetworkLost();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        INSTANCE.removeListener(this);
     }
 
     @Override
@@ -168,16 +189,6 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        if (presenter != null) {
-            presenter.onDestroy();
-            presenter = null;
-        }
-    }
-
-    @Override
     public void showLoading() {
         binding.loading.setVisibility(VISIBLE);
         binding.loading.setIndeterminate(true);
@@ -203,5 +214,42 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     @Override
     public void showError(String message) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        INSTANCE.removeListener(this);
+        presenter.detachView();
+        binding = null;
+        super.onDestroyView();
+    }
+
+
+    void toggleClickable(boolean clickable){
+        binding.cardSync.setClickable(clickable);
+        binding.cardSync.setFocusable(clickable);
+        binding.cardRetrieveData.setClickable(clickable);
+        binding.cardRetrieveData.setFocusable(clickable);
+
+        if (!clickable){
+            binding.cardSync.setAlpha(0.5f);
+            binding.cardRetrieveData.setAlpha(0.5f);
+        }else{
+            binding.cardSync.setAlpha(1f);
+            binding.cardRetrieveData.setAlpha(1f);
+        }
+    }
+
+    @Override
+    public void onNetworkAvailable() {
+        requireActivity().runOnUiThread(() -> {
+            toggleClickable(true);
+            presenter.loadUserDetails();
+        });
+    }
+
+    @Override
+    public void onNetworkLost() {
+        requireActivity().runOnUiThread(() -> toggleClickable(false));
     }
 }

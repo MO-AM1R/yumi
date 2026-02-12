@@ -2,14 +2,14 @@ package com.example.yumi.presentation.home.view.fragments;
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
+import static com.example.yumi.utils.NetworkMonitor.INSTANCE;
+
 import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,11 +34,13 @@ import com.example.yumi.presentation.home.view.adapters.IngredientsRecyclerViewA
 import com.example.yumi.presentation.home.view.adapters.RandomMealsRecyclerViewAdapter;
 import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
 import com.example.yumi.utils.GlideUtil;
+import com.example.yumi.utils.NetworkMonitor;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements HomeContract.View {
+public class HomeFragment extends Fragment implements HomeContract.View, NetworkMonitor.NetworkListener {
     private FragmentHomeBinding binding;
     private IngredientsRecyclerViewAdapter ingredientsAdapter;
     private CategoriesRecyclerViewAdapter categoriesAdapter;
@@ -53,6 +55,30 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         if (context instanceof NavigationCallback) {
             navigationCallback = (NavigationCallback) context;
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        NetworkMonitor.INSTANCE.addListener(this);
+        updateUI();
+    }
+
+    private void updateUI() {
+        if (NetworkMonitor.INSTANCE.isConnected()) {
+            binding.noInternetView.setVisibility(View.GONE);
+            binding.swipeRefreshLayout.setVisibility(VISIBLE);
+            loadData();
+        } else {
+            binding.noInternetView.setVisibility(View.VISIBLE);
+            binding.swipeRefreshLayout.setVisibility(GONE);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        NetworkMonitor.INSTANCE.removeListener(this);
     }
 
     @Override
@@ -273,12 +299,26 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
-
-        if (presenter != null) {
-            presenter.detachView();
-        }
-
+        INSTANCE.removeListener(this);
+        presenter.detachView();
         binding = null;
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onNetworkAvailable() {
+        requireActivity().runOnUiThread(() -> {
+            binding.noInternetView.setVisibility(GONE);
+            binding.swipeRefreshLayout.setVisibility(VISIBLE);
+            loadData();
+        });
+    }
+
+    @Override
+    public void onNetworkLost() {
+        requireActivity().runOnUiThread(() -> {
+            binding.noInternetView.setVisibility(VISIBLE);
+            binding.swipeRefreshLayout.setVisibility(GONE);
+        });
     }
 }

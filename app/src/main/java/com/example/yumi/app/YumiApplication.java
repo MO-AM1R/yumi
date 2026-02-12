@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.yumi.data.database.AppDatabase;
 import com.example.yumi.data.firebase.FirebaseModule;
 import com.example.yumi.utils.LocaleHelper;
+import com.example.yumi.utils.NetworkMonitor;
 import com.example.yumi.utils.ThemeHelper;
 
 
@@ -17,6 +18,7 @@ public class YumiApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        NetworkMonitor.INSTANCE.init(this);
         FirebaseModule.initialize(this);
         ThemeHelper.applySavedTheme(this);
         AppDatabase.getInstance(getApplicationContext());

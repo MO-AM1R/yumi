@@ -24,6 +24,7 @@ import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.home.contract.ProfileContract;
 import com.example.yumi.utils.LocaleHelper;
+import com.example.yumi.utils.NetworkMonitor;
 import com.example.yumi.utils.ThemeHelper;
 
 import java.text.ParseException;
@@ -129,6 +130,9 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View>
 
     @Override
     public void syncData() {
+        if (!NetworkMonitor.INSTANCE.isConnected())
+            return;
+
         withView(ProfileContract.View::showLoading);
 
         User currentUser = userRepository.getCurrentUser();
@@ -199,6 +203,9 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View>
 
     @Override
     public void retrieveData() {
+        if (!NetworkMonitor.INSTANCE.isConnected())
+            return;
+
         withView(ProfileContract.View::showLoading);
 
         Disposable disposable = userRepository.retrieveData()

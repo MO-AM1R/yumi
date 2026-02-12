@@ -1,6 +1,7 @@
 package com.example.yumi.presentation.details.view.fragment;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.example.yumi.utils.NetworkMonitor.INSTANCE;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,12 +23,13 @@ import com.example.yumi.presentation.details.view.MealDetailsContract;
 import com.example.yumi.presentation.details.view.adapter.IngredientsAdapter;
 import com.example.yumi.presentation.details.view.adapter.InstructionsAdapter;
 import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
+import com.example.yumi.utils.NetworkMonitor;
 import com.google.android.material.tabs.TabLayout;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 
 
-public class MealDetailsFragment extends Fragment implements MealDetailsContract.View {
+public class MealDetailsFragment extends Fragment implements MealDetailsContract.View, NetworkMonitor.NetworkListener {
     private static final String ARG_MEAL = "arg_meal";
     private static final String KEY_MEAL = "key_meal";
     private FragmentMealDetailsBinding binding;
@@ -59,6 +61,24 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         args.putSerializable(ARG_MEAL, meal);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        INSTANCE.addListener(this);
+
+        if (INSTANCE.isConnected()) {
+            onNetworkAvailable();
+        } else {
+            onNetworkLost();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        INSTANCE.removeListener(this);
     }
 
     @Override
@@ -344,4 +364,50 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         super.onDetach();
         navigationCallback = null;
     }
+
+    private void showNoInternetForVideo() {
+        if (!isAdded() || binding == null) return;
+
+        binding.playButtonContainer.setClickable(false);
+        binding.playButtonContainer.setFocusable(false);
+
+        binding.playVideoIcon.setImageResource(R.drawable.no_internet);
+
+        binding.videoTitle.setText(R.string.no_internet_connection);
+        binding.videoSubtitle.setText(
+                R.string.no_internet_to_watch_the_video
+        );
+
+        binding.youtubePlayerView.setVisibility(View.GONE);
+    }
+
+    private void restoreVideoState(String videoTitle) {
+        if (!isAdded() || binding == null) return;
+
+        binding.playButtonContainer.setClickable(true);
+        binding.playButtonContainer.setFocusable(true);
+
+        binding.playVideoIcon.setImageResource(R.drawable.ic_play);
+
+        binding.videoTitle.setText(videoTitle);
+        binding.videoSubtitle.setText(
+                R.string.watch_the_full_video_tutorial_for_this_recipe
+        );
+    }
+
+    private void runIfUiReady(Runnable action) {
+        if (!isAdded() || binding == null || getActivity() == null) return;
+        getActivity().runOnUiThread(action);
+    }
+
+    @Override
+    public void onNetworkLost() {
+        runIfUiReady(this::showNoInternetForVideo);
+    }
+
+    @Override
+    public void onNetworkAvailable() {
+        runIfUiReady(() -> restoreVideoState(meal.getName()));
+    }
+
 }

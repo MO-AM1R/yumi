@@ -150,4 +150,7 @@
     <string name="removed_from_favorites">Removed from favorites</string>
     <string name="sync_data">Sync Data</string>
     <string name="retrieve_data">Retrieve Data</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="no_internet_description">No Internet Description</string>
+    <string name="no_internet_to_watch_the_video">No internet to watch the video</string>
 </resources>

@@ -15,6 +15,8 @@ import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.presentation.base.BasePresenter;
 import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.home.contract.SearchContract;
+import com.example.yumi.utils.NetworkMonitor;
+
 import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -72,6 +74,9 @@ public class SearchPresenter extends BasePresenter<SearchContract.View>
 
     @Override
     public void loadMeals(String query) {
+        if (!NetworkMonitor.INSTANCE.isConnected())
+            return;
+
         withView(BaseView::showLoading);
 
         Disposable disposable = repository.searchMealsByName(query)
@@ -87,6 +92,9 @@ public class SearchPresenter extends BasePresenter<SearchContract.View>
 
     @Override
     public void loadCategories() {
+        if (!NetworkMonitor.INSTANCE.isConnected())
+            return;
+
         withView(BaseView::showLoading);
 
         Disposable disposable = repository.getAllCategories()
@@ -102,6 +110,9 @@ public class SearchPresenter extends BasePresenter<SearchContract.View>
 
     @Override
     public void loadAreas() {
+        if (!NetworkMonitor.INSTANCE.isConnected())
+            return;
+
         withView(BaseView::showLoading);
 
         Disposable disposable = repository.getAllAreas()
@@ -117,6 +128,9 @@ public class SearchPresenter extends BasePresenter<SearchContract.View>
 
     @Override
     public void loadIngredients() {
+        if (!NetworkMonitor.INSTANCE.isConnected())
+            return;
+
         withView(BaseView::showLoading);
 
         Disposable disposable = repository.getAllIngredients()
