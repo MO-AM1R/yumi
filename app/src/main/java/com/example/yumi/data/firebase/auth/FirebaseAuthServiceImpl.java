@@ -109,12 +109,6 @@ public class FirebaseAuthServiceImpl implements FirebaseAuthService {
         return firebaseAuth.getCurrentUser() != null;
     }
 
-    @Override
-    public String getCurrentUserId() {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        return user != null ? user.getUid() : null;
-    }
-
     private User mapToUser(FirebaseUser firebaseUser) {
         return new User.Builder()
                 .uid(firebaseUser.getUid())
