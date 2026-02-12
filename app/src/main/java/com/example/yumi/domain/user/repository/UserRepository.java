@@ -2,11 +2,10 @@ package com.example.yumi.domain.user.repository;
 
 import android.content.Context;
 
-import com.example.yumi.domain.favorites.models.DayMeals;
-import com.example.yumi.domain.favorites.models.MealPlan;
+import com.example.yumi.domain.plan.models.DayMeals;
+import com.example.yumi.domain.plan.models.MealPlan;
 import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.domain.user.model.User;
-import com.example.yumi.domain.user.model.UserSettings;
 
 import java.util.List;
 
@@ -27,9 +26,6 @@ public interface UserRepository {
     void setOnboardingCompleted(boolean completed);
     boolean isOnboardingCompleted();
 
-    Single<UserSettings> getUserSettings();
-    Completable updateUserSettings(UserSettings settings);
-
     Single<List<String>> getFavoriteMeals();
     Completable addFavoriteMeal(String mealId);
     Completable removeFavoriteMeal(String mealId);
@@ -40,4 +36,7 @@ public interface UserRepository {
     Completable setDayMeals(String date, DayMeals dayMeals);
     Completable setMealForDay(String date, MealType mealType, String mealId);
     Completable removeMealFromDay(String date, MealType mealType);
+
+    Completable syncData();
+    Single<User> retrieveData();
 }

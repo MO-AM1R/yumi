@@ -6,12 +6,12 @@ import com.example.yumi.data.user.datasources.remote.UserRemoteDataSource;
 import com.example.yumi.data.user.datasources.remote.UserRemoteDataSourceImpl;
 import com.example.yumi.domain.user.repository.UserRepository;
 import android.content.Context;
-import com.example.yumi.domain.favorites.models.DayMeals;
-import com.example.yumi.domain.favorites.models.MealPlan;
+import com.example.yumi.domain.plan.models.DayMeals;
+import com.example.yumi.domain.plan.models.MealPlan;
 import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.domain.user.model.User;
-import com.example.yumi.domain.user.model.UserSettings;
 import java.util.List;
+
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
@@ -92,34 +92,6 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public boolean isOnboardingCompleted() {
         return userLocalDataSource.isOnboardingCompleted();
-    }
-
-    @Override
-    public Single<UserSettings> getUserSettings() {
-        String userId = remoteDataSource.getCurrentUserId();
-        if (userId == null) {
-            return Single.error(new Exception("User not logged in"));
-        }
-
-        return remoteDataSource.getUserSettings(userId)
-                .doOnSuccess(settings -> {
-                    userLocalDataSource.cacheSettings(settings);
-                    userLocalDataSource.updateUserSettings(settings);
-                })
-                .onErrorResumeNext(e -> Single.just(userLocalDataSource.getCachedSettings()));
-    }
-
-    @Override
-    public Completable updateUserSettings(UserSettings settings) {
-        String userId = remoteDataSource.getCurrentUserId();
-        if (userId == null) {
-            return Completable.error(new Exception("User not logged in"));
-        }
-
-        userLocalDataSource.cacheSettings(settings);
-        userLocalDataSource.updateUserSettings(settings);
-
-        return remoteDataSource.updateUserSettings(userId, settings);
     }
 
     @Override
@@ -222,6 +194,17 @@ public class UserRepositoryImpl implements UserRepository {
 
         userLocalDataSource.removeMealFromDay(date, mealType);
         return remoteDataSource.removeMealFromDay(userId, date, mealType);
+    }
+
+    @Override
+    public Completable syncData() {
+        return null;
+    }
+
+    @Override
+    public Single<User> retrieveData() {
+        String currentUserId = userLocalDataSource.getUserId();
+        return remoteDataSource.getUser(currentUserId);
     }
 
     private Single<User> handleAuthSuccess(User user) {

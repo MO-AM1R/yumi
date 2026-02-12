@@ -1,6 +1,6 @@
 package com.example.yumi.data.user.datasources.local;
-import com.example.yumi.domain.favorites.models.DayMeals;
-import com.example.yumi.domain.favorites.models.MealPlan;
+import com.example.yumi.domain.plan.models.DayMeals;
+import com.example.yumi.domain.plan.models.MealPlan;
 import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.domain.user.model.User;
 import com.example.yumi.domain.user.model.UserSettings;
@@ -29,10 +29,6 @@ public interface UserLocalDataSource {
     User getCurrentUser();
 
     boolean hasUser();
-
-    void updateUserSettings(UserSettings settings);
-
-    UserSettings getUserSettings();
 
     void setFavoriteMealIds(List<String> mealIds);
 
