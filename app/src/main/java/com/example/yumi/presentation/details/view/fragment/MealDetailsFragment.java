@@ -1,4 +1,6 @@
 package com.example.yumi.presentation.details.view.fragment;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -258,11 +260,20 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
 
     @Override
     public void showVideoSection(String videoUrl) {
-        if (!isAdded() || binding == null) return;
+        if (!isAdded() || binding == null || videoUrl == null || videoUrl.isEmpty()) return;
+        binding.videoTitle.setText(getString(R.string.how_to_make_meal, meal.getName()));
 
-        binding.videoTitle.setText(
-                getString(R.string.how_to_make_meal, meal.getName())
-        );
+        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                try {
+                    String id = videoUrl.substring(videoUrl.indexOf("=") + 1);
+                    youTubePlayer.cueVideo(id, 0);
+                } catch (Exception e) {
+                    Log.e("MealDetails", "Error parsing video ID");
+                }
+            }
+        });
     }
 
     @Override
@@ -276,11 +287,13 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
 
     @Override
     public void showAddToPlanSuccess() {
+        //TODO: show dialog
         if (!isAdded()) return;
     }
 
     @Override
     public void showAddToPlanError(String message) {
+        //TODO: show dialog
         if (!isAdded()) return;
     }
 
@@ -292,12 +305,24 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
 
     @Override
     public void showLoading() {
-        // TODO: Show loading indicator
+        binding.loading.setVisibility(VISIBLE);
+        binding.loading.setIndeterminate(true);
+        binding.getRoot().setClickable(false);
+        binding.getRoot().setFocusable(false);
+        toggleView(GONE);
     }
 
     @Override
     public void hideLoading() {
-        // TODO: Hide loading indicator
+        binding.loading.setVisibility(GONE);
+        binding.loading.setIndeterminate(false);
+        binding.getRoot().setClickable(true);
+        binding.getRoot().setFocusable(false);
+        toggleView(VISIBLE);
+    }
+
+    private void toggleView(int visible) {
+        binding.nestedScrollView.setVisibility(visible);
     }
 
     @Override
