@@ -10,6 +10,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +84,8 @@ public class ProfileFragment extends Fragment implements ProfileContract.View, N
     private void setupSyncDataButtons() {
         binding.cardSync.setOnClickListener(v -> presenter.syncData());
         binding.cardRetrieveData.setOnClickListener(v -> presenter.retrieveData());
+
+        updateSyncButtonsState();
     }
 
     private void setupLanguageSpinner() {
@@ -225,7 +229,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View, N
     }
 
 
-    void toggleClickable(boolean clickable){
+    void toggleClickableSyncButtons(boolean clickable){
         binding.cardSync.setClickable(clickable);
         binding.cardSync.setFocusable(clickable);
         binding.cardRetrieveData.setClickable(clickable);
@@ -240,16 +244,23 @@ public class ProfileFragment extends Fragment implements ProfileContract.View, N
         }
     }
 
+    private void updateSyncButtonsState() {
+        boolean hasInternet = INSTANCE.isConnected();
+        boolean isGuest = presenter.isGuestMode();
+
+        toggleClickableSyncButtons(hasInternet && !isGuest);
+    }
+
     @Override
     public void onNetworkAvailable() {
         requireActivity().runOnUiThread(() -> {
-            toggleClickable(true);
+            updateSyncButtonsState();
             presenter.loadUserDetails();
         });
     }
 
     @Override
     public void onNetworkLost() {
-        requireActivity().runOnUiThread(() -> toggleClickable(false));
+        requireActivity().runOnUiThread(this::updateSyncButtonsState);
     }
 }

@@ -202,6 +202,11 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View>
     }
 
     @Override
+    public boolean isGuestMode(){
+        return userRepository.getCurrentUser().getUid().equalsIgnoreCase("Guest");
+    }
+
+    @Override
     public void retrieveData() {
         if (!NetworkMonitor.INSTANCE.isConnected())
             return;
