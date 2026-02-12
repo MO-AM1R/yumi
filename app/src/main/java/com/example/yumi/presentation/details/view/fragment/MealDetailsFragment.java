@@ -1,6 +1,9 @@
 package com.example.yumi.presentation.details.view.fragment;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +41,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     public MealDetailsFragment() {}
 
     public MealDetailsFragment(Meal meal) {
+        Log.d("TAG", "Meal");
         this.meal = meal;
     }
 
@@ -49,9 +53,20 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         }
     }
 
+    public static MealDetailsFragment newInstance(Meal meal) {
+        MealDetailsFragment fragment = new MealDetailsFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_MEAL, meal);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            meal = (Meal) getArguments().getSerializable(ARG_MEAL);
+        }
 
         if (savedInstanceState != null) {
             meal = (Meal) savedInstanceState.getSerializable(KEY_MEAL);
@@ -215,6 +230,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     public void showMealDetails(Meal meal) {
         if (!isAdded() || binding == null) return;
 
+        this.meal = meal;
         binding.mealName.setText(meal.getName());
         binding.mealCategory.setText(meal.getCategory());
         binding.mealArea.setText(meal.getArea());
@@ -245,11 +261,20 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
 
     @Override
     public void showVideoSection(String videoUrl) {
-        if (!isAdded() || binding == null) return;
+        if (!isAdded() || binding == null || videoUrl == null || videoUrl.isEmpty()) return;
+        binding.videoTitle.setText(getString(R.string.how_to_make_meal, meal.getName()));
 
-        binding.videoTitle.setText(
-                getString(R.string.how_to_make_meal, meal.getName())
-        );
+        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                try {
+                    String id = videoUrl.substring(videoUrl.indexOf("=") + 1);
+                    youTubePlayer.cueVideo(id, 0);
+                } catch (Exception e) {
+                    Log.e("MealDetails", "Error parsing video ID");
+                }
+            }
+        });
     }
 
     @Override
@@ -263,11 +288,13 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
 
     @Override
     public void showAddToPlanSuccess() {
+        //TODO: show dialog
         if (!isAdded()) return;
     }
 
     @Override
     public void showAddToPlanError(String message) {
+        //TODO: show dialog
         if (!isAdded()) return;
     }
 
@@ -279,12 +306,24 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
 
     @Override
     public void showLoading() {
-        // TODO: Show loading indicator
+        binding.loading.setVisibility(VISIBLE);
+        binding.loading.setIndeterminate(true);
+        binding.getRoot().setClickable(false);
+        binding.getRoot().setFocusable(false);
+        toggleView(GONE);
     }
 
     @Override
     public void hideLoading() {
-        // TODO: Hide loading indicator
+        binding.loading.setVisibility(GONE);
+        binding.loading.setIndeterminate(false);
+        binding.getRoot().setClickable(true);
+        binding.getRoot().setFocusable(false);
+        toggleView(VISIBLE);
+    }
+
+    private void toggleView(int visible) {
+        binding.nestedScrollView.setVisibility(visible);
     }
 
     @Override

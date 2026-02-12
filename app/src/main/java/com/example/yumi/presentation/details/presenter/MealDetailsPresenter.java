@@ -1,12 +1,15 @@
 package com.example.yumi.presentation.details.presenter;
 import android.content.Context;
 import com.example.yumi.data.favorite.repository.FavoriteRepositoryImpl;
+import com.example.yumi.data.meals.repository.MealsRepositoryImpl;
 import com.example.yumi.data.plan.repository.MealPlanRepositoryImpl;
 import com.example.yumi.domain.favorites.repository.FavoriteRepository;
 import com.example.yumi.domain.meals.model.Meal;
+import com.example.yumi.domain.meals.repository.MealsRepository;
 import com.example.yumi.domain.plan.repository.MealPlanRepository;
 import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.presentation.base.BasePresenter;
+import com.example.yumi.presentation.base.BaseView;
 import com.example.yumi.presentation.details.view.MealDetailsContract;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -19,12 +22,14 @@ public class MealDetailsPresenter  extends BasePresenter<MealDetailsContract.Vie
     private MealDetailsContract.View view;
     private final FavoriteRepository favoriteRepository;
     private final MealPlanRepository mealPlanRepository;
+    private final MealsRepository mealsRepository;
     private boolean isFavorite = false;
 
     public MealDetailsPresenter(Context context, MealDetailsContract.View view) {
         this.view = view;
         this.favoriteRepository = new FavoriteRepositoryImpl(context);
         this.mealPlanRepository = new MealPlanRepositoryImpl(context);
+        this.mealsRepository = new MealsRepositoryImpl(context);
     }
 
     @Override
@@ -32,14 +37,52 @@ public class MealDetailsPresenter  extends BasePresenter<MealDetailsContract.Vie
         if (view == null || meal == null) return;
 
         view.showMealDetails(meal);
+        checkFavoriteStatus(meal.getId());
+
+        if (isMealDataComplete(meal)) {
+            displayFullMealInfo(meal);
+        } else {
+            fetchFullMealDetails(meal.getId());
+        }
+    }
+
+    private boolean isMealDataComplete(Meal meal) {
+        return meal.getInstructions() != null && !meal.getInstructions().isEmpty()
+                && meal.getIngredients() != null && !meal.getIngredients().isEmpty();
+    }
+
+    private void fetchFullMealDetails(String mealId) {
+        if (view != null) view.showLoading();
+
+        Disposable disposable = mealsRepository.getMealById(mealId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        fullMeal -> {
+                            if (view != null) {
+                                view.hideLoading();
+                                displayFullMealInfo(fullMeal);
+                                view.showMealDetails(fullMeal);
+                            }
+                        },
+                        throwable -> {
+                            if (view != null) {
+                                view.hideLoading();
+                                view.showError("Failed to load full recipe: " + throwable.getMessage());
+                            }
+                        }
+                );
+
+        compositeDisposable.add(disposable);
+    }
+
+    private void displayFullMealInfo(Meal meal) {
+        if (view == null) return;
         view.showIngredients(meal);
         view.showInstructions(meal);
-
         if (meal.getYoutubeUrl() != null && !meal.getYoutubeUrl().isEmpty()) {
             view.showVideoSection(meal.getYoutubeUrl());
         }
-
-        checkFavoriteStatus(meal.getId());
     }
 
     @Override

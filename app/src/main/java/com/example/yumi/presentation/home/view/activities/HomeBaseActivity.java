@@ -293,10 +293,7 @@ public class HomeBaseActivity  extends BaseActivity implements NavigationCallbac
 
     @Override
     public void navigateToFragment(Fragment fragment, String tag) {
-        Fragment existingFragment = getSupportFragmentManager().findFragmentByTag(tag);
-        if (existingFragment != null && existingFragment.isVisible()) {
-            return;
-        }
+        String uniqueTag = tag + System.currentTimeMillis();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(
@@ -311,13 +308,8 @@ public class HomeBaseActivity  extends BaseActivity implements NavigationCallbac
             fragmentStack.push(activeFragment);
         }
 
-        if (existingFragment != null) {
-            transaction.show(existingFragment);
-            activeFragment = existingFragment;
-        } else {
-            transaction.add(R.id.fragment_container, fragment, tag);
-            activeFragment = fragment;
-        }
+        transaction.add(R.id.fragment_container, fragment, uniqueTag);
+        activeFragment = fragment;
 
         transaction.commit();
         hideBottomBar();

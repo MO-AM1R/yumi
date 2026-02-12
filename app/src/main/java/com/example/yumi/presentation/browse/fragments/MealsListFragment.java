@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.yumi.domain.meals.model.MealsFilter;
 import com.example.yumi.presentation.browse.adapters.MealsGridAdapter;
 import com.example.yumi.presentation.browse.contracts.MealsListContract;
 import com.example.yumi.presentation.browse.presenter.MealsListPresenter;
+import com.example.yumi.presentation.details.view.fragment.MealDetailsFragment;
 import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
 import java.util.List;
 import android.os.Bundle;
@@ -80,7 +82,7 @@ public class MealsListFragment extends Fragment implements MealsListContract.Vie
         presenter.attachView(this);
 
         adapter = new MealsGridAdapter(
-                meal -> presenter.onMealClicked(meal)
+                this::navigateToMealDetail
         );
 
         binding.mealsGridView.setAdapter(adapter);
@@ -117,6 +119,15 @@ public class MealsListFragment extends Fragment implements MealsListContract.Vie
         binding.loading.setVisibility(GONE);
 
         toggleAllViewsVisibility(VISIBLE);
+    }
+
+    public void navigateToMealDetail(Meal meal) {
+        if (navigationCallback != null) {
+            navigationCallback.navigateToFragment(
+                    MealDetailsFragment.newInstance(meal),
+                    "meal_details"
+            );
+        }
     }
 
     @Override
