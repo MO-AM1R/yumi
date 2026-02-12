@@ -18,7 +18,6 @@ public interface AuthContract {
     interface OnboardingView extends BaseView {
         void showPage(int index);
         void navigateToLogin();
-        int getCurrentPageIndex();
         int getTotalPages();
     }
 

@@ -16,7 +16,6 @@ public class DaySelectorAdapter extends RecyclerView.Adapter<DaySelectorAdapter.
 
     private List<PlanDay> days = new ArrayList<>();
     private final OnDayClickListener listener;
-    private int selectedPosition = 0;
 
     public interface OnDayClickListener {
         void onDayClick(int position);
@@ -39,7 +38,6 @@ public class DaySelectorAdapter extends RecyclerView.Adapter<DaySelectorAdapter.
         }
         if (newPosition >= 0 && newPosition < days.size()) {
             days.get(newPosition).setSelected(true);
-            selectedPosition = newPosition;
             notifyItemChanged(newPosition);
         }
     }
@@ -71,7 +69,7 @@ public class DaySelectorAdapter extends RecyclerView.Adapter<DaySelectorAdapter.
 
         holder.container.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onDayClick(holder.getAdapterPosition());
+                listener.onDayClick(holder.getBindingAdapterPosition());
             }
         });
     }

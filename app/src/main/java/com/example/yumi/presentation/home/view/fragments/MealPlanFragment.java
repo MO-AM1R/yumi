@@ -249,13 +249,6 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.View,
         }
     }
 
-    public String getSelectedDateKey() {
-        if (presenter != null) {
-            return presenter.getSelectedDateKey();
-        }
-        return null;
-    }
-
     @Override
     public void onDestroyView() {
         Log.d("TAG", "On Destroy");

@@ -34,7 +34,6 @@ public class MealIngredientEntity {
         this.thumbnailUrl = thumbnailUrl;
     }
 
-    @NonNull
     public int getId() {
         return id;
     }

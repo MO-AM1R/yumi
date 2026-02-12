@@ -19,7 +19,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TimeZone;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -31,7 +30,7 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
     private final MealPlanRepository repository;
     private final UserRepository userRepository;
     private final CompositeDisposable disposables = new CompositeDisposable();
-    private List<PlanDay> days = new ArrayList<>();
+    private final List<PlanDay> days = new ArrayList<>();
     private int selectedDayPosition = 0;
     private Map<String, Map<MealType, Meal>> cachedMealPlan = new HashMap<>();
     private final SimpleDateFormat dayNameFormat = new SimpleDateFormat("EEE", Locale.getDefault());
@@ -283,22 +282,6 @@ public class MealPlanPresenter implements MealPlanContract.Presenter {
 
         PlanDay selectedDay = days.get(selectedDayPosition);
         removeMealFromPlan(selectedDay.getDateKey(), mealType);
-    }
-
-    public List<String> getValidDateKeys() {
-        List<String> dateKeys = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        for (int i = 0; i < 7; i++) {
-            dateKeys.add(dateKeyFormat.format(calendar.getTime()));
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-        }
-        return dateKeys;
     }
 
     public String getSelectedDateKey() {

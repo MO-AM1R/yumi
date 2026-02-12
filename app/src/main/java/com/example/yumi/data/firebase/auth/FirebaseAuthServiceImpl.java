@@ -73,11 +73,6 @@ public class FirebaseAuthServiceImpl implements FirebaseAuthService {
         );
     }
 
-    @Override
-    public Single<User> firebaseAuthWithGoogle(String idToken) {
-        return Single.create(emitter -> firebaseAuthWithGoogleInternal(idToken, emitter));
-    }
-
     private void firebaseAuthWithGoogleInternal(String idToken, io.reactivex.rxjava3.core.SingleEmitter<User> emitter) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
 

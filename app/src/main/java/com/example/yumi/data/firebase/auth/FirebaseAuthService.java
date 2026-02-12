@@ -13,8 +13,6 @@ public interface FirebaseAuthService {
 
     Single<User> signInWithGoogle(Context context);
 
-    Single<User> firebaseAuthWithGoogle(String idToken);
-
     Completable signOut();
 
     User getCurrentUser();

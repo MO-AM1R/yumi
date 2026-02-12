@@ -7,14 +7,12 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.example.yumi.R;
 
-public class CircleAvatarView extends View {
 
+public class CircleAvatarView extends View {
     private Paint backgroundPaint;
     private Paint textPaint;
 
@@ -47,14 +45,12 @@ public class CircleAvatarView extends View {
     }
 
     private void init(Context context, @Nullable AttributeSet attrs) {
-        // Default values
         radius = dpToPx(DEFAULT_RADIUS);
         text = "";
         backgroundColor = DEFAULT_BACKGROUND_COLOR;
         foregroundColor = DEFAULT_FOREGROUND_COLOR;
         isBold = true;
 
-        // Read attributes
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CircleAvatarView);
 
@@ -91,12 +87,10 @@ public class CircleAvatarView extends View {
     }
 
     private void setupPaints() {
-        // Background paint
         backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         backgroundPaint.setStyle(Paint.Style.FILL);
         backgroundPaint.setColor(backgroundColor);
 
-        // Text paint
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setColor(foregroundColor);
         textPaint.setTextAlign(Paint.Align.CENTER);
@@ -111,7 +105,6 @@ public class CircleAvatarView extends View {
         int width = resolveSize(diameter, widthMeasureSpec);
         int height = resolveSize(diameter, heightMeasureSpec);
 
-        // Keep it square
         int size = Math.min(width, height);
         setMeasuredDimension(size, size);
     }
@@ -126,16 +119,12 @@ public class CircleAvatarView extends View {
         int centerY = height / 2;
         int drawRadius = Math.min(width, height) / 2;
 
-        // Draw background circle
         canvas.drawCircle(centerX, centerY, drawRadius, backgroundPaint);
 
-        // Draw text
         if (text != null && !text.isEmpty()) {
-            // Calculate text size if not set
             float actualTextSize = textSize > 0 ? textSize : drawRadius * DEFAULT_TEXT_SIZE_RATIO * 2;
             textPaint.setTextSize(actualTextSize);
 
-            // Center text vertically
             Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
             float textY = centerY - (fontMetrics.ascent + fontMetrics.descent) / 2;
 
@@ -143,16 +132,8 @@ public class CircleAvatarView extends View {
         }
     }
 
-    // ==================== Public Setters ====================
-
     public void setRadius(int radiusDp) {
         this.radius = dpToPx(radiusDp);
-        requestLayout();
-        invalidate();
-    }
-
-    public void setRadiusPx(int radiusPx) {
-        this.radius = radiusPx;
         requestLayout();
         invalidate();
     }
@@ -162,35 +143,10 @@ public class CircleAvatarView extends View {
         invalidate();
     }
 
-    public void setInitials(@NonNull String fullName) {
-        this.text = generateInitials(fullName);
-        invalidate();
-    }
-
-    public void setAvatarBackgroundColor(@ColorInt int color) {
-        this.backgroundColor = color;
-        backgroundPaint.setColor(color);
-        invalidate();
-    }
-
-    public void setForegroundColor(@ColorInt int color) {
-        this.foregroundColor = color;
-        textPaint.setColor(color);
-        invalidate();
-    }
-
     public void setTextSize(float sizeSp) {
         this.textSize = spToPx(sizeSp);
         invalidate();
     }
-
-    public void setTextBold(boolean bold) {
-        this.isBold = bold;
-        textPaint.setTypeface(bold ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
-        invalidate();
-    }
-
-    // ==================== Public Getters ====================
 
     public int getRadius() {
         return radius;
@@ -198,32 +154,6 @@ public class CircleAvatarView extends View {
 
     public String getText() {
         return text;
-    }
-
-    public int getAvatarBackgroundColor() {
-        return backgroundColor;
-    }
-
-    public int getForegroundColor() {
-        return foregroundColor;
-    }
-
-    // ==================== Utility Methods ====================
-
-    private String generateInitials(@NonNull String fullName) {
-        if (fullName.trim().isEmpty()) {
-            return "";
-        }
-
-        String[] parts = fullName.trim().split("\\s+");
-
-        if (parts.length == 1) {
-            return parts[0].substring(0, Math.min(2, parts[0].length())).toUpperCase();
-        } else {
-            String first = parts[0].isEmpty() ? "" : parts[0].substring(0, 1);
-            String last = parts[parts.length - 1].isEmpty() ? "" : parts[parts.length - 1].substring(0, 1);
-            return (first + last).toUpperCase();
-        }
     }
 
     private int dpToPx(int dp) {

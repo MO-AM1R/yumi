@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ public class MealsListFragment extends Fragment implements MealsListContract.Vie
     private NavigationCallback navigationCallback;
     private final String FILTER_KEY = "filter";
     private FragmentMealsListBinding binding;
-    private MealsListPresenter presenter;
     private MealsGridAdapter adapter;
     private MealsFilter filter;
 
@@ -78,7 +76,7 @@ public class MealsListFragment extends Fragment implements MealsListContract.Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new MealsListPresenter(filter,this);
+        MealsListPresenter presenter = new MealsListPresenter(filter, this);
         presenter.attachView(this);
 
         adapter = new MealsGridAdapter(

@@ -1,5 +1,4 @@
 package com.example.yumi.presentation.custom;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.BlurMaskFilter;
@@ -9,15 +8,13 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.example.yumi.R;
 
-public class ShadowLayout extends FrameLayout {
 
-    private static final int BLUR_LAYERS = 5; // Number of blur spread layers
+public class ShadowLayout extends FrameLayout {
+    private static final int BLUR_LAYERS = 5;
 
     private Paint[] shadowPaints;
     private RectF shadowRect;
@@ -74,7 +71,6 @@ public class ShadowLayout extends FrameLayout {
         shadowRect = new RectF();
         setupPaints();
 
-        // Padding to make room for shadow spread
         int padding = (int) (shadowSpread + shadowRadius);
         setPadding(padding, padding, padding, padding);
     }
@@ -127,37 +123,6 @@ public class ShadowLayout extends FrameLayout {
                 Color.green(color),
                 Color.blue(color)
         );
-    }
-
-    public void setShadowColorValue(int color) {
-        this.shadowColor = color;
-        setupPaints();
-        invalidate();
-    }
-
-    public void setShadowRadiusValue(float radius) {
-        this.shadowRadius = radius;
-        setupPaints();
-        updatePadding();
-        invalidate();
-    }
-
-    public void setShadowSpreadValue(float spread) {
-        this.shadowSpread = spread;
-        setupPaints();
-        updatePadding();
-        invalidate();
-    }
-
-    public void setCornerRadiusValue(float radius) {
-        this.cornerRadius = radius;
-        invalidate();
-    }
-
-    private void updatePadding() {
-        int padding = (int) (shadowSpread + shadowRadius);
-        setPadding(padding, padding, padding, padding);
-        requestLayout();
     }
 
     private float dpToPx(int dp) {

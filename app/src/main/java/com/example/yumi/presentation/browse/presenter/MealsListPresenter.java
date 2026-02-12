@@ -91,9 +91,4 @@ public class MealsListPresenter extends BasePresenter<MealsListContract.View>
         else if (filter.getType() == MealsFilterType.INGREDIENT)
             filterByIngredient(filter.getQuery());
     }
-
-    @Override
-    public void onMealClicked(Meal meal) {
-
-    }
 }

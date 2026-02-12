@@ -1,5 +1,4 @@
 package com.example.yumi.utils;
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;

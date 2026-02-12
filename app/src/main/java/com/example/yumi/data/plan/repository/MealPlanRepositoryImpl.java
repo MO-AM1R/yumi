@@ -4,7 +4,6 @@ import com.example.yumi.data.database.mapper.MealPlannerMapper;
 import com.example.yumi.data.plan.datasources.local.MealPlanLocalDataSource;
 import com.example.yumi.data.plan.datasources.local.MealPlanLocalDataSourceImpl;
 import com.example.yumi.domain.meals.model.Meal;
-import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import com.example.yumi.domain.plan.repository.MealPlanRepository;
@@ -40,11 +39,6 @@ public class MealPlanRepositoryImpl implements MealPlanRepository {
     public Flowable<Map<String, Map<MealType, Meal>>> getAllPlannedMeals() {
         return localDataSource.getAllPlanEntries()
                 .map(MealPlannerMapper::toFullPlanMap);
-    }
-
-    @Override
-    public Flowable<Boolean> hasMealForDateAndType(String date, MealType mealType) {
-        return localDataSource.hasMealForDateAndType(date, mealType);
     }
 
     @Override

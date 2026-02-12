@@ -9,7 +9,6 @@ import com.example.yumi.data.database.pojo.MealWithIngredients;
 import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Single;
 
 
 @Dao
@@ -22,9 +21,6 @@ public interface FavoriteDao {
 
     @Query("SELECT EXISTS(SELECT 1 FROM favorites WHERE mealId = :mealId)")
     Flowable<Boolean> isFavorite(String mealId);
-
-    @Query("SELECT EXISTS(SELECT 1 FROM favorites WHERE mealId = :mealId)")
-    Single<Boolean> isFavoriteSingle(String mealId);
 
     @Transaction
     @Query("SELECT m.* FROM meals m INNER JOIN favorites f ON m.mealId = f.mealId ORDER BY f.addedAt DESC")
