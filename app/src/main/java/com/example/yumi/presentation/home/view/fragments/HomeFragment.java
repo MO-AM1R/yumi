@@ -311,6 +311,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Network
         requireActivity().runOnUiThread(() -> {
             binding.noInternetView.setVisibility(GONE);
             binding.swipeRefreshLayout.setVisibility(VISIBLE);
+            loadData();
         });
     }
 
