@@ -1,16 +1,9 @@
 package com.example.yumi.domain.user.repository;
-
 import android.content.Context;
-
-import com.example.yumi.domain.plan.models.DayMeals;
-import com.example.yumi.domain.plan.models.MealPlan;
-import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.domain.user.model.User;
-
-import java.util.List;
-
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
+
 
 public interface UserRepository {
     Single<User> signInWithEmail(String email, String password);
@@ -21,21 +14,9 @@ public interface UserRepository {
     Completable signOut();
     User getCurrentUser();
     boolean isLoggedIn();
-    String getCurrentUserId();
 
     void setOnboardingCompleted(boolean completed);
     boolean isOnboardingCompleted();
-
-    Single<List<String>> getFavoriteMeals();
-    Completable addFavoriteMeal(String mealId);
-    Completable removeFavoriteMeal(String mealId);
-    boolean isFavorite(String mealId);
-
-    Single<MealPlan> getMealPlan();
-    Single<DayMeals> getDayMeals(String date);
-    Completable setDayMeals(String date, DayMeals dayMeals);
-    Completable setMealForDay(String date, MealType mealType, String mealId);
-    Completable removeMealFromDay(String date, MealType mealType);
 
     Completable syncData(User user);
     Single<User> retrieveData();

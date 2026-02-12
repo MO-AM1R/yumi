@@ -1,6 +1,4 @@
 package com.example.yumi.data.firebase;
-import com.example.yumi.domain.plan.models.MealPlan;
-import com.example.yumi.domain.user.model.MealType;
 import com.example.yumi.domain.user.model.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +7,6 @@ import java.util.List;
 public class UserSessionManager {
 
     private User currentUser;
-    private MealPlan mealPlan;
     private boolean isInitialized = false;
 
     public UserSessionManager() {}
@@ -69,31 +66,12 @@ public class UserSessionManager {
         return false;
     }
 
-
-    public synchronized MealPlan getMealPlan() {
-        return mealPlan;
-    }
-
-    public synchronized void setMealPlan(MealPlan plan) {
-        this.mealPlan = plan;
-    }
-
-
     public synchronized void clearSession() {
         currentUser = null;
-        mealPlan = null;
         isInitialized = false;
     }
 
     public synchronized boolean isInitialized() {
         return isInitialized;
-    }
-
-    public void setMealForDay(String date, MealType mealType, String mealId) {
-        mealPlan.setMealForDay(date, mealType, mealId);
-    }
-
-    public void removeMealFromDay(String date, MealType mealType) {
-        mealPlan.removeMealFromDay(date, mealType);
     }
 }
