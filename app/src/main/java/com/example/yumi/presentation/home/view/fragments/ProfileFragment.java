@@ -59,7 +59,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     }
 
     private void setupSyncDataButtons() {
-        binding.cardSync.setOnClickListener(v -> {});
+        binding.cardSync.setOnClickListener(v -> presenter.syncData());
         binding.cardRetrieveData.setOnClickListener(v -> presenter.retrieveData());
     }
 
@@ -180,12 +180,18 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     @Override
     public void showLoading() {
         binding.loading.setVisibility(VISIBLE);
+        binding.loading.setIndeterminate(true);
+        binding.getRoot().setClickable(false);
+        binding.getRoot().setFocusable(false);
         toggleView(GONE);
     }
 
     @Override
     public void hideLoading() {
         binding.loading.setVisibility(GONE);
+        binding.loading.setIndeterminate(false);
+        binding.getRoot().setClickable(true);
+        binding.getRoot().setFocusable(false);
         toggleView(VISIBLE);
     }
 

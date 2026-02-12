@@ -30,7 +30,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
@@ -123,7 +122,12 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View>
 
     @Override
     public void syncData() {
+        Disposable disposable = userRepository.syncData()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> withView(ProfileContract.View::onLogout));
 
+        compositeDisposable.add(disposable);
     }
 
     @Override
