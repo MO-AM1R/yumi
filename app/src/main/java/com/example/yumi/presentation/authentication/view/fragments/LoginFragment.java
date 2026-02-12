@@ -56,8 +56,7 @@ public class LoginFragment extends Fragment implements AuthContract.LoginView {
 
         binding.registerText.setOnClickListener(v -> navigateToRegister());
 
-        //TODO: continue as guest
-        binding.continueAsGuest.setOnClickListener(v -> {});
+        binding.continueAsGuest.setOnClickListener(v -> presenter.continueAsGuest());
     }
 
     private void navigateToRegister() {

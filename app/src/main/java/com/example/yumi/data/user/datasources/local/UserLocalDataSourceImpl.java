@@ -15,7 +15,7 @@ public class UserLocalDataSourceImpl implements UserLocalDataSource {
                 SharedPreferencesKeysConfig.PREF_NAME,
                 Context.MODE_PRIVATE
         );
-        this.userSession = new UserSessionManager();
+        this.userSession = UserSessionManager.getInstance();
     }
 
 

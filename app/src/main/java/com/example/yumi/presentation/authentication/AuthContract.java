@@ -42,6 +42,7 @@ public interface AuthContract {
         void detachView();
         void login(String email, String password);
         void loginWithGoogle(android.content.Context context);
+        void continueAsGuest();
     }
 
     interface RegisterView extends BaseView {

@@ -1,12 +1,19 @@
 package com.example.yumi.data.user.repository;
+
 import com.example.yumi.data.firebase.FirebaseModule;
 import com.example.yumi.data.user.datasources.local.UserLocalDataSource;
 import com.example.yumi.data.user.datasources.local.UserLocalDataSourceImpl;
 import com.example.yumi.data.user.datasources.remote.UserRemoteDataSource;
 import com.example.yumi.data.user.datasources.remote.UserRemoteDataSourceImpl;
+import com.example.yumi.domain.plan.models.MealPlan;
 import com.example.yumi.domain.user.repository.UserRepository;
+
 import android.content.Context;
+
 import com.example.yumi.domain.user.model.User;
+
+import java.util.ArrayList;
+
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
@@ -92,6 +99,19 @@ public class UserRepositoryImpl implements UserRepository {
     public Single<User> retrieveData() {
         String currentUserId = userLocalDataSource.getUserId();
         return remoteDataSource.getUser(currentUserId);
+    }
+
+    @Override
+    public void continueAsGuest() {
+        User user = new User.Builder()
+                .uid("Guest")
+                .displayName("Guest")
+                .email("Guest")
+                .mealPlan(new MealPlan())
+                .favoriteMealIds(new ArrayList<>())
+                .build();
+
+        userLocalDataSource.setCurrentUser(user);
     }
 
     private Single<User> handleAuthSuccess(User user) {
