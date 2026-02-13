@@ -44,7 +44,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     public MealDetailsFragment() {}
 
     public MealDetailsFragment(Meal meal) {
-        Log.d("TAG", "Meal");
         this.meal = meal;
     }
 
@@ -310,7 +309,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         binding.favoriteIcon.setImageResource(
                 isFavorite ? R.drawable.favorite_filled : R.drawable.favorite
         );
+    }
 
+    @Override
+    public void showFavoriteToggleSnackBar(boolean isFavorite){
         int messageId = R.string.meal_added_favorite_successfully;
         if (!isFavorite)
             messageId = R.string.meal_removed_favorite_successfully;

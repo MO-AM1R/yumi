@@ -104,6 +104,7 @@ public class MealDetailsPresenter  extends BasePresenter<MealDetailsContract.Vie
                             this.isFavorite = newFavoriteState;
                             if (view != null) {
                                 view.updateFavoriteStatus(newFavoriteState);
+                                view.showFavoriteToggleSnackBar(newFavoriteState);
                             }
                         },
                         throwable -> {
