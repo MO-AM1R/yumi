@@ -1,7 +1,7 @@
 # 🍽️ Yumi - Your Daily Meal Planner
 
 <p align="center">
-<img src="screenshots/app_icon.png" alt="Yumi Logo" width="120" height="120">
+<img src="screenshots/app_logo.png" alt="Yumi Logo" width="120" height="120">
 </p>
 
 <p align="center">
@@ -69,8 +69,7 @@ The name "Yumi" means "Daily" in Arabic (يومي) and sounds like "Yummy" in En
 ## 📱 Screenshots
 
 <p align="center">
-<img src="screenshots/splash_light.png" width="200" alt="Splash Light">
-<img src="screenshots/splash_dark.png" width="200" alt="Splash Dark">
+<img src="screenshots/splash.gif" width="200" alt="Splash Animation">
 <img src="screenshots/onboarding.png" width="200" alt="Onboarding">
 <img src="screenshots/login.png" width="200" alt="Login">
 </p>
@@ -86,7 +85,6 @@ The name "Yumi" means "Daily" in Arabic (يومي) and sounds like "Yummy" in En
 <img src="screenshots/favorites.png" width="200" alt="Favorites">
 <img src="screenshots/meal_plan.png" width="200" alt="Meal Plan">
 <img src="screenshots/profile.png" width="200" alt="Profile">
-<img src="screenshots/no_internet.png" width="200" alt="No Internet">
 </p>
 
 > 📝 **Note:** Screenshots will be added as features are implemented.
@@ -270,7 +268,7 @@ app/
 ### Prerequisites
 
 * Android Studio Hedgehog (2023.1.1) or later
-* JDK 17
+* JDK 25
 * Android SDK 34
 * Min SDK 24
 
@@ -375,12 +373,6 @@ https://www.themealdb.com/api/json/v1/1/
 | Dark/Light Theme | ✅ Completed |
 | Arabic Localization | 🔲 Pending |
 | Animations & Transitions | ✅ Completed |
-
----
-
-## 🎬 Demo
-
-📹 [Watch Demo Video](https://drive.google.com/your-demo-link)
 
 ---
 
