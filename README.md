@@ -87,8 +87,6 @@ The name "Yumi" means "Daily" in Arabic (يومي) and sounds like "Yummy" in En
 <img src="screenshots/profile.png" width="200" alt="Profile">
 </p>
 
-> 📝 **Note:** Screenshots will be added as features are implemented.
-
 ---
 
 ## 🏗️ Architecture
