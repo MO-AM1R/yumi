@@ -17,14 +17,6 @@
 <a href="#setup">Setup</a> •
 <a href="#api">API</a>
 </p>
-
-<p align="center">
-<img src="[https://img.shields.io/badge/Platform-Android-green.svg](https://img.shields.io/badge/Platform-Android-green.svg)" alt="Platform">
-<img src="[https://img.shields.io/badge/Language-Java-orange.svg](https://img.shields.io/badge/Language-Java-orange.svg)" alt="Language">
-<img src="[https://img.shields.io/badge/Architecture-MVP-blue.svg](https://img.shields.io/badge/Architecture-MVP-blue.svg)" alt="Architecture">
-<img src="[https://img.shields.io/badge/Min%20SDK-24-yellow.svg](https://img.shields.io/badge/Min%20SDK-24-yellow.svg)" alt="Min SDK">
-</p>
-
 ---
 
 ## 📖 Description
