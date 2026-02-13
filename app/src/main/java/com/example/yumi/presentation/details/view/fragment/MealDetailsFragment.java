@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
@@ -129,6 +132,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        applyBottomInsets();
         setupToolbar();
         setupTabs();
         setupRecyclerViews();
@@ -137,6 +141,24 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         if (meal != null) {
             presenter.loadMealDetails(meal);
         }
+    }
+
+    private void applyBottomInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, windowInsets) -> {
+            Insets systemBars = windowInsets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+            );
+
+            int basePadding = (int) (16 * getResources().getDisplayMetrics().density);
+            binding.addToPlanBtnFrame.setPadding(
+                    binding.addToPlanBtnFrame.getPaddingLeft(),
+                    binding.addToPlanBtnFrame.getPaddingTop(),
+                    binding.addToPlanBtnFrame.getPaddingRight(),
+                    basePadding + systemBars.bottom
+            );
+
+            return windowInsets;
+        });
     }
 
     @Override
