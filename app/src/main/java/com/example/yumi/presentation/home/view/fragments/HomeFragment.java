@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -314,6 +316,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Network
 
     @Override
     public void onNetworkAvailable() {
+        Log.d("TAG", "Network connection available");
         requireActivity().runOnUiThread(() -> {
             binding.noInternetView.setVisibility(GONE);
             binding.swipeRefreshLayout.setVisibility(VISIBLE);
@@ -323,6 +326,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Network
 
     @Override
     public void onNetworkLost() {
+        Log.d("TAG", "Network connection lost");
         requireActivity().runOnUiThread(() -> {
             binding.noInternetView.setVisibility(VISIBLE);
             binding.swipeRefreshLayout.setVisibility(GONE);
