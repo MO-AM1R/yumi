@@ -8,12 +8,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
 import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentLoginBinding;
 import com.example.yumi.presentation.authentication.AuthContract;
 import com.example.yumi.presentation.authentication.presenter.LoginPresenter;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.yumi.utils.AppDialogs;
 
 
 public class LoginFragment extends Fragment implements AuthContract.LoginView {
@@ -97,11 +96,6 @@ public class LoginFragment extends Fragment implements AuthContract.LoginView {
         if (isAdded() && !isDetached()) {
             try {
                 showSuccess(getString(R.string.login_success));
-                NavController navController = Navigation.findNavController(binding.getRoot());
-                navController.navigate(
-                        LoginFragmentDirections.actionLoginFragmentToHomeBaseActivity()
-                );
-                requireActivity().finish();
             } catch (Exception e) {
                 showError("Navigation error");
             }
@@ -126,16 +120,29 @@ public class LoginFragment extends Fragment implements AuthContract.LoginView {
 
     @Override
     public void showError(String message) {
-        Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_LONG)
-                .setBackgroundTint(getResources().getColor(android.R.color.holo_red_dark, null))
-                .show();
+        AppDialogs.showError(
+                requireContext(),
+                getString(R.string.error_title),
+                getString(R.string.incorrect_password_email)
+        );
     }
 
     @Override
     public void showSuccess(String message) {
-        Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(getResources().getColor(android.R.color.holo_green_dark, null))
-                .show();
+        AppDialogs.showSuccess(
+                requireContext(),
+                getString(R.string.login_success_title),
+                getString(R.string.login_success_message),
+                getString(R.string.login_success_button),
+                true,
+                () -> {
+                    NavController navController = Navigation.findNavController(binding.getRoot());
+                    navController.navigate(
+                            LoginFragmentDirections.actionLoginFragmentToHomeBaseActivity()
+                    );
+                    requireActivity().finish();
+                }
+        );
     }
 
     @Override

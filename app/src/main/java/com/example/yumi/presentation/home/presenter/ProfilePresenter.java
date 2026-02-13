@@ -141,7 +141,10 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View>
                 .flatMapCompletable(userRepository::syncData)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        () -> withView(BaseView::hideLoading),
+                        () -> withView(v -> {
+                            v.hideLoading();
+                            v.onDataSyncSuccess();
+                        }),
                         throwable -> withView(v -> {
                             v.hideLoading();
                             v.showError("Sync failed: " + throwable.getLocalizedMessage());

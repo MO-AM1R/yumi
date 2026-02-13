@@ -18,7 +18,7 @@ public class AppDialogs {
         void onClick();
     }
 
-    public static Dialog showSuccess(
+    public static void showSuccess(
             Context context,
             String title,
             String message,
@@ -48,15 +48,6 @@ public class AppDialogs {
 
         setupDialogWindow(dialog);
         dialog.show();
-        return dialog;
-    }
-
-    public static Dialog showSuccess(Context context, String title, String message) {
-        return showSuccess(context, title, message, "Done", true, null);
-    }
-
-    public static Dialog showSuccess(Context context, String title, String message, OnDialogClickListener onDismiss) {
-        return showSuccess(context, title, message, "Done", true, onDismiss);
     }
 
     public static Dialog showError(
@@ -104,15 +95,17 @@ public class AppDialogs {
     }
 
     public static Dialog showError(Context context, String title, String message) {
-        return showError(context, title, message, "Try Again", "Cancel", true, null, null);
+        return showError(context, title, message,  context.getString(R.string.try_again),
+                context.getString(R.string.cancel), true, null, null);
     }
 
     public static Dialog showError(Context context, String title, String message,
                                    OnDialogClickListener onPositive, OnDialogClickListener onNegative) {
-        return showError(context, title, message, "Try Again", "Cancel", true, onPositive, onNegative);
+        return showError(context, title, message, context.getString(R.string.try_again),
+                context.getString(R.string.cancel),  true, onPositive, onNegative);
     }
 
-    public static Dialog showConfirmation(
+    public static void showConfirmation(
             Context context,
             String title,
             String message,
@@ -153,16 +146,12 @@ public class AppDialogs {
 
         setupDialogWindow(dialog);
         dialog.show();
-        return dialog;
     }
-
-    public static Dialog showConfirmation(Context context, String title, String message) {
-        return showConfirmation(context, title, message, "Confirm", "Cancel", true, null, null);
-    }
-
-    public static Dialog showConfirmation(Context context, String title, String message,
-                                          OnDialogClickListener onConfirm, OnDialogClickListener onCancel) {
-        return showConfirmation(context, title, message, "Confirm", "Cancel", true, onConfirm, onCancel);
+    public static void showConfirmation(Context context, String title, String message,
+                                        OnDialogClickListener onConfirm, OnDialogClickListener onCancel) {
+        showConfirmation(context, title, message,
+                context.getString(R.string.confirm),
+                context.getString(R.string.cancel), true, onConfirm, onCancel);
     }
 
     private static Dialog createBaseDialog(Context context, boolean cancelable) {

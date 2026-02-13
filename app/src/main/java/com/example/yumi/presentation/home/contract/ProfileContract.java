@@ -12,6 +12,7 @@ public interface ProfileContract {
         void onLogout();
 
         void onDataRetrievedSuccess();
+        void onDataSyncSuccess();
     }
 
     interface Presenter {

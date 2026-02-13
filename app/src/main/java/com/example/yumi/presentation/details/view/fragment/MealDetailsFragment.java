@@ -246,6 +246,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         bottomSheet.setOnConfirmListener((date, mealType) -> {
             if (meal != null) {
                 presenter.addToMealPlan(meal, date, mealType);
+                Snackbar.make(requireView(), getString(R.string.meal_added_plan_successfully), BaseTransientBottomBar.LENGTH_SHORT).show();
             }
         });
         bottomSheet.show(getChildFragmentManager(), "addToPlan");
@@ -309,18 +310,12 @@ public class MealDetailsFragment extends Fragment implements MealDetailsContract
         binding.favoriteIcon.setImageResource(
                 isFavorite ? R.drawable.favorite_filled : R.drawable.favorite
         );
-    }
 
-    @Override
-    public void showAddToPlanSuccess() {
-        //TODO: show dialog
-        if (!isAdded()) return;
-    }
+        int messageId = R.string.meal_added_favorite_successfully;
+        if (!isFavorite)
+            messageId = R.string.meal_removed_favorite_successfully;
 
-    @Override
-    public void showAddToPlanError(String message) {
-        //TODO: show dialog
-        if (!isAdded()) return;
+        Snackbar.make(requireView(), getString(messageId), BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
     @Override
