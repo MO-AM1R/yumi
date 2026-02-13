@@ -151,4 +151,25 @@
     <string name="hint_search_ingredients">Search ingredients…</string>
     <string name="hint_search_meals">Search meals…</string>
 
+    <string name="meal_added_plan_successfully">Meal added to plan successfully</string>
+    <string name="meal_added_favorite_successfully">Meal added to favorites successfully</string>
+
+    <string name="meal_removed_plan_successfully">Meal removed from plan successfully</string>
+    <string name="meal_removed_favorite_successfully">Meal removed from favorites successfully</string>
+
+    <string name="data_retrieved_successfully">Your data has been retrieved successfully</string>
+    <string name="data_sync_successfully">Your data has been uploaded successfully</string>
+
+    <string name="are_you_sure_to_logout">Are you sure to logout without syncing your data</string>
+
+    <string name="login_success_title">Login Successfully</string>
+    <string name="login_success_message">You logged in with your account</string>
+    <string name="login_success_button">Go to Home</string>
+
+    <string name="register_success_title">Register Successfully</string>
+    <string name="register_success_button">Go to Login</string>
+
+    <string name="error_title">Error</string>
+    <string name="incorrect_password_email">Incorrect password or email</string>
+    <string name="try_again">Try Again</string>
 </resources>

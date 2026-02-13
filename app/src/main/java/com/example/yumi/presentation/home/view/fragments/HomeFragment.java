@@ -141,6 +141,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Network
         bottomSheet.setOnConfirmListener((date, mealType) -> {
             if (meal != null) {
                 presenter.addToMealPlan(meal, date, mealType);
+                Snackbar.make(requireView(), getString(R.string.meal_added_plan_successfully), BaseTransientBottomBar.LENGTH_SHORT).show();
             }
         });
         bottomSheet.show(getChildFragmentManager(), "addToPlan");

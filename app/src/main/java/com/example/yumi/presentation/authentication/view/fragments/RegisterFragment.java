@@ -15,6 +15,7 @@ import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentRegisterBinding;
 import com.example.yumi.presentation.authentication.AuthContract;
 import com.example.yumi.presentation.authentication.presenter.RegisterPresenter;
+import com.example.yumi.utils.AppDialogs;
 import com.google.android.material.snackbar.Snackbar;
 
 public class RegisterFragment extends Fragment implements AuthContract.RegisterView {
@@ -106,7 +107,6 @@ public class RegisterFragment extends Fragment implements AuthContract.RegisterV
         if (isAdded() && !isDetached()) {
             try {
                 showSuccess(getString(R.string.register_success));
-                navigateToLogin();
             } catch (Exception e) {
                 showError("Navigation error");
             }
@@ -129,16 +129,23 @@ public class RegisterFragment extends Fragment implements AuthContract.RegisterV
 
     @Override
     public void showError(String message) {
-        Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_LONG)
-                .setBackgroundTint(getResources().getColor(android.R.color.holo_red_dark, null))
-                .show();
+        AppDialogs.showError(
+                requireContext(),
+                getString(R.string.error_title),
+                message
+        );
     }
 
     @Override
     public void showSuccess(String message) {
-        Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(getResources().getColor(android.R.color.holo_green_dark, null))
-                .show();
+        AppDialogs.showSuccess(
+                requireContext(),
+                getString(R.string.register_success_title),
+                getString(R.string.register_success),
+                getString(R.string.register_success_button),
+                true,
+                this::navigateToLogin
+        );
     }
 
     @Override

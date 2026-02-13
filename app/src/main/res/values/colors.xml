@@ -75,4 +75,16 @@
     <color name="setting_option_background">#FFF0E6</color>
 
     <color name="switch_track_tint">#ECECF0</color>
+
+    <color name="dialog_background">#FFFFFF</color>
+    <color name="dialog_overlay">#80000000</color>
+    <color name="success_color">#22C55E</color>
+    <color name="success_background">#F0FDF4</color>
+    <color name="success_border">#BBF7D0</color>
+    <color name="error_background">#FEF2F2</color>
+    <color name="error_border">#FECACA</color>
+    <color name="confirmation_icon_background">#FFF7ED</color>
+    <color name="confirmation_icon_border">#FFEDD5</color>
+    <color name="dialog_button_cancel_background">#F3F3F5</color>
+    <color name="dialog_button_cancel_text">#1A1A1A</color>
 </resources>

@@ -23,6 +23,9 @@ import com.example.yumi.presentation.home.contract.MealPlanContract;
 import com.example.yumi.presentation.home.presenter.MealPlanPresenter;
 import com.example.yumi.presentation.home.view.helper.MealTypeCardViewHolder;
 import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.List;
 
 
@@ -182,22 +185,21 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.View,
     @Override
     public void showMealRemovedSuccess() {
         if (!isAdded()) return;
-        Toast.makeText(requireContext(), R.string.meal_removed_from_plan, Toast.LENGTH_SHORT).show();
+        Snackbar.make(requireView(), getString(R.string.meal_removed_from_plan),
+                BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showMealAddedSuccess() {
         if (!isAdded()) return;
-        Toast.makeText(requireContext(), R.string.meal_added_to_plan, Toast.LENGTH_SHORT).show();
+        Snackbar.make(requireView(), getString(R.string.meal_added_to_plan),
+                BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
     @Override
     public void navigateToAddMeal(String date, MealType mealType) {
-        Toast.makeText(
-                requireContext(),
-                getString(R.string.select_meal_for_type, mealType.name()),
-                Toast.LENGTH_SHORT
-        ).show();
+        Snackbar.make(requireView(), getString(R.string.select_meal_for_type, mealType.name()),
+                BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
     @Override

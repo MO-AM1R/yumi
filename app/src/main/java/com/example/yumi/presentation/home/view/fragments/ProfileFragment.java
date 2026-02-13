@@ -8,6 +8,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +21,15 @@ import com.example.yumi.R;
 import com.example.yumi.databinding.FragmentProfileBinding;
 import com.example.yumi.domain.user.model.User;
 import com.example.yumi.presentation.authentication.view.activities.AuthenticationActivity;
+import com.example.yumi.presentation.authentication.view.fragments.LoginFragmentDirections;
 import com.example.yumi.presentation.home.contract.ProfileContract;
 import com.example.yumi.presentation.home.presenter.ProfilePresenter;
+import com.example.yumi.utils.AppDialogs;
 import com.example.yumi.utils.LocaleHelper;
 import com.example.yumi.utils.NetworkMonitor;
 import com.example.yumi.utils.ThemeHelper;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 
 public class ProfileFragment extends Fragment implements ProfileContract.View, NetworkMonitor.NetworkListener {
@@ -74,7 +81,15 @@ public class ProfileFragment extends Fragment implements ProfileContract.View, N
         setupSyncDataButtons();
         presenter.loadUserDetails();
 
-        binding.cardLogout.setOnClickListener(v -> presenter.logout());
+        binding.cardLogout.setOnClickListener(v -> {
+            AppDialogs.showConfirmation(
+                    requireContext(),
+                    getString(R.string.logout),
+                    getString(R.string.are_you_sure_to_logout),
+                    () -> presenter.logout(),
+                    () -> {}
+            );
+        });
     }
 
     private void setupSyncDataButtons() {
@@ -185,7 +200,14 @@ public class ProfileFragment extends Fragment implements ProfileContract.View, N
 
     @Override
     public void onDataRetrievedSuccess() {
+        Snackbar.make(requireView(), getString(R.string.data_retrieved_successfully),
+                BaseTransientBottomBar.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onDataSyncSuccess() {
+        Snackbar.make(requireView(), getString(R.string.data_sync_successfully),
+                BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -213,7 +235,8 @@ public class ProfileFragment extends Fragment implements ProfileContract.View, N
 
     @Override
     public void showError(String message) {
-
+        Snackbar.make(requireView(), message,
+                BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
     @Override

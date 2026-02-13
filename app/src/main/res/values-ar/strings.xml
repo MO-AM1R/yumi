@@ -151,4 +151,26 @@
     <string name="hint_search_countries">ابحث في الدول…</string>
     <string name="hint_search_ingredients">ابحث في المكونات…</string>
     <string name="hint_search_meals">ابحث في الوجبات…</string>
+
+    <string name="meal_added_plan_successfully">تم إضافة الوجبة في الخطط بنجاح</string>
+    <string name="meal_added_favorite_successfully">تم إضافة الوجبة في المفضلة بنجاح</string>
+
+    <string name="meal_removed_plan_successfully">تم مسح الوجبة من الخطط بنجاح</string>
+    <string name="meal_removed_favorite_successfully">تم مسح الوجبة من المفضلة بنجاح</string>
+
+    <string name="data_retrieved_successfully">تم استرجاع بياناتك بنجاح</string>
+    <string name="data_sync_successfully">تم حفظ بياناتك بنجاح</string>
+
+    <string name="are_you_sure_to_logout">هل انت متأكد انك تريد تسجيل الخروج بدون حفظ بياناتك</string>
+
+    <string name="login_success_title">تم تسجيل الدخول بنجاح</string>
+    <string name="login_success_message">لقد سجلت الدخول باستخدام حسابك</string>
+    <string name="login_success_button">اذهب إلى الرئيسية</string>
+
+    <string name="register_success_title">تم التسجيل بنجاح</string>
+    <string name="register_success_button">اذهب إلى تسجيل الدخول</string>
+
+    <string name="error_title">خطأ</string>
+    <string name="incorrect_password_email">كلمة المرور أو البريد الإلكتروني غير صحيحة</string>
+    <string name="try_again">أعد المحاولة</string>
 </resources>

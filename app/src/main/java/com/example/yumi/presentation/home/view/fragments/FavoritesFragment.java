@@ -19,6 +19,9 @@ import com.example.yumi.presentation.home.contract.FavoriteContract;
 import com.example.yumi.presentation.home.presenter.FavoritePresenter;
 import com.example.yumi.presentation.home.view.adapters.FavoriteMealsRecyclerViewAdapter;
 import com.example.yumi.presentation.shared.callbacks.NavigationCallback;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +76,10 @@ public class FavoritesFragment extends Fragment implements FavoriteContract.View
                 new ArrayList<>(),
                 this::navigateToMealDetail,
                 this::showAddToPlanBottomSheet,
-                meal -> favoritePresenter.onMealRemoved(meal)
+                meal -> {
+                    favoritePresenter.onMealRemoved(meal);
+                    Snackbar.make(requireView(), getString(R.string.meal_removed_favorite_successfully), BaseTransientBottomBar.LENGTH_SHORT).show();
+                }
         );
 
         binding.favoriteRecyclerView.setLayoutManager(
@@ -88,6 +94,7 @@ public class FavoritesFragment extends Fragment implements FavoriteContract.View
         bottomSheet.setOnConfirmListener((date, mealType) -> {
             if (meal != null) {
                 favoritePresenter.addToMealPlan(meal, date, mealType);
+                Snackbar.make(requireView(), getString(R.string.meal_added_plan_successfully), BaseTransientBottomBar.LENGTH_SHORT).show();
             }
         });
         bottomSheet.show(getChildFragmentManager(), "addToPlan");

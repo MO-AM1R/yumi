@@ -11,8 +11,6 @@ public interface MealDetailsContract {
         void showInstructions(Meal meal);
         void showVideoSection(String videoUrl);
         void updateFavoriteStatus(boolean isFavorite);
-        void showAddToPlanSuccess();
-        void showAddToPlanError(String message);
     }
 
     interface Presenter {
