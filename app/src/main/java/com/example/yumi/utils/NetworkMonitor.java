@@ -3,10 +3,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.net.NetworkRequest;
-
 import androidx.annotation.NonNull;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -16,25 +13,44 @@ public enum NetworkMonitor {
     INSTANCE;
 
     private ConnectivityManager connectivityManager;
-    private boolean isConnected = false;
+    private volatile boolean isConnected = false;
     private final List<NetworkListener> listeners = new CopyOnWriteArrayList<>();
+
     private final ConnectivityManager.NetworkCallback networkCallback =
             new ConnectivityManager.NetworkCallback() {
 
                 @Override
                 public void onAvailable(@NonNull Network network) {
-                    updateState();
+                    if (!isConnected) {
+                        isConnected = true;
+                        notifyListeners();
+                    }
                 }
 
                 @Override
                 public void onLost(@NonNull Network network) {
-                    updateState();
+                    boolean stillConnected = checkNetwork();
+                    if (isConnected != stillConnected) {
+                        isConnected = stillConnected;
+                        notifyListeners();
+                    }
+                }
+
+                @Override
+                public void onCapabilitiesChanged(@NonNull Network network,
+                                                  @NonNull NetworkCapabilities caps) {
+                    boolean newState =
+                            caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                                    && caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+                    if (newState != isConnected) {
+                        isConnected = newState;
+                        notifyListeners();
+                    }
                 }
             };
 
     public interface NetworkListener {
         void onNetworkAvailable();
-
         void onNetworkLost();
     }
 
@@ -45,22 +61,9 @@ public enum NetworkMonitor {
                 (ConnectivityManager) context.getApplicationContext()
                         .getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkRequest request = new NetworkRequest.Builder()
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
-                .build();
-
-        connectivityManager.registerNetworkCallback(request, networkCallback);
+        connectivityManager.registerDefaultNetworkCallback(networkCallback);
 
         isConnected = checkNetwork();
-    }
-
-    private void updateState() {
-        boolean newState = checkNetwork();
-        if (newState != isConnected) {
-            isConnected = newState;
-            notifyListeners();
-        }
     }
 
     private boolean checkNetwork() {
