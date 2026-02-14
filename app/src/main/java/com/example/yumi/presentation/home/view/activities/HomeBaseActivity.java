@@ -85,11 +85,12 @@ public class HomeBaseActivity  extends BaseActivity implements NavigationCallbac
             binding.fragmentContainer.setPadding(0, topInset, 0, 0);
 
             androidx.constraintlayout.widget.ConstraintLayout.LayoutParams params =
-                    (androidx.constraintlayout.widget.ConstraintLayout.LayoutParams) binding.bottomBar.getLayoutParams();
+                    (androidx.constraintlayout.widget.ConstraintLayout.LayoutParams)
+                            binding.bottomBar.getLayoutParams();
             params.bottomMargin = bottomInset;
             binding.bottomBar.setLayoutParams(params);
 
-            return WindowInsetsCompat.CONSUMED;
+            return windowInsets;
         });
     }
 
