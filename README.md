@@ -77,7 +77,7 @@ The name "Yumi" means "Daily" in Arabic (يومي) and sounds like "Yummy" in En
 ## 📱 Screenshots
 
 <p align="center">
-<img src="screenshots/splash.mp4" width="200" alt="Splash Animation">
+<img src="screenshots/splash.gif" width="200" alt="Splash Animation">
 <img src="screenshots/onboarding.png" width="200" alt="Onboarding">
 <img src="screenshots/login.png" width="200" alt="Login">
 </p>
