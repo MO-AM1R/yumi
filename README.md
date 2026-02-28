@@ -17,14 +17,19 @@
 </p>
 
 <p align="center">
-<a href="#features">Features</a> •
-<a href="#screenshots">Screenshots</a> •
-<a href="#architecture">Architecture</a> •
-<a href="#tech-stack">Tech Stack</a> •
-<a href="#project-structure">Project Structure</a> •
-<a href="#setup">Setup</a> •
-<a href="#api">API</a>
+
+<a href="#features">✨ Features</a> •
+<a href="#screenshots">📱 Screenshots</a> •
+<a href="#architecture">🏗️ Architecture</a> •
+<a href="#tech-stack">🛠️ Tech Stack</a> •
+<a href="#project-structure">📁 Project Structure</a> •
+<a href="#setup">⚙️ Setup</a> •
+<a href="#api">🌐 API</a> •
+<a href="#implementation-progress">📋 Progress</a> •
+<a href="#license">📄 License</a>
+
 </p>
+
 ---
 
 ## 📖 Description
@@ -34,6 +39,8 @@
 The name "Yumi" means "Daily" in Arabic (يومي) and sounds like "Yummy" in English - perfect for a daily meal planner!
 
 ---
+
+<a name="features"></a>
 
 ## ✨ Features
 
@@ -74,28 +81,29 @@ The name "Yumi" means "Daily" in Arabic (يومي) and sounds like "Yummy" in En
 
 ---
 
+<a name="screenshots"></a>
+
 ## 📱 Screenshots
 
-<p align="center">
-<img src="screenshots/splash.gif" width="200" alt="Splash Animation">
-<img src="screenshots/onboarding.png" width="200" alt="Onboarding">
-<img src="screenshots/login.png" width="200" alt="Login">
-</p>
+| Splash | Onboarding | Login |
+|-------|------------|-------|
+| <img src="screenshots/splash.gif" width="200"> | <img src="screenshots/onboarding.png" width="200"> | <img src="screenshots/login.png" width="200"> |
 
-<p align="center">
-<img src="screenshots/home_light.png" width="200" alt="Home Light">
-<img src="screenshots/home_dark.png" width="200" alt="Home Dark">
-<img src="screenshots/search.png" width="200" alt="Search">
-<img src="screenshots/meal_details.png" width="200" alt="Meal Details">
-</p>
+| Home Light | Home Dark | Search |
+|------------|-----------|--------|
+| <img src="screenshots/home_light.png" width="200"> | <img src="screenshots/home_dark.png" width="200"> | <img src="screenshots/search.png" width="200"> |
 
-<p align="center">
-<img src="screenshots/favorites.png" width="200" alt="Favorites">
-<img src="screenshots/meal_plan.png" width="200" alt="Meal Plan">
-<img src="screenshots/profile.png" width="200" alt="Profile">
-</p>
+| Meal Details | Favorites | Meal Plan |
+|-------------|-----------|-----------|
+| <img src="screenshots/meal_details.png" width="200"> | <img src="screenshots/favorites.png" width="200"> | <img src="screenshots/meal_plan.png" width="200"> |
+
+| Profile |
+|---------|
+| <img src="screenshots/profile.png" width="200"> |
 
 ---
+
+<a name="architecture"></a>
 
 ## 🏗️ Architecture
 
@@ -175,6 +183,8 @@ User Action → View → Presenter → Domain (Repository Interface)
 
 ---
 
+<a name="tech-stack"></a>
+
 ## 🛠️ Tech Stack
 
 | Technology | Purpose |
@@ -193,6 +203,8 @@ User Action → View → Presenter → Domain (Repository Interface)
 | **SharedPreferences** | User Settings Storage |
 
 ---
+
+<a name="project-structure"></a>
 
 ## 📁 Project Structure
 
@@ -269,6 +281,8 @@ app/
 
 ---
 
+<a name="setup"></a>
+
 ## ⚙️ Setup
 
 ### Prerequisites
@@ -325,6 +339,8 @@ Or click ▶️ Run in Android Studio
 
 ---
 
+<a name="api"></a>
+
 ## 🌐 API
 
 This app uses [TheMealDB API](https://www.themealdb.com/api.php) - a free recipe API.
@@ -351,6 +367,8 @@ https://www.themealdb.com/api/json/v1/1/
 ```
 
 ---
+
+<a name="implementation-progress"></a>
 
 ## 📋 Implementation Progress
 
@@ -381,6 +399,8 @@ https://www.themealdb.com/api/json/v1/1/
 | Animations & Transitions | ✅ Completed |
 
 ---
+
+<a name="license"></a>
 
 ## 📄 License
 
